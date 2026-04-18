@@ -1,0 +1,85 @@
+---
+const year = new Date().getFullYear();
+
+const sections = [
+  {
+    title: "Product",
+    links: [
+      { label: "Features", href: "/#features" },
+      { label: "Quick Start", href: "/#quickstart" },
+      { label: "Roadmap", href: "/docs/roadmap" },
+      { label: "Changelog", href: "/blog" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "Documentation", href: "/docs/introduction" },
+      { label: "Architecture", href: "/docs/concepts/architecture" },
+      { label: "Security", href: "/docs/concepts/security" },
+      { label: "Contributing", href: "/docs/contributing" },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      { label: "GitHub", href: "https://github.com/abhee235/headlessos" },
+      { label: "Issues", href: "https://github.com/abhee235/headlessos/issues" },
+      { label: "Discussions", href: "https://github.com/abhee235/headlessos/discussions" },
+    ],
+  },
+];
+---
+
+<footer class="mt-32 border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 md:grid-cols-4">
+      <div class="md:col-span-1">
+        <a href="/" class="flex items-center gap-2 text-lg font-semibold">
+          <span class="inline-block h-7 w-7 rounded-md bg-gradient-to-br from-[var(--color-brand-500)] to-[var(--color-accent-500)]"></span>
+          <span>Headless<span class="text-[var(--color-brand-400)]">OS</span></span>
+        </a>
+        <p class="mt-3 text-sm text-[var(--color-fg-muted)] max-w-xs">
+          A desktop-class interface for headless Linux servers. Free and open
+          source.
+        </p>
+      </div>
+
+      {
+        sections.map((s) => (
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-[var(--color-fg-subtle)]">
+              {s.title}
+            </h3>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {s.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-[var(--color-border)] pt-6 text-sm text-[var(--color-fg-subtle)]"
+    >
+      <p>© {year} HeadlessOS. MIT licensed.</p>
+      <p>
+        Built with
+        <a href="https://astro.build" class="hover:text-[var(--color-fg-muted)]">Astro</a>
+        · Hosted on
+        <a href="https://workers.cloudflare.com" class="hover:text-[var(--color-fg-muted)]">
+          Cloudflare Workers
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="404 — Page not found · HeadlessOS" noindex>
+  <section class="relative bg-mesh py-32">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <p class="chip mx-auto">404</p>
+      <h1 class="mt-6 text-6xl font-bold tracking-tight">
+        Page <span class="gradient-text">not found.</span>
+      </h1>
+      <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
+        The page you're looking for doesn't exist — or maybe it never did.
+      </p>
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn btn-primary">Back to home</a>
+        <a href="/docs/introduction" class="btn btn-secondary">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

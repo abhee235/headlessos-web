@@ -1,0 +1,83 @@
+---
+const faqs = [
+  {
+    q: "Does HeadlessOS install anything on my server?",
+    a: "No. HeadlessOS is a client-only application. It connects to your server using standard SSH and only uses tools your server already has (ls, df, docker, systemctl, etc.). Your server stays exactly as it is.",
+  },
+  {
+    q: "Which Linux distros are supported?",
+    a: "Anything with a standard SSH server. We test against Ubuntu, Debian, Fedora, Alpine, and Arch. Different distros may format command output differently — HeadlessOS uses both deterministic parsers and an LLM fallback to handle the variations.",
+  },
+  {
+    q: "Is it really open source?",
+    a: "Yes. MIT licensed, source on GitHub. You can self-host it, fork it, audit it — whatever you need.",
+  },
+  {
+    q: "What about security?",
+    a: "All connections go through SSH using your existing credentials (key or password). The backend listens on localhost only — never exposed to the internet. We use SFTP for all file operations and validate every command path against an allowlist before execution.",
+  },
+  {
+    q: "Can I manage multiple servers?",
+    a: "Yes. The Multi-Session Workspace lets you connect to many servers at once with per-server identity (accent colors, names) and independent app windows.",
+  },
+  {
+    q: "Do I need an OpenAI / LLM API key?",
+    a: "Optional. Most common commands have deterministic parsers and don't touch the LLM at all. The LLM is only used as a fallback for unknown command output. You can plug in OpenAI, Anthropic, or a local Ollama model.",
+  },
+  {
+    q: "How is this different from cockpit / webmin / portainer?",
+    a: "Those tools require installing an agent on every server. HeadlessOS doesn't — your server stays untouched. We're also building toward a desktop-class UX (windows, multi-server, keyboard shortcuts) rather than a single-page admin panel.",
+  },
+  {
+    q: "Will there be a hosted version at headlessos.com?",
+    a: "Possibly. The app is currently localhost-only and we ship an Electron desktop app. A secure hosted version is on the roadmap, but the localhost & Electron versions will always remain free and open source.",
+  },
+];
+---
+
+<section class="relative py-28 border-t border-[var(--color-border)]">
+  <div class="mx-auto max-w-4xl px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="chip mx-auto">FAQ</p>
+      <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
+        Frequently asked <span class="gradient-text">questions.</span>
+      </h2>
+    </div>
+
+    <div class="mt-16 space-y-3">
+      {
+        faqs.map((f, i) => (
+          <details
+            class="group rounded-xl glass overflow-hidden"
+            open={i === 0}
+          >
+            <summary
+              class="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 list-none [&::-webkit-details-marker]:hidden hover:bg-[rgba(255,255,255,0.02)] transition-colors"
+            >
+              <span class="text-base font-medium text-[var(--color-fg)]">
+                {f.q}
+              </span>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                class="text-[var(--color-fg-muted)] group-open:rotate-180 transition-transform shrink-0"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <div
+              class="px-5 pb-5 text-sm text-[var(--color-fg-muted)] leading-relaxed"
+            >
+              {f.a}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

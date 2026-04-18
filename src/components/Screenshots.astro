@@ -1,0 +1,81 @@
+---
+const tabs = [
+  { id: "dashboard", label: "Dashboard", desc: "Live system metrics" },
+  { id: "files", label: "Files", desc: "Visual SFTP browser" },
+  { id: "docker", label: "Docker", desc: "Containers, images, networks" },
+  { id: "terminal", label: "Terminal", desc: "Real shell, in your browser" },
+];
+---
+
+<section class="relative py-28 border-t border-[var(--color-border)]">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="max-w-2xl">
+      <p class="chip">Screenshots</p>
+      <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
+        See it in <span class="gradient-text">action.</span>
+      </h2>
+      <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
+        Real screenshots of HeadlessOS managing a real Linux server. None of
+        these are mockups.
+      </p>
+    </div>
+
+    <!-- tabs -->
+    <div class="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        tabs.map((t, i) => (
+          <div
+            class={`rounded-lg border p-4 transition-colors ${
+              i === 0
+                ? "border-[var(--color-brand-500)] bg-[rgba(0,212,255,0.05)]"
+                : "border-[var(--color-border)] glass"
+            }`}
+          >
+            <div class="text-sm font-semibold">{t.label}</div>
+            <div class="mt-1 text-xs text-[var(--color-fg-muted)]">{t.desc}</div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- screenshot frame -->
+    <div class="mt-8 relative">
+      <div
+        class="absolute -inset-x-10 top-1/2 h-64 -translate-y-1/2 bg-[var(--color-accent-500)] opacity-10 blur-3xl pointer-events-none"
+      >
+      </div>
+      <div
+        class="relative rounded-2xl glass overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+      >
+        <div
+          class="flex items-center gap-1.5 px-4 py-3 border-b border-[var(--color-border)] bg-[rgba(255,255,255,0.02)]"
+        >
+          <span class="h-3 w-3 rounded-full bg-[#FF5F57]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#FEBC2E]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#28C841]"></span>
+        </div>
+        <div
+          class="aspect-[16/9] bg-[var(--color-bg)] flex items-center justify-center text-center px-8"
+        >
+          <div>
+            <div
+              class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--color-brand-500)] to-[var(--color-accent-500)] mb-4 mx-auto"
+            >
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18M9 21V9"/>
+              </svg>
+            </div>
+            <p class="text-[var(--color-fg-muted)] text-sm">
+              Screenshots coming soon. <br/>
+              <a href="https://github.com/abhee235/headlessos" class="text-[var(--color-brand-400)] hover:underline">
+                Follow the project on GitHub
+              </a>
+              for live updates.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

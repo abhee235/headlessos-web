@@ -1,0 +1,99 @@
+---
+const features = [
+  {
+    title: "Zero Server Footprint",
+    desc: "Nothing is installed on your VPS. Connects with standard SSH using only the tools your server already has.",
+    accent: "from-[#00d4ff] to-[#3dccff]",
+    icon: `<path d='M12 22V12M12 12 4 7m8 5 8-5M4 7l8-5 8 5M4 7v10l8 5m8-15v10l-8 5'/>`,
+  },
+  {
+    title: "Visual File Explorer",
+    desc: "Browse, upload, download, rename, and delete files on remote servers with a Finder-like interface — backed by SFTP.",
+    accent: "from-[#a78bfa] to-[#7c3aed]",
+    icon: `<path d='M3 7v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-9l-2-2H4a1 1 0 0 0-1 1Z'/>`,
+  },
+  {
+    title: "Docker Dashboard",
+    desc: "Manage containers, images, volumes, and networks visually. No Docker Desktop. No 500MB overhead.",
+    accent: "from-[#3dccff] to-[#00a8d4]",
+    icon: `<path d='M22 12c0 5-2 8-10 8s-10-3-10-8'/><path d='M2 12V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4'/><path d='M6 6V4M10 6V2M14 6V4M18 6V4'/>`,
+  },
+  {
+    title: "System Monitor",
+    desc: "Real-time CPU, memory, disk, network, and uptime metrics rendered as clean, glanceable widgets.",
+    accent: "from-[#34d399] to-[#10b981]",
+    icon: `<path d='M3 3v18h18'/><path d='m7 17 4-4 4 4 5-7'/>`,
+  },
+  {
+    title: "Server Admin",
+    desc: "Eight sections, twenty-three parsers: users, groups, firewall, services, packages, logs, network, cron — all in a UI.",
+    accent: "from-[#fbbf24] to-[#f59e0b]",
+    icon: `<path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z'/>`,
+  },
+  {
+    title: "Interactive Terminal",
+    desc: "Full xterm.js terminal in your browser. Persistent shell sessions over WebSocket with proper PTY support.",
+    accent: "from-[#f472b6] to-[#ec4899]",
+    icon: `<path d='m4 17 6-6-6-6'/><path d='M12 19h8'/>`,
+  },
+  {
+    title: "LLM-Powered Parsing",
+    desc: "Deterministic parsers handle known commands; an LLM understands the rest. Cache layer keeps costs minimal.",
+    accent: "from-[#7c3aed] to-[#5b21b6]",
+    icon: `<path d='M12 2a4 4 0 0 0-4 4v2H6a4 4 0 0 0 0 8h2v2a4 4 0 0 0 8 0v-2h2a4 4 0 0 0 0-8h-2V6a4 4 0 0 0-4-4Z'/>`,
+  },
+  {
+    title: "Multi-Server Workspace",
+    desc: "Connect to many servers at once with per-server identity, accent colors, and independent windows.",
+    accent: "from-[#00d4ff] to-[#7c3aed]",
+    icon: `<rect x='2' y='3' width='20' height='6' rx='1'/><rect x='2' y='14' width='20' height='6' rx='1'/><circle cx='6' cy='6' r='1'/><circle cx='6' cy='17' r='1'/>`,
+  },
+];
+---
+
+<section id="features" class="relative py-28">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="chip mx-auto">Features</p>
+      <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
+        Everything you'd expect from a server admin tool.
+        <span class="gradient-text">Nothing installed on the server.</span>
+      </h2>
+      <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
+        HeadlessOS sits on your laptop, talks to your servers over SSH, and
+        renders the result as the kind of UI you'd hope a Linux server came
+        with.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        features.map((f) => (
+          <div class="group relative rounded-xl glass p-5 hover:border-[rgba(0,212,255,0.3)] transition-colors">
+            <div
+              class={`inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${f.accent} text-black shadow-lg`}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={f.icon}
+              />
+            </div>
+            <h3 class="mt-4 text-base font-semibold text-[var(--color-fg)]">
+              {f.title}
+            </h3>
+            <p class="mt-2 text-sm text-[var(--color-fg-muted)] leading-relaxed">
+              {f.desc}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

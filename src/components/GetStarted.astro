@@ -1,0 +1,75 @@
+---
+const steps = [
+  {
+    n: "01",
+    title: "Clone & install",
+    desc: "Clone the repo and install dependencies. HeadlessOS runs locally on your machine.",
+    code: `git clone https://github.com/abhee235/headlessos.git
+cd headlessos
+npm install`,
+  },
+  {
+    n: "02",
+    title: "Start the app",
+    desc: "Run the dev server. The backend listens on :3001, the UI on :3000 — both on localhost only.",
+    code: `npm run dev
+
+# server  → http://localhost:3001
+# client  → http://localhost:3000`,
+  },
+  {
+    n: "03",
+    title: "Add your server",
+    desc: "Open the UI, click 'Add Server', and enter your SSH credentials. That's it — no agents, no installs.",
+    code: `Host:     your-vps.example.com
+Port:     22
+User:     root
+Auth:     SSH key or password
+
+→ Click Connect`,
+  },
+];
+---
+
+<section
+  id="quickstart"
+  class="relative py-28 border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+>
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="chip mx-auto">Quick Start</p>
+      <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
+        Up and running in <span class="gradient-text">under a minute.</span>
+      </h2>
+      <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
+        No server configuration. No installations. Just three commands.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-6 lg:grid-cols-3">
+      {
+        steps.map((s) => (
+          <div class="relative rounded-xl glass p-6">
+            <div class="flex items-baseline gap-3">
+              <span class="text-sm font-mono text-[var(--color-brand-400)]">
+                {s.n}
+              </span>
+              <h3 class="text-lg font-semibold">{s.title}</h3>
+            </div>
+            <p class="mt-2 text-sm text-[var(--color-fg-muted)]">{s.desc}</p>
+            <pre class="mt-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-xs font-mono text-[var(--color-fg)] overflow-x-auto leading-relaxed"><code>{s.code}</code></pre>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center">
+      <a href="/docs/getting-started" class="btn btn-primary">
+        Read the full guide
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M13 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
