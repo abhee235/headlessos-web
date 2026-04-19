@@ -4,9 +4,19 @@
       <stop offset="0%" stop-color="#00D4FF" />
       <stop offset="100%" stop-color="#7C3AED" />
     </linearGradient>
+    <linearGradient id="s" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
   </defs>
-  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#g)" />
-  <rect x="14" y="18" width="36" height="28" rx="4" fill="#07070B" stroke="white" stroke-opacity="0.25" />
-  <path d="M19 32 L23 35 L19 38" stroke="#00D4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-  <rect x="26" y="36" width="8" height="2" rx="1" fill="white" fill-opacity="0.85" />
+  <rect width="64" height="64" rx="14" fill="url(#g)" />
+  <rect width="64" height="32" rx="14" fill="url(#s)" />
+  <circle cx="32" cy="32" r="18" fill="none" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="2.5" />
+  <path d="M 44.73 44.73 A 18 18 0 1 1 44.73 19.27" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
+  <circle cx="44.73" cy="19.27" r="2.2" fill="#FFFFFF" />
+  <g fill="#FFFFFF">
+    <rect x="24" y="23" width="3" height="18" rx="1" />
+    <rect x="37" y="23" width="3" height="18" rx="1" />
+    <rect x="24" y="30.5" width="16" height="3" rx="1" />
+  </g>
 </svg>

@@ -1,4 +1,7 @@
 ---
+import logoWordmark from "@/assets/logo-wordmark.svg";
+import { Image } from "astro:assets";
+
 const year = new Date().getFullYear();
 
 const sections = [
@@ -35,9 +38,14 @@ const sections = [
   <div class="mx-auto max-w-6xl px-6 py-14">
     <div class="grid gap-10 md:grid-cols-4">
       <div class="md:col-span-1">
-        <a href="/" class="flex items-center gap-2 text-lg font-semibold">
-          <span class="inline-block h-7 w-7 rounded-md bg-gradient-to-br from-[var(--color-brand-500)] to-[var(--color-accent-500)]"></span>
-          <span>Headless<span class="text-[var(--color-brand-400)]">OS</span></span>
+        <a href="/" class="inline-flex items-center" aria-label="HeadlessOS home">
+          <Image
+            src={logoWordmark}
+            alt="HeadlessOS"
+            width={140}
+            height={32}
+            class="h-7 w-auto"
+          />
         </a>
         <p class="mt-3 text-sm text-[var(--color-fg-muted)] max-w-xs">
           A desktop-class interface for headless Linux servers. Free and open
@@ -72,14 +80,7 @@ const sections = [
       class="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-[var(--color-border)] pt-6 text-sm text-[var(--color-fg-subtle)]"
     >
       <p>© {year} HeadlessOS. MIT licensed.</p>
-      <p>
-        Built with
-        <a href="https://astro.build" class="hover:text-[var(--color-fg-muted)]">Astro</a>
-        · Hosted on
-        <a href="https://workers.cloudflare.com" class="hover:text-[var(--color-fg-muted)]">
-          Cloudflare Workers
-        </a>
-      </p>
+      <p>Made for people who prefer their servers boring and their tools beautiful.</p>
     </div>
   </div>
 </footer>

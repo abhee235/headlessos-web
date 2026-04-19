@@ -1,68 +1,68 @@
 ---
 const features = [
   {
-    title: "Zero Server Footprint",
-    desc: "Nothing is installed on your VPS. Connects with standard SSH using only the tools your server already has.",
+    title: "Zero server footprint",
+    desc: "Connects over standard SSH using only the binaries your server already has. No agent, no daemon, no extra attack surface.",
     accent: "from-[#00d4ff] to-[#3dccff]",
     icon: `<path d='M12 22V12M12 12 4 7m8 5 8-5M4 7l8-5 8 5M4 7v10l8 5m8-15v10l-8 5'/>`,
   },
   {
-    title: "Visual File Explorer",
-    desc: "Browse, upload, download, rename, and delete files on remote servers with a Finder-like interface — backed by SFTP.",
+    title: "Files, without the `scp` dance",
+    desc: "Drag, drop, preview, rename, chmod. A Finder-grade file explorer backed by pure SFTP — never a shell command.",
     accent: "from-[#a78bfa] to-[#7c3aed]",
     icon: `<path d='M3 7v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-9l-2-2H4a1 1 0 0 0-1 1Z'/>`,
   },
   {
-    title: "Docker Dashboard",
-    desc: "Manage containers, images, volumes, and networks visually. No Docker Desktop. No 500MB overhead.",
+    title: "Docker without Docker Desktop",
+    desc: "Containers, images, volumes, networks — full lifecycle management in a UI that loads instantly and never phones home.",
     accent: "from-[#3dccff] to-[#00a8d4]",
     icon: `<path d='M22 12c0 5-2 8-10 8s-10-3-10-8'/><path d='M2 12V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4'/><path d='M6 6V4M10 6V2M14 6V4M18 6V4'/>`,
   },
   {
-    title: "System Monitor",
-    desc: "Real-time CPU, memory, disk, network, and uptime metrics rendered as clean, glanceable widgets.",
+    title: "Glanceable metrics",
+    desc: "CPU, memory, disk, network, uptime — polled in the background, cached, and rendered as the clean dashboard your VPS never had.",
     accent: "from-[#34d399] to-[#10b981]",
     icon: `<path d='M3 3v18h18'/><path d='m7 17 4-4 4 4 5-7'/>`,
   },
   {
-    title: "Server Admin",
-    desc: "Eight sections, twenty-three parsers: users, groups, firewall, services, packages, logs, network, cron — all in a UI.",
+    title: "Server Admin, not man pages",
+    desc: "Users, groups, firewall, services, packages, logs, network, cron — eight admin surfaces with point-and-click parity with the CLI.",
     accent: "from-[#fbbf24] to-[#f59e0b]",
     icon: `<path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z'/>`,
   },
   {
-    title: "Interactive Terminal",
-    desc: "Full xterm.js terminal in your browser. Persistent shell sessions over WebSocket with proper PTY support.",
+    title: "A real terminal, still",
+    desc: "When you want the shell, the shell is one click away. Full xterm.js, persistent PTY over WebSocket, zero quirks.",
     accent: "from-[#f472b6] to-[#ec4899]",
     icon: `<path d='m4 17 6-6-6-6'/><path d='M12 19h8'/>`,
   },
   {
-    title: "LLM-Powered Parsing",
-    desc: "Deterministic parsers handle known commands; an LLM understands the rest. Cache layer keeps costs minimal.",
+    title: "LLM-assisted, not LLM-dependent",
+    desc: "Deterministic parsers handle everyday commands in under a millisecond. The LLM only kicks in for weird distro output — and caches aggressively.",
     accent: "from-[#7c3aed] to-[#5b21b6]",
     icon: `<path d='M12 2a4 4 0 0 0-4 4v2H6a4 4 0 0 0 0 8h2v2a4 4 0 0 0 8 0v-2h2a4 4 0 0 0 0-8h-2V6a4 4 0 0 0-4-4Z'/>`,
   },
   {
-    title: "Multi-Server Workspace",
-    desc: "Connect to many servers at once with per-server identity, accent colors, and independent windows.",
+    title: "Every server, one workspace",
+    desc: "Open a dozen servers in a dozen tabs, each with its own identity color and independent window layout. Multi-server is a first-class citizen.",
     accent: "from-[#00d4ff] to-[#7c3aed]",
     icon: `<rect x='2' y='3' width='20' height='6' rx='1'/><rect x='2' y='14' width='20' height='6' rx='1'/><circle cx='6' cy='6' r='1'/><circle cx='6' cy='17' r='1'/>`,
   },
 ];
 ---
 
-<section id="features" class="relative py-28">
+<section id="features" class="relative py-28 border-t border-[var(--color-border)]">
   <div class="mx-auto max-w-6xl px-6">
     <div class="text-center max-w-2xl mx-auto">
       <p class="chip mx-auto">Features</p>
       <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
-        Everything you'd expect from a server admin tool.
-        <span class="gradient-text">Nothing installed on the server.</span>
+        Everything you'd hope a Linux server came with.
+        <span class="gradient-text">Nothing installed on it.</span>
       </h2>
       <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
-        HeadlessOS sits on your laptop, talks to your servers over SSH, and
-        renders the result as the kind of UI you'd hope a Linux server came
-        with.
+        Eight first-class apps, one desktop-style workspace, and a parsing engine
+        that turns `df`, `docker ps`, and `systemctl status` into something you
+        can actually look at.
       </p>
     </div>
 

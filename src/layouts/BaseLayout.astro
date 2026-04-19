@@ -2,6 +2,7 @@
 import "@/styles/global.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import Spinner from "@/components/Spinner.astro";
 
 interface Props {
   title?: string;
@@ -27,6 +28,9 @@ const socialImage = new URL(image, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand/icon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon-180.png" />
     <link rel="canonical" href={canonicalURL} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
@@ -59,6 +63,24 @@ const socialImage = new URL(image, Astro.site);
     <!-- Theme color -->
     <meta name="theme-color" content="#07070b" />
 
+    <!-- Inline theme setter: runs before first paint to avoid flash -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("hos-theme");
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+
     <!-- JSON-LD structured data -->
     <script
       type="application/ld+json"
@@ -75,10 +97,36 @@ const socialImage = new URL(image, Astro.site);
     />
   </head>
   <body>
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+      <Spinner size={32} class="text-white/95" label="Loading page" />
+    </div>
     <Header />
     <main>
       <slot />
     </main>
     <Footer />
+
+    <script>
+      const loader = document.getElementById("page-loader");
+
+      const hideLoader = () => {
+        if (!loader) return;
+        loader.classList.add("is-hidden");
+      };
+
+      const showLoader = () => {
+        if (!loader) return;
+        loader.classList.remove("is-hidden");
+      };
+
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+        hideLoader();
+      } else {
+        window.addEventListener("DOMContentLoaded", hideLoader, { once: true });
+      }
+
+      document.addEventListener("astro:before-preparation", showLoader);
+      document.addEventListener("astro:after-swap", hideLoader);
+    </script>
   </body>
 </html>

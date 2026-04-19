@@ -1,0 +1,49 @@
+---
+interface Props {
+  size?: number;
+  class?: string;
+  label?: string;
+}
+
+const { size = 24, class: className = "", label = "Loading" } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  width={size}
+  height={size}
+  class={`hos-spinner ${className}`}
+  role="img"
+  aria-label={label}
+>
+  <!-- Static base ring -->
+  <circle cx="32" cy="32" r="18" fill="none" stroke="currentColor" stroke-opacity="0.22" stroke-width="2.5" />
+  <!-- Static H glyph -->
+  <g fill="currentColor" opacity="0.96">
+    <rect x="24" y="23" width="3" height="18" rx="1" />
+    <rect x="37" y="23" width="3" height="18" rx="1" />
+    <rect x="24" y="30.5" width="16" height="3" rx="1" />
+  </g>
+  <!-- Spinning orbit -->
+  <g class="hos-spinner-orbit">
+    <path d="M 44.73 44.73 A 18 18 0 1 1 44.73 19.27" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+    <circle cx="44.73" cy="19.27" r="2.2" fill="currentColor" />
+  </g>
+</svg>
+
+<style>
+  .hos-spinner {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .hos-spinner-orbit {
+    transform-origin: 32px 32px;
+    animation: hos-spinner-rotate 1.1s linear infinite;
+  }
+  @keyframes hos-spinner-rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

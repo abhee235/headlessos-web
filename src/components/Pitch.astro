@@ -1,0 +1,103 @@
+---
+// "Before / After" pitch section — sits between Hero and Features.
+// Translates the value proposition into concrete, relatable scenarios.
+
+const pains = [
+  { quote: "Was it `df -h` or `df -Th`?" },
+  { quote: "Which tab had my Grafana session?" },
+  { quote: "Is nginx up on box-3 or box-5?" },
+  { quote: "What port did I open last Tuesday?" },
+];
+
+const gains = [
+  {
+    title: "One window, every server",
+    desc:
+      "Connect to your whole fleet in tabs. Each server gets its own color, its own desktop, its own terminal — no more tmux-as-a-workaround.",
+  },
+  {
+    title: "Click, don't memorize",
+    desc:
+      "A visual file explorer, a real Docker dashboard, a firewall editor with ports and rules. The muscle memory you've been building for years still works in the terminal tab.",
+  },
+  {
+    title: "Your server stays pristine",
+    desc:
+      "HeadlessOS never touches the server filesystem beyond the commands you'd run by hand. No daemon, no auto-start, no extra surface area.",
+  },
+];
+---
+
+<section class="relative py-24 border-t border-[var(--color-border)]">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <!-- The pain -->
+      <div>
+        <p class="chip">The problem</p>
+        <h2 class="mt-5 text-3xl sm:text-4xl font-bold tracking-tight">
+          Managing servers in a terminal is<br />
+          <span class="gradient-text">a productivity tax.</span>
+        </h2>
+        <p class="mt-4 text-[var(--color-fg-muted)] leading-relaxed">
+          Every admin task becomes a trivia quiz of flag syntax. Every fleet
+          becomes 12 open terminals. And the one time you really need an answer
+          fast — production is down at 2am — you're grep-ing through `journalctl`.
+        </p>
+
+        <ul class="mt-6 space-y-2.5 text-sm">
+          {
+            pains.map((p) => (
+              <li class="flex items-start gap-2 text-[var(--color-fg-muted)] italic">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  class="mt-1 shrink-0 text-[var(--color-fg-subtle)]"
+                >
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                "{p.quote}"
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- The gains -->
+      <div class="space-y-4">
+        <p class="chip">With HeadlessOS</p>
+        {
+          gains.map((g) => (
+            <div class="rounded-xl glass p-5">
+              <div class="flex items-start gap-3">
+                <div class="mt-0.5 shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-[var(--color-brand-500)] to-[var(--color-accent-500)] text-white">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-[var(--color-fg)]">{g.title}</h3>
+                  <p class="mt-1 text-sm text-[var(--color-fg-muted)] leading-relaxed">
+                    {g.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

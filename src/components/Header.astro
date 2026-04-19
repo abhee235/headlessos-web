@@ -1,7 +1,4 @@
 ---
-import logoWordmark from "@/assets/logo-wordmark.svg";
-import { Image } from "astro:assets";
-
 const navLinks = [
   { label: "Features", href: "/#features" },
   { label: "Quick Start", href: "/#quickstart" },
@@ -17,13 +14,31 @@ const navLinks = [
     class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5"
   >
     <a href="/" class="flex items-center gap-2 group" aria-label="HeadlessOS home">
-      <Image
-        src={logoWordmark}
-        alt="HeadlessOS"
-        width={140}
-        height={32}
-        class="h-8 w-auto transition-transform group-hover:scale-[1.02]"
-      />
+      <svg viewBox="0 0 220 48" class="h-8 w-auto transition-transform group-hover:scale-[1.02]" aria-hidden="true">
+        <defs>
+          <linearGradient id="hdrg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00D4FF" />
+            <stop offset="100%" stop-color="#7C3AED" />
+          </linearGradient>
+          <linearGradient id="hdrs" x1="0" y1="0" x2="0" y2="22" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="44" height="44" rx="11" fill="url(#hdrg)" />
+        <rect x="2" y="2" width="44" height="22" rx="11" fill="url(#hdrs)" />
+        <circle cx="24" cy="24" r="12.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="2" />
+        <path d="M 32.84 32.84 A 12.5 12.5 0 1 1 32.84 15.16" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+        <circle cx="32.84" cy="15.16" r="1.6" fill="#FFFFFF" />
+        <g fill="#FFFFFF">
+          <rect x="18.6" y="17.7" width="2.2" height="12.6" rx="0.8" />
+          <rect x="27.4" y="17.7" width="2.2" height="12.6" rx="0.8" />
+          <rect x="18.6" y="23.0" width="11" height="2.2" rx="0.8" />
+        </g>
+        <text x="58" y="32" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="currentColor" style="color: var(--color-fg)">
+          Headless<tspan fill="#00D4FF">OS</tspan>
+        </text>
+      </svg>
     </a>
 
     <nav class="hidden md:flex items-center gap-1 text-sm">
@@ -40,6 +55,23 @@ const navLinks = [
     </nav>
 
     <div class="flex items-center gap-2">
+      <button
+        type="button"
+        id="theme-toggle"
+        class="btn btn-ghost"
+        aria-label="Toggle color theme"
+        title="Toggle color theme"
+      >
+        <!-- sun (shown in dark mode) -->
+        <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <!-- moon (shown in light mode) -->
+        <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
       <a
         href="https://github.com/abhee235/headlessos"
         target="_blank"
@@ -58,3 +90,32 @@ const navLinks = [
     </div>
   </div>
 </header>
+
+<style>
+  /* Icon visibility is driven by the theme attribute on <html> */
+  html[data-theme="dark"] .theme-icon-moon {
+    display: none;
+  }
+  html[data-theme="light"] .theme-icon-sun {
+    display: none;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("theme-toggle");
+  const setTheme = (t: "light" | "dark") => {
+    document.documentElement.dataset.theme = t;
+    try {
+      localStorage.setItem("hos-theme", t);
+    } catch (e) {
+      /* ignore storage errors */
+    }
+    // Update meta theme-color for mobile browser chrome
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", t === "light" ? "#fbfbfd" : "#07070b");
+  };
+  btn?.addEventListener("click", () => {
+    const current = document.documentElement.dataset.theme;
+    setTheme(current === "light" ? "dark" : "light");
+  });
+</script>

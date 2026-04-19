@@ -1,0 +1,303 @@
+---
+// Hero carousel — real product screenshots.
+// Source images live in src/assets/screenshots/ so Astro/Sharp can optimize them.
+import { Image } from "astro:assets";
+import img01 from "@/assets/screenshots/01-files.png";
+import img02 from "@/assets/screenshots/02-task-network.png";
+import img03 from "@/assets/screenshots/03-server-admin.png";
+import img04 from "@/assets/screenshots/04-start-menu.png";
+import img05 from "@/assets/screenshots/05-personalize.png";
+
+interface Slide {
+  id: string;
+  title: string;
+  subtitle: string;
+  src: ImageMetadata;
+  alt: string;
+}
+
+const slides: Slide[] = [
+  {
+    id: "files",
+    title: "File Explorer",
+    subtitle: "Finder-grade file management, over plain SFTP",
+    src: img01,
+    alt: "HeadlessOS File Explorer showing the root filesystem of a connected Linux server, with folders like boot, etc, home, opt, root, usr, var rendered as icons.",
+  },
+  {
+    id: "tasks",
+    title: "Task Manager",
+    subtitle: "Live CPU, memory, disk and network graphs — no agent, no metrics daemon",
+    src: img02,
+    alt: "HeadlessOS Task Manager showing a live network throughput chart with receive and send lines, and a list of interfaces eth0, docker0, vethe6c7e99.",
+  },
+  {
+    id: "admin",
+    title: "Server Admin",
+    subtitle: "Users, firewall, services, logs, cron — one UI for all of it",
+    src: img03,
+    alt: "HeadlessOS Server Admin showing the Network section with listening ports 22 and 53, including sshd flagged as Running and Public.",
+  },
+  {
+    id: "desktop",
+    title: "A real desktop for your servers",
+    subtitle: "Pinned apps, recently used, multi-server tabs — it's a workspace, not a dashboard",
+    src: img04,
+    alt: "HeadlessOS Start Menu open over the gradient desktop wallpaper, showing pinned apps and a list of recently used apps.",
+  },
+  {
+    id: "personalize",
+    title: "Personalize",
+    subtitle: "Light, dark, auto. Accent colors. Your OS, your taste.",
+    src: img05,
+    alt: "HeadlessOS Personalize window on the Appearance page with Light, Dark, Auto options and an accent color picker.",
+  },
+];
+---
+
+<div class="relative">
+  <!-- glow under window -->
+  <div
+    class="absolute -inset-x-20 -top-12 h-72 bg-[var(--color-brand-500)] opacity-15 blur-3xl pointer-events-none"
+  >
+  </div>
+
+  <div
+    class="relative mx-auto max-w-5xl rounded-2xl glass overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.4)]"
+    data-hero-carousel
+  >
+    <!-- Track -->
+    <div
+      class="hc-track flex overflow-x-auto"
+      data-hero-track
+      aria-label="Product preview"
+    >
+      {
+        slides.map((s, idx) => (
+          <div
+            class="hc-slide relative shrink-0 w-full aspect-[16/10] bg-[var(--color-bg-elevated)]"
+            data-hero-slide={idx}
+            aria-hidden={idx === 0 ? "false" : "true"}
+          >
+            <Image
+              src={s.src}
+              alt={s.alt}
+              widths={[800, 1200, 1600, 2000]}
+              sizes="(min-width: 1024px) 960px, 100vw"
+              loading={idx === 0 ? "eager" : "lazy"}
+              class="absolute inset-0 w-full h-full object-cover object-top"
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Prev / next controls -->
+    <button
+      type="button"
+      class="hc-btn hc-btn-prev"
+      aria-label="Previous view"
+      data-hero-prev
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="hc-btn hc-btn-next"
+      aria-label="Next view"
+      data-hero-next
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Caption + dots -->
+  <div class="mt-5 flex flex-col items-center gap-3">
+    <div class="text-center">
+      <p
+        class="text-sm font-semibold text-[var(--color-fg)]"
+        data-hero-title
+      >
+        {slides[0].title}
+      </p>
+      <p
+        class="text-xs text-[var(--color-fg-muted)] mt-0.5"
+        data-hero-subtitle
+      >
+        {slides[0].subtitle}
+      </p>
+    </div>
+
+    <div
+      class="flex items-center gap-2"
+      role="tablist"
+      aria-label="Choose a product view"
+    >
+      {
+        slides.map((s, idx) => (
+          <button
+            type="button"
+            class="hc-dot"
+            data-active={idx === 0 ? "true" : "false"}
+            data-hero-dot={idx}
+            role="tab"
+            aria-selected={idx === 0 ? "true" : "false"}
+            aria-label={s.title}
+          />
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ slideData: slides.map(s => ({ title: s.title, subtitle: s.subtitle })) }}>
+  (() => {
+    const root = document.querySelector("[data-hero-carousel]");
+    if (!root) return;
+    const track = root.querySelector("[data-hero-track]");
+    const slides = Array.from(root.querySelectorAll("[data-hero-slide]"));
+    const dots = Array.from(document.querySelectorAll("[data-hero-dot]"));
+    const titleEl = document.querySelector("[data-hero-title]");
+    const subtitleEl = document.querySelector("[data-hero-subtitle]");
+    const prev = root.querySelector("[data-hero-prev]");
+    const next = root.querySelector("[data-hero-next]");
+    if (!track || slides.length === 0) return;
+
+    let current = 0;
+    const count = slides.length;
+
+    const setActive = (idx) => {
+      current = ((idx % count) + count) % count;
+      slides.forEach((s, i) => s.setAttribute("aria-hidden", i === current ? "false" : "true"));
+      dots.forEach((d, i) => {
+        d.setAttribute("data-active", i === current ? "true" : "false");
+        d.setAttribute("aria-selected", i === current ? "true" : "false");
+      });
+      const meta = slideData[current];
+      if (meta) {
+        if (titleEl) titleEl.textContent = meta.title;
+        if (subtitleEl) subtitleEl.textContent = meta.subtitle;
+      }
+    };
+
+    const scrollTo = (idx) => {
+      const target = slides[idx];
+      if (!target) return;
+      track.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+    };
+
+    dots.forEach((d, i) =>
+      d.addEventListener("click", () => {
+        setActive(i);
+        scrollTo(i);
+      }),
+    );
+    prev?.addEventListener("click", () => {
+      const i = (current - 1 + count) % count;
+      setActive(i);
+      scrollTo(i);
+    });
+    next?.addEventListener("click", () => {
+      const i = (current + 1) % count;
+      setActive(i);
+      scrollTo(i);
+    });
+
+    // Update on manual scroll / snap
+    let rafId = 0;
+    track.addEventListener("scroll", () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const x = track.scrollLeft + track.clientWidth / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        slides.forEach((s, i) => {
+          const center = s.offsetLeft + s.offsetWidth / 2;
+          const d = Math.abs(center - x);
+          if (d < bestDist) {
+            bestDist = d;
+            best = i;
+          }
+        });
+        if (best !== current) setActive(best);
+      });
+    });
+
+    // Keyboard
+    root.setAttribute("tabindex", "0");
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prev?.dispatchEvent(new MouseEvent("click"));
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        next?.dispatchEvent(new MouseEvent("click"));
+      }
+    });
+
+    // Autoplay (pause on hover, respect reduced motion)
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let timer = 0;
+    const start = () => {
+      if (reduced) return;
+      stop();
+      timer = window.setInterval(() => {
+        const i = (current + 1) % count;
+        setActive(i);
+        scrollTo(i);
+      }, 6000);
+    };
+    const stop = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = 0;
+      }
+    };
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+    root.addEventListener("focusin", stop);
+    root.addEventListener("focusout", start);
+    start();
+  })();
+</script>
+
+<style>
+  .hc-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: rgba(15, 15, 25, 0.55);
+    color: #fff;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    opacity: 0;
+    transition:
+      opacity 0.2s ease,
+      background 0.2s ease;
+    z-index: 5;
+  }
+  [data-hero-carousel]:hover .hc-btn,
+  [data-hero-carousel]:focus-within .hc-btn {
+    opacity: 1;
+  }
+  .hc-btn:hover {
+    background: rgba(15, 15, 25, 0.75);
+  }
+  .hc-btn-prev {
+    left: 12px;
+  }
+  .hc-btn-next {
+    right: 12px;
+  }
+</style>
