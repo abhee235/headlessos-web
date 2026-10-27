@@ -10,9 +10,9 @@ const disks = [
 <section id="features" class="section relative">
   <div class="container-x">
     <div class="max-w-3xl">
-      <p class="rv eyebrow">Why HeadlessOS</p>
+      <p class="rv eyebrow">Features</p>
       <h2 class="rv h2 mt-5 [--d:.05s]">
-        Made for you. <span class="dim">Invisible to your server.</span>
+        Made for you. <span class="dim block">Invisible to your server.</span>
       </h2>
     </div>
 
@@ -22,12 +22,12 @@ const disks = [
         <span class="icon-tile [--tile:#4ade80]">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V7l8-4z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg>
         </span>
-        <h3 class="mt-6 text-2xl font-semibold tracking-tight">Nothing to install. Nothing to open.</h3>
+        <h3 class="mt-6 text-2xl font-semibold tracking-tight">No agent. No new port. No account.</h3>
         <p class="mt-3 max-w-xl leading-relaxed text-fg-muted">
-          No agent, no daemon, no extra port, no account. HeadlessOS uses the tools the server already has, so a
-          fresh VPS works the minute you can SSH into it.
+          HeadlessOS uses the tools the server already has, so a fresh VPS works the minute you can SSH into it,
+          and an old one doesn't need touching.
         </p>
-        <pre class="term mt-7" aria-label="Connection summary for web-01"><span class="dim">$</span> <span class="hi">ssh deploy@web-01</span>  <span class="dim"># all HeadlessOS needs</span>
+        <pre class="term mt-7" aria-label="Connection summary for web-01"><span class="dim">$</span> <span class="hi">ssh deploy@web-01.example.com</span>  <span class="dim"># all HeadlessOS needs</span>
 <span class="ok">✓</span> connected        <span class="dim">ed25519 key · port 22</span>
 <span class="ok">✓</span> uses             <span class="cy">ls df ps ss docker systemctl journalctl</span>
 <span class="ok">✓</span> installed        <span class="hi">nothing</span>

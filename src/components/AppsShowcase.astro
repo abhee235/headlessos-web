@@ -1,6 +1,7 @@
 ---
 // The apps, one tab each. Screenshots are 1600×1000 captures of the real app at 2× density.
 import { Image } from "astro:assets";
+import dashboard from "@/assets/screens/dashboard.webp";
 import home from "@/assets/screens/home-hub.webp";
 import files from "@/assets/screens/files.webp";
 import docker from "@/assets/screens/docker.webp";
@@ -10,6 +11,13 @@ import admin from "@/assets/screens/server-admin.webp";
 import personalize from "@/assets/screens/personalize.webp";
 
 const apps = [
+  {
+    id: "dashboard",
+    name: "Dashboard",
+    img: dashboard,
+    alt: "The Dashboard for web-01: processor, memory, disks, network and uptime, live",
+    body: "Processor, memory, disks, network and uptime on one live screen: the first thing you open when something feels slow.",
+  },
   {
     id: "home",
     name: "Home hub",

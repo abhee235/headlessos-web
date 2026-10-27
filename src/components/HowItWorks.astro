@@ -18,7 +18,7 @@ const steps = [
   {
     where: "Your server",
     title: "It stays exactly as it was",
-    body: "Any Linux box you can reach. HeadlessOS runs the same commands you would and turns their output into windows. Close it, and nothing is left behind.",
+    body: "A VPS, a cloud server, a home-lab box or a Raspberry Pi: any Linux machine you can reach. Close HeadlessOS, and nothing is left behind.",
     tile: "#4ade80",
     icon: '<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
   },
@@ -31,13 +31,13 @@ const commands = ["ls", "df", "ps", "ss", "docker", "systemctl", "journalctl", "
     <div class="max-w-3xl">
       <p class="rv eyebrow">How it works</p>
       <h2 class="rv h2 mt-5 [--d:.05s]">
-        It's not an operating system.
-        <span class="dim">It's a desktop for the servers you already run.</span>
+        Nothing to install.
+        <span class="dim block">It runs on your computer, not your server.</span>
       </h2>
       <p class="rv lede mt-6 max-w-2xl [--d:.1s]">
-        "Headless" servers have no screen: you reach them through a terminal. HeadlessOS gives them a desktop
-        without touching them. Your server keeps its own OS, packages and config. HeadlessOS is the window you
-        look through.
+        HeadlessOS isn't an operating system. It's an app for your laptop or desktop that signs in to your
+        server over SSH, runs the same commands you would, and turns the answers into windows. Your server keeps
+        its own OS, packages and config.
       </p>
     </div>
 

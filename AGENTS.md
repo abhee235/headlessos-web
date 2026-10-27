@@ -58,9 +58,10 @@ headlessOS-Web/
 │   │   └── screens/              # App screenshots (WebP, 3200×2000) + the video poster
 │   ├── components/               # Astro components (marketing sections)
 │   │   ├── Header.astro, Footer.astro, Logo.astro
-│   │   ├── Hero.astro            # Headline + the looping demo video
-│   │   ├── HowItWorks.astro      # "Not an operating system": computer → SSH → server
+│   │   ├── Hero.astro            # Rotating headline ("Your VPS / cloud server / …") + the demo video
+│   │   ├── BeforeAfter.astro     # The commands you'd type vs the Dashboard
 │   │   ├── AppsShowcase.astro    # Tabbed screenshot gallery (auto-advances)
+│   │   ├── HowItWorks.astro      # Runs on your computer, not the server (and isn't an OS): computer → SSH → server
 │   │   ├── Features.astro        # Bento grid
 │   │   ├── GetStarted.astro, FAQ.astro, OpenSourceCTA.astro
 │   ├── content/
@@ -165,7 +166,8 @@ All marketing components are `.astro` files. Interactivity (the gallery tabs, OS
 - **Capture from a demo server, never a real one.** Screens must not show real hostnames, IPs, user names or the capturing PC's account name (the Home hub greets the local OS user; blank it for captures).
 - **Only show screens that match the current app design.** Skip any view that still has an older look (for now: the Control Center's Fleet tab).
 - **Stills**: 1600×1000 CSS px at device scale 2, saved as PNG, then `node scripts/import-screens.mjs <folder> [names…]` writes `src/assets/screens/<name>.webp`. `AppsShowcase.astro` imports them by name.
-- **Video**: `public/media/headlessos-demo.mp4` (H.264, 30 fps, faststart) and `.webm` (VP9), 1600×1000, muted, looping. It must start and end on the same screen so the loop is seamless. `src/assets/screens/demo-poster.webp` is a frame from it.
+- **Video**: `public/media/headlessos-demo.mp4` (H.264, 30 fps, faststart) and `.webm` (VP9), 1600×1000, muted, looping. It must start and end on the same screen so the loop is seamless. `src/assets/screens/demo-poster.webp` is a frame from it. It opens by adding a server (a documentation-range host such as `web-01.example.com`), so visitors see the first step.
+- **Copy**: say "VPS", "cloud server", "home lab", not only "Linux server"; lead with what the visitor gets, and keep the "isn't an operating system" clarification out of the hero.
 
 ---
 

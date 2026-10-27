@@ -1,9 +1,16 @@
 ---
 // The hero: what HeadlessOS is in one line, then the app itself running in a loop.
 import { getImage } from "astro:assets";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import poster from "@/assets/screens/demo-poster.webp";
 
 const posterImg = await getImage({ src: poster, width: 1600, format: "webp", quality: 82 });
+
+// public/ files keep their names, so a content hash in the URL makes caches pick up a new recording
+const media = (file: string) =>
+  `/media/${file}?v=${createHash("sha1").update(readFileSync(join(process.cwd(), "public", "media", file))).digest("hex").slice(0, 8)}`;
 ---
 
 <section class="hero relative isolate overflow-hidden pt-20 sm:pt-28">
@@ -16,20 +23,29 @@ const posterImg = await getImage({ src: poster, width: 1600, format: "webp", qua
   <div class="container-x text-center">
     <a href="https://github.com/abhee235/headlessos" class="rv hero-pill" target="_blank" rel="noopener">
       <span class="hero-pill-tag">Open source</span>
-      <span class="sm:hidden">Free and MIT licensed</span>
-      <span class="hidden sm:inline">Free, MIT licensed, and runs on your machine</span>
+      <span class="sm:hidden">Free, no account</span>
+      <span class="hidden sm:inline">Free, no account, nothing to install on the server</span>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
     </a>
 
     <h1 class="rv display mx-auto mt-7 max-w-5xl [--d:.06s]">
-      Your Linux servers,<br />
-      <span class="gradient-text">as a desktop.</span>
+      <span class="sr-only">Your VPS, cloud server, home lab or Raspberry Pi, as a desktop.</span>
+      <span aria-hidden="true">
+        Your
+        <span class="rotator" data-rotator>
+          {
+            ["VPS", "cloud server", "home lab", "Raspberry Pi"].map((w, i) => (
+              <span class:list={["word gradient-text", { "is-on": i === 0 }]}>{w}</span>
+            ))
+          }
+        </span>,<br />
+        as a desktop.
+      </span>
     </h1>
 
     <p class="rv lede mx-auto mt-7 max-w-2xl [--d:.12s]">
-      HeadlessOS is an app on your computer that signs in to your servers over SSH and opens them as a
-      desktop: files, Docker, processes, logs and settings, in real windows. It isn't an operating system,
-      and nothing is installed on the server.
+      Open any server you can SSH into and use it like your own computer. Drag files, restart containers,
+      watch CPU and read logs in real windows. No commands to memorize, and nothing installed on the server.
     </p>
 
     <div class="rv mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row [--d:.18s]">
@@ -44,7 +60,7 @@ const posterImg = await getImage({ src: poster, width: 1600, format: "webp", qua
     </div>
 
     <p class="rv mt-6 font-mono text-[0.8rem] text-fg-subtle [--d:.22s]">
-      Windows · macOS · Linux&nbsp;&nbsp;—&nbsp;&nbsp;or run it from source in your browser
+      Windows · macOS · Linux&nbsp;&nbsp;—&nbsp;&nbsp;free, no account, no telemetry
     </p>
   </div>
 
@@ -62,11 +78,11 @@ const posterImg = await getImage({ src: poster, width: 1600, format: "webp", qua
         poster={posterImg.src}
         width="1600"
         height="1000"
-        aria-label="HeadlessOS running: signing in to a server, the Home hub, File Explorer, Docker, Terminal and Task Manager"
+        aria-label="HeadlessOS running: adding a VPS and signing in, then the Home hub, Dashboard, File Explorer, Docker and Terminal"
         data-demo-video
       >
-        <source src="/media/headlessos-demo.webm" type="video/webm" />
-        <source src="/media/headlessos-demo.mp4" type="video/mp4" />
+        <source src={media("headlessos-demo.webm")} type="video/webm" />
+        <source src={media("headlessos-demo.mp4")} type="video/mp4" />
       </video>
       <button type="button" class="video-toggle" aria-label="Pause video" data-video-toggle>
         <svg class="i-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
@@ -74,7 +90,7 @@ const posterImg = await getImage({ src: poster, width: 1600, format: "webp", qua
       </button>
     </figure>
     <p class="rv mt-5 text-center font-mono text-xs text-fg-subtle">
-      Recorded live against a demo server: sign-in, Home hub, Files, Docker, Terminal, Task Manager
+      Recorded live: adding a VPS, then the Home hub, Dashboard, Files, Docker and Terminal
     </p>
   </div>
 </section>
@@ -109,6 +125,36 @@ const posterImg = await getImage({ src: poster, width: 1600, format: "webp", qua
     border-radius: 999px;
     color: #041218;
     background: linear-gradient(100deg, #7ce7ff, #00d4ff);
+  }
+
+  /* "Your [VPS / cloud server / …]": the active word sits in the flow, the rest stack on it */
+  .rotator {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    padding-bottom: 0.08em; /* room for descenders under background-clip text */
+  }
+
+  .rotator .word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transform: translateY(0.45em);
+    transition:
+      opacity 0.35s ease,
+      transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .rotator .word.is-on {
+    position: relative;
+    opacity: 1;
+    transform: none;
+  }
+
+  .rotator .word.is-out {
+    opacity: 0;
+    transform: translateY(-0.45em);
   }
 
   /* A rising glow behind the top of the product frame */
@@ -177,6 +223,26 @@ const posterImg = await getImage({ src: poster, width: 1600, format: "webp", qua
   import { labelDownloadButtons } from "@/lib/platform";
 
   labelDownloadButtons();
+
+  // Cycle the headline's word; animate the width so the centred line glides rather than jumps
+  const rotator = document.querySelector<HTMLElement>("[data-rotator]");
+  if (rotator && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const words = [...rotator.querySelectorAll<HTMLElement>(".word")];
+    let i = 0;
+    window.setInterval(() => {
+      if (document.hidden) return;
+      const from = rotator.offsetWidth;
+      const prev = words[i];
+      i = (i + 1) % words.length;
+      prev.classList.remove("is-on");
+      prev.classList.add("is-out");
+      words[i].classList.remove("is-out");
+      words[i].classList.add("is-on");
+      const to = rotator.offsetWidth;
+      rotator.animate([{ width: `${from}px` }, { width: `${to}px` }], { duration: 450, easing: "cubic-bezier(.2,.7,.2,1)" });
+      window.setTimeout(() => prev.classList.remove("is-out"), 500);
+    }, 2400);
+  }
 
   const video = document.querySelector<HTMLVideoElement>("[data-demo-video]");
   const toggle = document.querySelector<HTMLButtonElement>("[data-video-toggle]");
