@@ -50,8 +50,6 @@ export default defineConfig({
           "https://github.com/abhee235/headlessos-web/edit/main/src/content/docs/",
       },
       customCss: ["./src/styles/starlight.css"],
-      // Dark only: one code theme, so code blocks never turn white in light mode
-      expressiveCode: { themes: ["github-dark-default"] },
       head: [
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true } },
@@ -99,8 +97,8 @@ export default defineConfig({
         },
       ],
       components: {
-        // Use our own marketing-style header on docs too
-        // Header: "./src/components/docs/DocsHeader.astro",
+        // Default to light when no theme was picked, like the marketing pages
+        ThemeProvider: "./src/components/docs/ThemeProvider.astro",
       },
       disable404Route: true,
       pagefind: true,

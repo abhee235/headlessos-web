@@ -36,7 +36,7 @@ const socialImage = new URL(image, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#07080c" />
+    <meta name="theme-color" content="#f7f8fa" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -60,8 +60,23 @@ const socialImage = new URL(image, Astro.site);
       rel="stylesheet"
     />
 
-    <!-- Lets CSS animate .rv elements in; without JS they simply show -->
-    <script is:inline>document.documentElement.classList.add("js");</script>
+    <!-- Before first paint: mark JS (for .rv reveals) and pick the theme. The choice is shared with the
+         docs through Starlight's "starlight-theme" key: "light" / "dark", "" = follow the system, unset = light. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        var t = "light";
+        try {
+          var s = localStorage.getItem("starlight-theme");
+          if (s === "light" || s === "dark") t = s;
+          else if (s === "") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        } catch (e) {}
+        d.dataset.theme = t;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", t === "dark" ? "#07080c" : "#f7f8fa");
+      })();
+    </script>
 
     <script
       type="application/ld+json"

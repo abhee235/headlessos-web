@@ -53,7 +53,7 @@ const platforms = [
         Free and open source. Install it on your computer; your VPS and servers don't need anything.
       </p>
       <p class="rv mt-5 font-mono text-sm text-fg-subtle [--d:.14s]" data-release-line>
-        Latest release on <a class="underline decoration-white/25 underline-offset-4 hover:text-fg" href={releases}>GitHub</a>
+        Latest release on <a class="underline decoration-ink/25 underline-offset-4 hover:text-fg" href={releases}>GitHub</a>
       </p>
     </div>
   </section>
@@ -64,7 +64,7 @@ const platforms = [
         platforms.map((p, i) => (
           <article id={p.id} class="rv card platform flex scroll-mt-28 flex-col p-7 sm:p-8" style={`--d:${0.06 * i}s`} data-platform={p.id}>
             <div class="flex items-start justify-between">
-              <span class="icon-tile !h-12 !w-12 [--tile:#e5e7eb]">
+              <span class="icon-tile !h-12 !w-12 [--tile:var(--color-fg-muted)]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={p.icon} />
               </span>
               <span class="mine-badge chip" hidden data-mine-badge>
@@ -88,7 +88,7 @@ const platforms = [
               </a>
             </div>
             <p class="missing mt-4 hidden text-sm text-fg-muted" data-missing>
-              Not in this release yet. <a href="#source" class="text-fg underline decoration-white/30 underline-offset-4">Run it from source</a> in the meantime.
+              Not in this release yet. <a href="#source" class="text-fg underline decoration-ink/30 underline-offset-4">Run it from source</a> in the meantime.
             </p>
             <p class="mt-auto pt-8 text-sm leading-relaxed text-fg-subtle">{p.note}</p>
           </article>
@@ -96,7 +96,7 @@ const platforms = [
       }
     </div>
     <p class="container-x mt-8 text-center text-sm text-fg-subtle">
-      Older versions and checksums are on the <a class="text-fg-muted underline decoration-white/25 underline-offset-4 hover:text-fg" href="https://github.com/abhee235/headlessos/releases">releases page</a>.
+      Older versions and checksums are on the <a class="text-fg-muted underline decoration-ink/25 underline-offset-4 hover:text-fg" href="https://github.com/abhee235/headlessos/releases">releases page</a>.
     </p>
   </section>
 
@@ -119,17 +119,17 @@ const platforms = [
 
   <section class="border-t border-border py-24">
     <div class="container-x grid gap-4 md:grid-cols-3">
-      <a href="/docs/getting-started" class="rv card group p-7 transition-colors hover:border-white/20">
+      <a href="/docs/getting-started" class="rv card group p-7 transition-colors hover:border-ink/20">
         <p class="font-mono text-xs uppercase tracking-[0.14em] text-brand-300">Next</p>
         <h3 class="mt-3 text-lg font-semibold">Connect your first server →</h3>
         <p class="mt-2 text-fg-muted">Add a host, sign in, and find your way around the desktop.</p>
       </a>
-      <a href="/docs/introduction" class="rv card group p-7 transition-colors hover:border-white/20 [--d:.06s]">
+      <a href="/docs/introduction" class="rv card group p-7 transition-colors hover:border-ink/20 [--d:.06s]">
         <p class="font-mono text-xs uppercase tracking-[0.14em] text-accent-300">Docs</p>
         <h3 class="mt-3 text-lg font-semibold">How it works →</h3>
         <p class="mt-2 text-fg-muted">The architecture, the parsers and the security model.</p>
       </a>
-      <a href="https://github.com/abhee235/headlessos/issues" class="rv card group p-7 transition-colors hover:border-white/20 [--d:.12s]">
+      <a href="https://github.com/abhee235/headlessos/issues" class="rv card group p-7 transition-colors hover:border-ink/20 [--d:.12s]">
         <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-subtle">Help</p>
         <h3 class="mt-3 text-lg font-semibold">Report an issue →</h3>
         <p class="mt-2 text-fg-muted">Found a bug or missing a feature? Tell us on GitHub.</p>
@@ -142,18 +142,18 @@ const platforms = [
   .platform[data-mine="true"] {
     border-color: rgba(61, 220, 255, 0.35);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.05) inset,
+      0 1px 0 rgb(var(--ink) / 0.05) inset,
       0 30px 80px -40px rgba(0, 212, 255, 0.45);
   }
 
   .platform:not([data-mine="true"]) .btn-primary {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgb(var(--ink) / 0.08);
     color: var(--color-fg);
     box-shadow: 0 0 0 1px var(--color-border-strong) inset;
   }
 
   .platform:not([data-mine="true"]) .btn-primary:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgb(var(--ink) / 0.12);
   }
 
   .platform[data-unavailable="true"] [data-asset],
@@ -207,7 +207,7 @@ const platforms = [
       const line = document.querySelector("[data-release-line]");
       if (line) {
         const date = new Date(rel.published_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-        line.innerHTML = `Latest: <a class="text-fg-muted underline decoration-white/25 underline-offset-4 hover:text-fg" href="${rel.html_url}">${rel.tag_name}</a> · ${date}`;
+        line.innerHTML = `Latest: <a class="text-fg-muted underline decoration-ink/25 underline-offset-4 hover:text-fg" href="${rel.html_url}">${rel.tag_name}</a> · ${date}`;
       }
       document.querySelectorAll<HTMLAnchorElement>("[data-asset]").forEach((a) => {
         const asset = rel.assets.find((x) => MATCH[a.dataset.asset!]?.(x.name));

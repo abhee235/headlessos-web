@@ -44,7 +44,7 @@ const appSteps = [
         <h3 class="mt-3 text-2xl font-semibold tracking-tight">Or run it in your browser</h3>
         <p class="mt-3 text-fg-muted">Needs Node.js 20 or later. Everything stays on localhost.</p>
         <div class="relative mt-8">
-          <pre class="term !pr-24 !text-[0.85rem]" data-copy-source><span class="dim">$</span> <span class="hi">git clone https://github.com/abhee235/headlessos.git</span>
+          <pre class="term !pt-12 !text-[0.85rem] sm:!pt-[14px] sm:!pr-24" data-copy-source><span class="dim">$</span> <span class="hi">git clone https://github.com/abhee235/headlessos.git</span>
 <span class="dim">$</span> <span class="hi">cd headlessos && npm install</span>
 <span class="dim">$</span> <span class="hi">npm run dev</span>
 <span class="ok">➜</span> open <span class="cy">http://localhost:3000</span></pre>
@@ -88,15 +88,16 @@ const appSteps = [
     padding: 0 10px;
     border-radius: 8px;
     font-size: 0.78rem;
-    color: var(--color-fg-muted);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-border);
+    /* sits on the terminal, which is dark in both themes */
+    color: #a4a8b6;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.1);
     cursor: pointer;
   }
 
   .copy-btn:hover {
-    color: var(--color-fg);
-    background: rgba(255, 255, 255, 0.09);
+    color: #f4f5f8;
+    background: rgb(255 255 255 / 0.12);
   }
 </style>
 

@@ -77,7 +77,7 @@ const commands = ["ls", "df", "ps", "ss", "docker", "systemctl", "journalctl", "
     right: 8%;
     top: 47px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16) 12%, rgba(255, 255, 255, 0.16) 88%, transparent);
+    background: linear-gradient(90deg, transparent, rgb(var(--ink) / 0.16) 12%, rgb(var(--ink) / 0.16) 88%, transparent);
     z-index: 0;
   }
 
@@ -111,6 +111,5 @@ const commands = ["ls", "df", "ps", "ss", "docker", "systemctl", "journalctl", "
 
   li {
     z-index: 1;
-    background-color: var(--color-bg);
   }
 </style>

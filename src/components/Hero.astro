@@ -104,14 +104,14 @@ const media = (file: string) =>
     border-radius: 999px;
     font-size: 0.85rem;
     color: var(--color-fg-muted);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgb(var(--ink) / 0.04);
     border: 1px solid var(--color-border-strong);
     transition: border-color 0.2s ease, color 0.2s ease;
   }
 
   .hero-pill:hover {
     color: var(--color-fg);
-    border-color: rgba(255, 255, 255, 0.24);
+    border-color: rgb(var(--ink) / 0.24);
   }
 
   .hero-pill-tag {
@@ -171,6 +171,7 @@ const media = (file: string) =>
       radial-gradient(ellipse at 30% 100%, rgba(124, 58, 237, 0.45), transparent 60%),
       radial-gradient(ellipse at 72% 100%, rgba(167, 139, 250, 0.35), transparent 60%);
     filter: blur(40px);
+    opacity: calc(0.4 + 0.6 * var(--glow-strength));
     pointer-events: none;
     z-index: -1;
   }

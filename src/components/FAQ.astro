@@ -37,7 +37,7 @@ const faqs = [
       <p class="rv eyebrow">FAQ</p>
       <h2 class="rv h2 mt-5 [--d:.05s]">Questions, answered.</h2>
       <p class="rv lede mt-6 [--d:.1s]">
-        Something else? Ask in <a class="text-fg underline decoration-white/30 underline-offset-4 hover:decoration-white" href="https://github.com/abhee235/headlessos/discussions">GitHub Discussions</a>.
+        Something else? Ask in <a class="text-fg underline decoration-ink/30 underline-offset-4 hover:decoration-ink" href="https://github.com/abhee235/headlessos/discussions">GitHub Discussions</a>.
       </p>
     </div>
     <div class="rv divide-y divide-border border-y border-border [--d:.08s]">
@@ -90,7 +90,7 @@ const faqs = [
   }
 
   .faq[open] .plus {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgb(var(--ink) / 0.06);
   }
 
   .faq[open] .plus::after {
@@ -98,6 +98,6 @@ const faqs = [
   }
 
   .faq summary:hover .plus {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: rgb(var(--ink) / 0.3);
   }
 </style>

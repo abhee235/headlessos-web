@@ -77,7 +77,7 @@ headlessOS-Web/
 │   │   └── 404.astro
 │   └── styles/
 │       ├── global.css            # TailwindCSS 4 + design tokens + utility classes
-│       └── starlight.css         # Starlight theme overrides (dark-only)
+│       └── starlight.css         # Starlight palette for both themes
 ├── scripts/import-screens.mjs    # 2× PNG captures → src/assets/screens/*.webp
 ├── public/
 │   ├── media/                    # headlessos-demo.mp4 / .webm (hero video)
@@ -122,7 +122,8 @@ Uses the new v4 CSS-first config:
 
 ### Design System
 
-- **Dark-only** — no light mode. Background `#07080c`, surfaces `#10121a` / `#161924`. The app's screenshots carry the colour; the page stays near-black.
+- **Light by default, dark on request.** `html[data-theme]` is `light` or `dark`. The header toggle stores the choice under Starlight's `starlight-theme` key, so the docs follow it (`""` = follow the system; nothing stored = light). Light values live in `@theme`, dark values in `html[data-theme="dark"]` in `global.css`.
+- **Colours that must work in both themes**: use the tokens, or `ink` for translucent layers (`bg-ink/5`, `border-ink/20`, `rgb(var(--ink) / 0.05)`) and `--paper` for the page colour. Never `white/…` or `rgba(255,255,255,…)`, which vanish on light. Terminal snippets (`.term`) and anything drawn on them stay dark in both themes.
 - **Brand gradient**: Cyan `#00d4ff` → Violet `#7c3aed` (logo, glows, `.gradient-text`)
 - **Type**: `.display` (hero), `.h2` (section titles, `.dim` for the muted half), `.lede` (intro paragraphs), `.eyebrow` (mono label above a title)
 - **Surfaces**: `.card` (bordered panel), `.frame` (bezel around screenshots and the video), `.term` (terminal snippet, use a `<pre>`), `.icon-tile` (set `--tile` for its colour), `.glass`, `.glass-strong`
@@ -186,7 +187,7 @@ All marketing components are `.astro` files. Interactivity (the gallery tabs, OS
 
 1. **Minimal JS** — no frameworks and no `client:*` islands on marketing pages. A component may carry a small vanilla `<script>` for behaviour CSS can't do, and the page must still read correctly without it.
 2. **CSS variable tokens** — always use `var(--color-*)` from `global.css`, never hardcode hex values
-3. **Dark-only** — no light mode support. Starlight is forced dark via `starlight.css` overrides.
+3. **Both themes** — check every change in light and dark. Starlight's ThemeProvider is overridden (`src/components/docs/ThemeProvider.astro`) so a first visit is light there too.
 4. **Astro components** for marketing — no React, no Vue, no Svelte. Pure `.astro` files.
 5. **Starlight for docs** — don't build custom doc layouts. Use Starlight's built-in pages.
 6. **TailwindCSS 4 syntax** — `@theme {}` in CSS, not `tailwind.config.js`

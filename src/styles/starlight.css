@@ -1,8 +1,12 @@
-/* Starlight theme overrides: the same near-black, Geist and cyan as the marketing pages */
+/* Starlight theme overrides: the marketing pages' palette, Geist type and cyan accent,
+   in both themes. Starlight's own CSS sits in a cascade layer, so these win. */
 
-:root,
-:root[data-theme="dark"],
-:root[data-theme="light"] {
+:root {
+  --sl-font: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sl-font-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+:root[data-theme="dark"] {
   --sl-color-accent-low: #052530;
   --sl-color-accent: #00d4ff;
   --sl-color-accent-high: #b1edff;
@@ -19,29 +23,30 @@
   --sl-color-bg: #07080c;
   --sl-color-bg-nav: rgba(7, 8, 12, 0.82);
   --sl-color-bg-sidebar: #0b0d13;
-
-  --sl-font: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --sl-font-mono: "Geist Mono", ui-monospace, monospace;
 }
 
-/* Dark only: Starlight's light mode gets the same palette (set above), and dark form controls */
+/* Light: Starlight's light scale is inverted (white = text, black = page) */
 :root[data-theme="light"] {
-  color-scheme: dark;
-  --sl-color-text: #f4f5f8;
-  --sl-color-text-accent: #3ddcff;
-  --sl-color-text-invert: #07080c;
-  --sl-color-hairline: #262935;
-  --sl-color-hairline-light: #161924;
-  --sl-color-hairline-shade: #07080c;
-  --sl-color-backdrop-overlay: rgba(7, 8, 12, 0.66);
+  --sl-color-accent-low: #d4f3fb;
+  --sl-color-accent: #0a7ea4;
+  --sl-color-accent-high: #0b4f63;
+
+  --sl-color-white: #0e1018;
+  --sl-color-gray-1: #23262f;
+  --sl-color-gray-2: #3b404c;
+  --sl-color-gray-3: #5a5f6e;
+  --sl-color-gray-4: #7a7f8f;
+  --sl-color-gray-5: #c9ccd5;
+  --sl-color-gray-6: #eceef2;
+  --sl-color-gray-7: #f5f6f9;
+  --sl-color-black: #ffffff;
+
+  --sl-color-bg: #ffffff;
+  --sl-color-bg-nav: rgba(255, 255, 255, 0.86);
+  --sl-color-bg-sidebar: #f7f8fa;
 }
 
 .site-title {
   font-weight: 600;
   letter-spacing: -0.02em;
-}
-
-/* The site is dark only, so the light/dark/auto picker has nothing to switch */
-starlight-theme-select {
-  display: none;
 }

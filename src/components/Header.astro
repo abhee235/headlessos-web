@@ -27,6 +27,11 @@ const navLinks = [
     </nav>
 
     <div class="flex items-center gap-2">
+      <button type="button" class="btn btn-ghost btn-sm !px-2.5" data-theme-toggle aria-label="Switch to dark theme" title="Switch theme">
+        <!-- moon shows in light (switch to dark), sun shows in dark (switch to light) -->
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+      </button>
       <a
         href="https://github.com/abhee235/headlessos"
         target="_blank"
@@ -52,12 +57,12 @@ const navLinks = [
         <nav class="mobile-panel glass-strong" aria-label="Mobile">
           {
             navLinks.map((l) => (
-              <a href={l.href} class="block rounded-lg px-3 py-2.5 text-fg-muted hover:bg-white/5 hover:text-fg">
+              <a href={l.href} class="block rounded-lg px-3 py-2.5 text-fg-muted hover:bg-ink/5 hover:text-fg">
                 {l.label}
               </a>
             ))
           }
-          <a href="https://github.com/abhee235/headlessos" class="block rounded-lg px-3 py-2.5 text-fg-muted hover:bg-white/5 hover:text-fg">
+          <a href="https://github.com/abhee235/headlessos" class="block rounded-lg px-3 py-2.5 text-fg-muted hover:bg-ink/5 hover:text-fg">
             GitHub
           </a>
         </nav>
@@ -68,10 +73,10 @@ const navLinks = [
 
 <style>
   .site-header {
-    background: rgba(7, 8, 12, 0.6);
+    background: rgb(var(--paper) / 0.72);
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgb(var(--ink) / 0.07);
   }
 
   .mobile-nav summary {
@@ -79,6 +84,11 @@ const navLinks = [
   }
 
   .mobile-nav summary::-webkit-details-marker {
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .icon-moon,
+  :global(html:not([data-theme="dark"])) .icon-sun {
     display: none;
   }
 
@@ -90,6 +100,28 @@ const navLinks = [
     padding: 8px;
     border-radius: 16px;
     border: 1px solid var(--color-border-strong);
-    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.8);
+    background: var(--color-surface);
+    box-shadow: 0 20px 60px -10px var(--shadow-strong);
   }
 </style>
+
+<script>
+  // Light ⇄ dark. Stored under Starlight's key so the docs follow the same choice.
+  const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  const label = () => {
+    const dark = document.documentElement.dataset.theme === "dark";
+    toggle?.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+  };
+  label();
+  toggle?.addEventListener("click", () => {
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("starlight-theme", next);
+    } catch {
+      /* storage blocked: the switch still applies to this page */
+    }
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#07080c" : "#f7f8fa");
+    label();
+  });
+</script>

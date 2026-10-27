@@ -163,7 +163,7 @@ const apps = [
     gap: 4px;
     padding: 5px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.035);
+    background: rgb(var(--ink) / 0.035);
     border: 1px solid var(--color-border);
   }
 
@@ -186,8 +186,8 @@ const apps = [
   }
 
   .tab[aria-selected="true"] {
-    color: #07080c;
-    background: #f4f5f8;
+    color: var(--color-bg);
+    background: var(--color-fg);
   }
 
   .tab-progress {
@@ -197,7 +197,7 @@ const apps = [
     bottom: 5px;
     height: 2px;
     border-radius: 2px;
-    background: rgba(7, 8, 12, 0.35);
+    background: rgb(var(--paper) / 0.4);
     transform: scaleX(0);
     transform-origin: left;
   }

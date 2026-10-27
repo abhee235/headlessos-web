@@ -30,7 +30,7 @@ npm run format       # Prettier format
 ## Critical Rules
 
 1. **Astro components only** for marketing pages — no React/Vue/Svelte
-2. **Dark-only theme** — background `#07080c`, no light mode
+2. **Light and dark themes** — light by default; use tokens and `ink` layers, never `white/…`
 3. **CSS variable tokens** — always `var(--color-*)` from `global.css`, never hardcode colors
 4. **TailwindCSS 4 syntax** — `@theme {}` in CSS, no `tailwind.config.js`
 5. **Integration order** in `astro.config.mjs`: `sitemap()` → `starlight()` → `mdx()` (build breaks otherwise)
