@@ -2,7 +2,6 @@
 import "@/styles/global.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Spinner from "@/components/Spinner.astro";
 
 interface Props {
   title?: string;
@@ -12,8 +11,8 @@ interface Props {
 }
 
 const {
-  title = "HeadlessOS — Manage your VPS like a desktop",
-  description = "A localhost web app that turns any Linux server into a desktop-class UI over SSH. Zero server install. Open source.",
+  title = "HeadlessOS — a desktop for your Linux servers",
+  description = "HeadlessOS is a free, open-source app that signs in to your Linux servers over SSH and opens them as a desktop: files, Docker, processes, logs and settings. Nothing is installed on the server.",
   image = "/og-image.png",
   noindex = false,
 } = Astro.props;
@@ -37,6 +36,7 @@ const socialImage = new URL(image, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#07080c" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -52,36 +52,17 @@ const socialImage = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
 
-    <!-- Fonts: Inter + JetBrains Mono -->
+    <!-- Fonts: Geist + Geist Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Theme color -->
-    <meta name="theme-color" content="#07070b" />
+    <!-- Lets CSS animate .rv elements in; without JS they simply show -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
 
-    <!-- Inline theme setter: runs before first paint to avoid flash -->
-    <script is:inline>
-      (function () {
-        try {
-          var stored = localStorage.getItem("hos-theme");
-          var theme =
-            stored === "light" || stored === "dark"
-              ? stored
-              : window.matchMedia("(prefers-color-scheme: light)").matches
-                ? "light"
-                : "dark";
-          document.documentElement.dataset.theme = theme;
-        } catch (e) {
-          document.documentElement.dataset.theme = "dark";
-        }
-      })();
-    </script>
-
-    <!-- JSON-LD structured data -->
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
@@ -89,17 +70,16 @@ const socialImage = new URL(image, Astro.site);
         "@type": "SoftwareApplication",
         name: "HeadlessOS",
         applicationCategory: "DeveloperApplication",
-        operatingSystem: "macOS, Linux, Windows",
+        operatingSystem: "Windows, macOS, Linux",
         description,
         url: "https://headlessos.com",
+        license: "https://opensource.org/licenses/MIT",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       })}
     />
+    <slot name="head" />
   </head>
   <body>
-    <div id="page-loader" class="page-loader" aria-hidden="true">
-      <Spinner size={32} class="text-white/95" label="Loading page" />
-    </div>
     <Header />
     <main>
       <slot />
@@ -107,26 +87,24 @@ const socialImage = new URL(image, Astro.site);
     <Footer />
 
     <script>
-      const loader = document.getElementById("page-loader");
-
-      const hideLoader = () => {
-        if (!loader) return;
-        loader.classList.add("is-hidden");
-      };
-
-      const showLoader = () => {
-        if (!loader) return;
-        loader.classList.remove("is-hidden");
-      };
-
-      if (document.readyState === "complete" || document.readyState === "interactive") {
-        hideLoader();
+      // Scroll reveal: add .in once an element is on screen
+      const items = document.querySelectorAll(".rv");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px" },
+        );
+        items.forEach((el) => io.observe(el));
       } else {
-        window.addEventListener("DOMContentLoaded", hideLoader, { once: true });
+        items.forEach((el) => el.classList.add("in"));
       }
-
-      document.addEventListener("astro:before-preparation", showLoader);
-      document.addEventListener("astro:after-swap", hideLoader);
     </script>
   </body>
 </html>

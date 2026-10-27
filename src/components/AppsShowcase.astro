@@ -1,0 +1,325 @@
+---
+// The apps, one tab each. Screenshots are 1600×1000 captures of the real app at 2× density.
+import { Image } from "astro:assets";
+import home from "@/assets/screens/home-hub.webp";
+import files from "@/assets/screens/files.webp";
+import docker from "@/assets/screens/docker.webp";
+import tasks from "@/assets/screens/task-manager.webp";
+import terminal from "@/assets/screens/terminal.webp";
+import admin from "@/assets/screens/server-admin.webp";
+import personalize from "@/assets/screens/personalize.webp";
+
+const apps = [
+  {
+    id: "home",
+    name: "Home hub",
+    img: home,
+    alt: "The Home hub: server health, network traffic, weather, recent apps and a photo frame",
+    body: "One glance at the server you're on: health, live network traffic, recent apps, and the other servers in your session bar.",
+  },
+  {
+    id: "files",
+    name: "Files",
+    img: files,
+    alt: "File Explorer editing a docker-compose.yml on the server, with syntax highlighting",
+    body: "Browse, upload, rename and edit over SFTP. A real code editor with syntax highlighting, two-pane mode, drag-and-drop uploads, and a recycle bin you can restore from.",
+  },
+  {
+    id: "docker",
+    name: "Docker",
+    img: docker,
+    alt: "The Docker app listing running and stopped containers with their images and ports",
+    body: "Containers, images, ports and logs at a glance. Start, stop and restart without remembering a single flag.",
+  },
+  {
+    id: "tasks",
+    name: "Task Manager",
+    img: tasks,
+    alt: "Task Manager with live CPU, memory and network graphs",
+    body: "Live CPU, memory, disk and network, plus every process with who owns it and what it costs.",
+  },
+  {
+    id: "terminal",
+    name: "Terminal",
+    img: terminal,
+    alt: "A terminal window running htop on the server, with three busy worker processes",
+    body: "When you want the shell, it's one click away: a real terminal with a persistent session, tabs and your own theme.",
+  },
+  {
+    id: "admin",
+    name: "Server Admin",
+    img: admin,
+    alt: "Server Admin showing listening ports with the process behind each",
+    body: "Network, firewall, services, packages, cron, logs and storage: the admin chores, as forms and tables instead of man pages.",
+  },
+  {
+    id: "personalize",
+    name: "Personalize",
+    img: personalize,
+    alt: "Settings showing the wallpaper picker with photo and gradient wallpapers",
+    body: "Wallpapers, accent colours, light or dark, terminal themes and shortcuts. Give each server its own look, so you always know which one you're on.",
+  },
+];
+---
+
+<section id="apps" class="section relative overflow-hidden">
+  <div class="container-x">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="rv eyebrow">Apps</p>
+      <h2 class="rv h2 mt-5 [--d:.05s]">Everything you SSH in for, already open.</h2>
+      <p class="rv lede mx-auto mt-6 max-w-2xl [--d:.1s]">
+        Each app runs the commands you'd type and shows the answer as an interface. Windows move, resize,
+        snap and remember where you put them.
+      </p>
+    </div>
+
+    <div class="rv mt-12 [--d:.12s]" data-tabs>
+      <div class="tabs-scroll">
+        <div role="tablist" aria-label="HeadlessOS apps" class="tabs">
+          {
+            apps.map((a, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`tab-${a.id}`}
+                aria-controls={`panel-${a.id}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                tabindex={i === 0 ? 0 : -1}
+                class="tab"
+              >
+                {a.name}
+                <span class="tab-progress" aria-hidden="true" />
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="relative mx-auto mt-8 max-w-[1120px]">
+        <div aria-hidden="true" class="glow"></div>
+        <div class="frame">
+          <div class="screens">
+            {
+              apps.map((a, i) => (
+                <div
+                  role="tabpanel"
+                  id={`panel-${a.id}`}
+                  aria-labelledby={`tab-${a.id}`}
+                  class="screen"
+                  data-active={i === 0 ? "true" : "false"}
+                >
+                  <Image
+                    src={a.img}
+                    alt={a.alt}
+                    widths={[800, 1200, 1600, 2400]}
+                    sizes="(min-width: 1180px) 1120px, 96vw"
+                    loading={i === 0 ? "eager" : "lazy"}
+                    class="frame-media"
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div class="captions mt-6 text-center">
+          {
+            apps.map((a, i) => (
+              <p class="caption lede mx-auto max-w-2xl text-base" data-active={i === 0 ? "true" : "false"}>
+                <span class="font-medium text-fg">{a.name}.</span> {a.body}
+              </p>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tabs-scroll {
+    position: relative; /* offsetParent for the tabs, so offsetLeft is measured in the row */
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: -20px;
+    padding-inline: 20px;
+  }
+
+  .tabs-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabs {
+    display: inline-flex;
+    margin-inline: auto; /* centred when it fits, scrollable from the first tab when it doesn't */
+    gap: 4px;
+    padding: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--color-border);
+  }
+
+  .tab {
+    position: relative;
+    overflow: hidden;
+    flex: none;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  .tab:hover {
+    color: var(--color-fg);
+  }
+
+  .tab[aria-selected="true"] {
+    color: #07080c;
+    background: #f4f5f8;
+  }
+
+  .tab-progress {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 5px;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(7, 8, 12, 0.35);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  [data-tabs][data-auto="true"] .tab[aria-selected="true"] .tab-progress {
+    animation: progress var(--tab-ms, 6000ms) linear forwards;
+  }
+
+  @keyframes progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .glow {
+    position: absolute;
+    inset: 12% 6% -4% 6%;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(0, 212, 255, 0.22), transparent 60%),
+      radial-gradient(ellipse at 70% 40%, rgba(124, 58, 237, 0.24), transparent 60%);
+    filter: blur(60px);
+    z-index: -1;
+  }
+
+  .screens {
+    display: grid;
+  }
+
+  .screen {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+  }
+
+  .screen[data-active="true"] {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.45s ease;
+  }
+
+  .captions {
+    display: grid;
+  }
+
+  .caption {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .caption[data-active="true"] {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen,
+    .caption {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-tabs]");
+  if (root) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const captions = [...root.querySelectorAll<HTMLElement>(".caption")];
+    const scroller = root.querySelector<HTMLElement>(".tabs-scroll");
+    const DWELL = 6000;
+    let current = 0;
+    let timer: number | undefined;
+
+    const select = (i: number, focus = false) => {
+      current = (i + tabs.length) % tabs.length;
+      tabs.forEach((t, j) => {
+        const on = j === current;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        panels[j].dataset.active = String(on);
+        captions[j].dataset.active = String(on);
+      });
+      if (focus) tabs[current].focus({ preventScroll: true });
+      // Keep the active tab visible when the row scrolls sideways on phones (never scroll the page)
+      if (scroller && scroller.scrollWidth > scroller.clientWidth) {
+        const t = tabs[current];
+        scroller.scrollTo({ left: t.offsetLeft - (scroller.clientWidth - t.offsetWidth) / 2, behavior: "smooth" });
+      }
+    };
+
+    const stopAuto = () => {
+      window.clearInterval(timer);
+      timer = undefined;
+      root.dataset.auto = "false";
+    };
+
+    const startAuto = () => {
+      if (timer || root.dataset.stopped === "true") return;
+      root.style.setProperty("--tab-ms", `${DWELL}ms`);
+      root.dataset.auto = "true";
+      timer = window.setInterval(() => select(current + 1), DWELL);
+    };
+
+    tabs.forEach((t, i) =>
+      t.addEventListener("click", () => {
+        root.dataset.stopped = "true";
+        stopAuto();
+        select(i);
+      }),
+    );
+
+    root.querySelector('[role="tablist"]')?.addEventListener("keydown", (e) => {
+      const k = (e as KeyboardEvent).key;
+      if (k !== "ArrowRight" && k !== "ArrowLeft" && k !== "Home" && k !== "End") return;
+      e.preventDefault();
+      root.dataset.stopped = "true";
+      stopAuto();
+      if (k === "ArrowRight") select(current + 1, true);
+      if (k === "ArrowLeft") select(current - 1, true);
+      if (k === "Home") select(0, true);
+      if (k === "End") select(tabs.length - 1, true);
+    });
+
+    // Advance on its own only while on screen, and never for reduced motion
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!calm && "IntersectionObserver" in window) {
+      new IntersectionObserver(([entry]) => (entry.isIntersecting ? startAuto() : stopAuto()), {
+        threshold: 0.35,
+      }).observe(root);
+    }
+  }
+</script>

@@ -1,34 +1,47 @@
-/* Starlight theme overrides — match marketing site dark aesthetic */
+/* Starlight theme overrides: the same near-black, Geist and cyan as the marketing pages */
 
 :root,
-:root[data-theme="dark"] {
-  --sl-color-accent-low: #001a26;
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  --sl-color-accent-low: #052530;
   --sl-color-accent: #00d4ff;
   --sl-color-accent-high: #b1edff;
 
-  --sl-color-white: #f5f5f7;
-  --sl-color-gray-1: #e5e5ea;
-  --sl-color-gray-2: #c7c7cc;
-  --sl-color-gray-3: #a8a8b3;
-  --sl-color-gray-4: #6b6b78;
-  --sl-color-gray-5: #2a2a36;
-  --sl-color-gray-6: #181826;
-  --sl-color-black: #07070b;
+  --sl-color-white: #f4f5f8;
+  --sl-color-gray-1: #e4e6ec;
+  --sl-color-gray-2: #c4c7d0;
+  --sl-color-gray-3: #a4a8b6;
+  --sl-color-gray-4: #6d7182;
+  --sl-color-gray-5: #262935;
+  --sl-color-gray-6: #161924;
+  --sl-color-black: #07080c;
 
-  --sl-color-bg: #07070b;
-  --sl-color-bg-nav: rgba(7, 7, 11, 0.8);
-  --sl-color-bg-sidebar: #0d0d14;
+  --sl-color-bg: #07080c;
+  --sl-color-bg-nav: rgba(7, 8, 12, 0.82);
+  --sl-color-bg-sidebar: #0b0d13;
 
-  --sl-font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --sl-font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --sl-font: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sl-font-mono: "Geist Mono", ui-monospace, monospace;
 }
 
-/* Force dark only — light mode toggle disabled visually */
+/* Dark only: Starlight's light mode gets the same palette (set above), and dark form controls */
 :root[data-theme="light"] {
-  --sl-color-bg: #07070b;
-  --sl-color-text: #f5f5f7;
+  color-scheme: dark;
+  --sl-color-text: #f4f5f8;
+  --sl-color-text-accent: #3ddcff;
+  --sl-color-text-invert: #07080c;
+  --sl-color-hairline: #262935;
+  --sl-color-hairline-light: #161924;
+  --sl-color-hairline-shade: #07080c;
+  --sl-color-backdrop-overlay: rgba(7, 8, 12, 0.66);
 }
 
 .site-title {
   font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* The site is dark only, so the light/dark/auto picker has nothing to switch */
+starlight-theme-select {
+  display: none;
 }

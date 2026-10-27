@@ -1,102 +1,198 @@
 ---
-// Hero section — top of the landing page
-import HeroCarousel from "@/components/HeroCarousel.astro";
+// The hero: what HeadlessOS is in one line, then the app itself running in a loop.
+import { getImage } from "astro:assets";
+import poster from "@/assets/screens/demo-poster.webp";
 
-const socialProof = [
-  "MIT licensed",
-  "No agents installed",
-  "Works with any Linux VPS",
-  "Offline-capable desktop app",
-];
+const posterImg = await getImage({ src: poster, width: 1600, format: "webp", quality: 82 });
 ---
 
-<section class="relative overflow-hidden bg-mesh">
-  <div class="absolute inset-0 bg-grid pointer-events-none"></div>
-
-  <!-- floating accent blobs -->
-  <div
-    class="absolute -top-40 -left-32 h-96 w-96 rounded-full bg-[var(--color-brand-500)] opacity-20 blur-3xl float-slow pointer-events-none"
-  >
-  </div>
-  <div
-    class="absolute -top-20 right-0 h-96 w-96 rounded-full bg-[var(--color-accent-500)] opacity-15 blur-3xl float-slow pointer-events-none"
-    style="animation-delay:-3s"
-  >
+<section class="hero relative isolate overflow-hidden pt-20 sm:pt-28">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="bg-grid absolute inset-0"></div>
+    <div class="aurora left-[8%] top-[-12%] h-[420px] w-[620px] bg-[#00d4ff]/30"></div>
+    <div class="aurora right-[4%] top-[2%] h-[380px] w-[560px] bg-[#7c3aed]/35 [animation-delay:-9s]"></div>
   </div>
 
-  <div
-    class="relative mx-auto max-w-6xl px-6 pt-24 pb-28 text-center sm:pt-28"
-  >
-    <a
-      href="https://github.com/abhee235/headlessos"
-      target="_blank"
-      rel="noopener"
-      class="chip mx-auto"
-    >
-      <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-brand-400)] animate-pulse"></span>
-      Now in public beta · Free &amp; open source
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="m9 18 6-6-6-6" />
-      </svg>
+  <div class="container-x text-center">
+    <a href="https://github.com/abhee235/headlessos" class="rv hero-pill" target="_blank" rel="noopener">
+      <span class="hero-pill-tag">Open source</span>
+      <span class="sm:hidden">Free and MIT licensed</span>
+      <span class="hidden sm:inline">Free, MIT licensed, and runs on your machine</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
     </a>
 
-    <h1
-      class="mt-6 text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.02]"
-    >
-      Stop SSH-ing into servers<br />
-      <span class="gradient-text">like it's 2009.</span>
+    <h1 class="rv display mx-auto mt-7 max-w-5xl [--d:.06s]">
+      Your Linux servers,<br />
+      <span class="gradient-text">as a desktop.</span>
     </h1>
 
-    <p
-      class="mx-auto mt-6 max-w-2xl text-lg sm:text-xl text-[var(--color-fg-muted)] leading-relaxed"
-    >
-      HeadlessOS is a desktop for your Linux servers. Files, Docker, processes,
-      logs, and firewall — all in one place, all over the SSH access you already
-      have.
-      <span class="block mt-2 text-[var(--color-fg)] font-medium">
-        No agent. No port to open. Nothing installed on the server.
-      </span>
+    <p class="rv lede mx-auto mt-7 max-w-2xl [--d:.12s]">
+      HeadlessOS is an app on your computer that signs in to your servers over SSH and opens them as a
+      desktop: files, Docker, processes, logs and settings, in real windows. It isn't an operating system,
+      and nothing is installed on the server.
     </p>
 
-    <div class="mt-9 flex flex-wrap justify-center gap-3">
-      <a href="/docs/getting-started" class="btn btn-primary">
-        Try it in 60 seconds
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M13 5l7 7-7 7" />
-        </svg>
+    <div class="rv mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row [--d:.18s]">
+      <a href="/download" class="btn btn-primary btn-lg w-full sm:w-auto" data-download-cta>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14"></path></svg>
+        <span data-download-label>Download free</span>
       </a>
-      <a
-        href="https://github.com/abhee235/headlessos"
-        target="_blank"
-        rel="noopener"
-        class="btn btn-secondary"
+      <a href="https://github.com/abhee235/headlessos" target="_blank" rel="noopener" class="btn btn-secondary btn-lg w-full sm:w-auto">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.94 5.96 6.56.95-4.75 4.63 1.12 6.53L12 17.5l-5.87 3.07 1.12-6.53L2.5 9.41l6.56-.95L12 2.5z"></path></svg>
+        Star on GitHub
+      </a>
+    </div>
+
+    <p class="rv mt-6 font-mono text-[0.8rem] text-fg-subtle [--d:.22s]">
+      Windows · macOS · Linux&nbsp;&nbsp;—&nbsp;&nbsp;or run it from source in your browser
+    </p>
+  </div>
+
+  <!-- The app, running -->
+  <div class="relative mx-auto mt-16 w-full max-w-[1280px] px-3 sm:mt-20 sm:px-6">
+    <div aria-hidden="true" class="horizon"></div>
+    <figure class="rv frame [--d:.28s]">
+      <video
+        class="frame-media"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={posterImg.src}
+        width="1600"
+        height="1000"
+        aria-label="HeadlessOS running: signing in to a server, the Home hub, File Explorer, Docker, Terminal and Task Manager"
+        data-demo-video
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.69-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.16 1.18a10.9 10.9 0 0 1 5.75 0c2.2-1.49 3.16-1.18 3.16-1.18.62 1.59.23 2.76.11 3.05.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z" />
-        </svg>
-        View source on GitHub
-      </a>
-    </div>
-
-    <!-- Trust strip -->
-    <ul
-      class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[var(--color-fg-subtle)]"
-    >
-      {
-        socialProof.map((p) => (
-          <li class="inline-flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            {p}
-          </li>
-        ))
-      }
-    </ul>
-
-    <!-- Product preview carousel -->
-    <div class="mt-16">
-      <HeroCarousel />
-    </div>
+        <source src="/media/headlessos-demo.webm" type="video/webm" />
+        <source src="/media/headlessos-demo.mp4" type="video/mp4" />
+      </video>
+      <button type="button" class="video-toggle" aria-label="Pause video" data-video-toggle>
+        <svg class="i-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
+        <svg class="i-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg>
+      </button>
+    </figure>
+    <p class="rv mt-5 text-center font-mono text-xs text-fg-subtle">
+      Recorded live against a demo server: sign-in, Home hub, Files, Docker, Terminal, Task Manager
+    </p>
   </div>
 </section>
+
+<style>
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 5px 12px 5px 5px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--color-fg-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border-strong);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .hero-pill:hover {
+    color: var(--color-fg);
+    border-color: rgba(255, 255, 255, 0.24);
+  }
+
+  .hero-pill-tag {
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 999px;
+    color: #041218;
+    background: linear-gradient(100deg, #7ce7ff, #00d4ff);
+  }
+
+  /* A rising glow behind the top of the product frame */
+  .horizon {
+    position: absolute;
+    left: 50%;
+    top: -70px;
+    width: min(1100px, 92vw);
+    height: 220px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(0, 212, 255, 0.45), transparent 62%),
+      radial-gradient(ellipse at 30% 100%, rgba(124, 58, 237, 0.45), transparent 60%),
+      radial-gradient(ellipse at 72% 100%, rgba(167, 139, 250, 0.35), transparent 60%);
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 30%;
+    background: linear-gradient(transparent, var(--color-bg));
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .video-toggle {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    color: #fff;
+    background: rgba(7, 8, 12, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .frame:hover .video-toggle,
+  .video-toggle:focus-visible,
+  .video-toggle[data-paused="true"] {
+    opacity: 1;
+  }
+
+  .video-toggle .i-play,
+  .video-toggle[data-paused="true"] .i-pause {
+    display: none;
+  }
+
+  .video-toggle[data-paused="true"] .i-play {
+    display: block;
+  }
+</style>
+
+<script>
+  import { labelDownloadButtons } from "@/lib/platform";
+
+  labelDownloadButtons();
+
+  const video = document.querySelector<HTMLVideoElement>("[data-demo-video]");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-video-toggle]");
+  if (video && toggle) {
+    const sync = () => {
+      toggle.dataset.paused = String(video.paused);
+      toggle.setAttribute("aria-label", video.paused ? "Play video" : "Pause video");
+    };
+    // Respect reduced motion: show the poster and let the visitor start it
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      video.removeAttribute("autoplay");
+      video.pause();
+    }
+    toggle.addEventListener("click", () => (video.paused ? video.play() : video.pause()));
+    video.addEventListener("play", sync);
+    video.addEventListener("pause", sync);
+    sync();
+  }
+</script>
