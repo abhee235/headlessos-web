@@ -6,7 +6,7 @@ Live: [https://headlessos.com](https://headlessos.com)
 
 ## Stack
 
-- **Astro 5** — static-first framework, ships zero JS by default
+- **Astro 6** — static-first framework
 - **Starlight** — documentation framework with built-in search (Pagefind)
 - **TailwindCSS 4** — utility-first styling
 - **Cloudflare Workers** — free-tier hosting (100K req/day, unlimited bandwidth)

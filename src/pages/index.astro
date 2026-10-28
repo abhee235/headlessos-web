@@ -1,16 +1,21 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/Hero.astro";
-import Pitch from "@/components/Pitch.astro";
+import BeforeAfter from "@/components/BeforeAfter.astro";
+import AppsShowcase from "@/components/AppsShowcase.astro";
+import HowItWorks from "@/components/HowItWorks.astro";
 import Features from "@/components/Features.astro";
 import GetStarted from "@/components/GetStarted.astro";
 import FAQ from "@/components/FAQ.astro";
 import OpenSourceCTA from "@/components/OpenSourceCTA.astro";
 ---
 
+<!-- Promise and proof first (hero, before/after, apps), then trust (how it works, features), then the way in -->
 <BaseLayout>
   <Hero />
-  <Pitch />
+  <BeforeAfter />
+  <AppsShowcase />
+  <HowItWorks />
   <Features />
   <GetStarted />
   <FAQ />

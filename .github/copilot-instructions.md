@@ -9,7 +9,7 @@ Marketing website + docs for [HeadlessOS](https://github.com/abhee235/headlessos
 
 ## Tech Stack
 
-- **Astro 6** — static SSG, zero JS by default
+- **Astro 6** — static SSG, minimal vanilla JS
 - **Starlight 0.38** — docs framework (Pagefind search, sidebar)
 - **TailwindCSS 4** — via `@tailwindcss/vite`, config in `src/styles/global.css` using `@theme {}`
 - **MDX** — for blog posts
@@ -30,7 +30,7 @@ npm run format       # Prettier format
 ## Critical Rules
 
 1. **Astro components only** for marketing pages — no React/Vue/Svelte
-2. **Dark-only theme** — background `#07070b`, no light mode
+2. **Light and dark themes** — light by default; use tokens and `ink` layers, never `white/…`
 3. **CSS variable tokens** — always `var(--color-*)` from `global.css`, never hardcode colors
 4. **TailwindCSS 4 syntax** — `@theme {}` in CSS, no `tailwind.config.js`
 5. **Integration order** in `astro.config.mjs`: `sitemap()` → `starlight()` → `mdx()` (build breaks otherwise)
@@ -46,12 +46,12 @@ npm run format       # Prettier format
 - Glass: `.glass`, `.glass-strong`
 - Gradient text: `.gradient-text`
 - Buttons: `.btn-primary` (gradient), `.btn-secondary` (border), `.btn-ghost`
-- Fonts: Inter (`--font-sans`), JetBrains Mono (`--font-mono`)
+- Fonts: Geist (`--font-sans`), Geist Mono (`--font-mono`)
 - All tokens in `src/styles/global.css` → `@theme` block
 
 ## Content
 
-- **Docs**: `src/content/docs/` — add to `starlight.sidebar` in `astro.config.mjs`
+- **Docs**: `src/content/docs/docs/` (served under `/docs/…`) — add to `starlight.sidebar` in `astro.config.mjs`
 - **Blog**: `src/content/blog/` — frontmatter: `title`, `description`, `pubDate` (required), `author`, `tags`, `draft` (optional)
 - **Blog schema** defined in `src/content.config.ts`
 
@@ -61,7 +61,7 @@ npm run format       # Prettier format
 |------|----------|
 | Landing page | `src/pages/index.astro` |
 | Marketing sections | `src/components/` |
-| Docs content | `src/content/docs/` |
+| Docs content | `src/content/docs/docs/` |
 | Blog posts | `src/content/blog/` |
 | Design tokens | `src/styles/global.css` |
 | Starlight overrides | `src/styles/starlight.css` |

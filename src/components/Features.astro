@@ -1,99 +1,246 @@
 ---
-const features = [
-  {
-    title: "Zero server footprint",
-    desc: "Connects over standard SSH using only the binaries your server already has. No agent, no daemon, no extra attack surface.",
-    accent: "from-[#00d4ff] to-[#3dccff]",
-    icon: `<path d='M12 22V12M12 12 4 7m8 5 8-5M4 7l8-5 8 5M4 7v10l8 5m8-15v10l-8 5'/>`,
-  },
-  {
-    title: "Files, without the `scp` dance",
-    desc: "Drag, drop, preview, rename, chmod. A Finder-grade file explorer backed by pure SFTP — never a shell command.",
-    accent: "from-[#a78bfa] to-[#7c3aed]",
-    icon: `<path d='M3 7v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-9l-2-2H4a1 1 0 0 0-1 1Z'/>`,
-  },
-  {
-    title: "Docker without Docker Desktop",
-    desc: "Containers, images, volumes, networks — full lifecycle management in a UI that loads instantly and never phones home.",
-    accent: "from-[#3dccff] to-[#00a8d4]",
-    icon: `<path d='M22 12c0 5-2 8-10 8s-10-3-10-8'/><path d='M2 12V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4'/><path d='M6 6V4M10 6V2M14 6V4M18 6V4'/>`,
-  },
-  {
-    title: "Glanceable metrics",
-    desc: "CPU, memory, disk, network, uptime — polled in the background, cached, and rendered as the clean dashboard your VPS never had.",
-    accent: "from-[#34d399] to-[#10b981]",
-    icon: `<path d='M3 3v18h18'/><path d='m7 17 4-4 4 4 5-7'/>`,
-  },
-  {
-    title: "Server Admin, not man pages",
-    desc: "Users, groups, firewall, services, packages, logs, network, cron — eight admin surfaces with point-and-click parity with the CLI.",
-    accent: "from-[#fbbf24] to-[#f59e0b]",
-    icon: `<path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z'/>`,
-  },
-  {
-    title: "A real terminal, still",
-    desc: "When you want the shell, the shell is one click away. Full xterm.js, persistent PTY over WebSocket, zero quirks.",
-    accent: "from-[#f472b6] to-[#ec4899]",
-    icon: `<path d='m4 17 6-6-6-6'/><path d='M12 19h8'/>`,
-  },
-  {
-    title: "LLM-assisted, not LLM-dependent",
-    desc: "Deterministic parsers handle everyday commands in under a millisecond. The LLM only kicks in for weird distro output — and caches aggressively.",
-    accent: "from-[#7c3aed] to-[#5b21b6]",
-    icon: `<path d='M12 2a4 4 0 0 0-4 4v2H6a4 4 0 0 0 0 8h2v2a4 4 0 0 0 8 0v-2h2a4 4 0 0 0 0-8h-2V6a4 4 0 0 0-4-4Z'/>`,
-  },
-  {
-    title: "Every server, one workspace",
-    desc: "Open a dozen servers in a dozen tabs, each with its own identity color and independent window layout. Multi-server is a first-class citizen.",
-    accent: "from-[#00d4ff] to-[#7c3aed]",
-    icon: `<rect x='2' y='3' width='20' height='6' rx='1'/><rect x='2' y='14' width='20' height='6' rx='1'/><circle cx='6' cy='6' r='1'/><circle cx='6' cy='17' r='1'/>`,
-  },
+// Why HeadlessOS: a bento of the things that make it safe to point at a real server.
+const disks = [
+  { mount: "/", used: 61, size: "96G" },
+  { mount: "/var/lib/docker", used: 83, size: "200G" },
+  { mount: "/backups", used: 27, size: "500G" },
 ];
 ---
 
-<section id="features" class="relative py-28 border-t border-[var(--color-border)]">
-  <div class="mx-auto max-w-6xl px-6">
-    <div class="text-center max-w-2xl mx-auto">
-      <p class="chip mx-auto">Features</p>
-      <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
-        Everything you'd hope a Linux server came with.
-        <span class="gradient-text">Nothing installed on it.</span>
+<section id="features" class="section relative">
+  <div class="container-x">
+    <div class="max-w-3xl">
+      <p class="rv eyebrow">Features</p>
+      <h2 class="rv h2 mt-5 [--d:.05s]">
+        Made for you. <span class="dim block">Invisible to your server.</span>
       </h2>
-      <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
-        Eight first-class apps, one desktop-style workspace, and a parsing engine
-        that turns `df`, `docker ps`, and `systemctl status` into something you
-        can actually look at.
-      </p>
     </div>
 
-    <div class="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {
-        features.map((f) => (
-          <div class="group relative rounded-xl glass p-5 hover:border-[rgba(0,212,255,0.3)] transition-colors">
-            <div
-              class={`inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${f.accent} text-black shadow-lg`}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                set:html={f.icon}
-              />
-            </div>
-            <h3 class="mt-4 text-base font-semibold text-[var(--color-fg)]">
-              {f.title}
-            </h3>
-            <p class="mt-2 text-sm text-[var(--color-fg-muted)] leading-relaxed">
-              {f.desc}
+    <div class="bento mt-14">
+      <!-- Nothing to install -->
+      <article class="rv card bento-a p-7 sm:p-8">
+        <span class="icon-tile [--tile:#4ade80]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V7l8-4z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg>
+        </span>
+        <h3 class="mt-6 text-2xl font-semibold tracking-tight">No agent. No new port. No account.</h3>
+        <p class="mt-3 max-w-xl leading-relaxed text-fg-muted">
+          HeadlessOS uses the tools the server already has, so a fresh VPS works the minute you can SSH into it,
+          and an old one doesn't need touching.
+        </p>
+        <pre class="term mt-7" aria-label="Connection summary for web-01"><span class="dim">$</span> <span class="hi">ssh deploy@web-01.example.com</span>  <span class="dim"># all HeadlessOS needs</span>
+<span class="ok">✓</span> connected        <span class="dim">ed25519 key · port 22</span>
+<span class="ok">✓</span> uses             <span class="cy">ls df ps ss docker systemctl journalctl</span>
+<span class="ok">✓</span> installed        <span class="hi">nothing</span>
+<span class="ok">✓</span> ports opened     <span class="hi">none</span></pre>
+      </article>
+
+      <!-- Private -->
+      <article class="rv card bento-b p-7 sm:p-8 [--d:.06s]">
+        <span class="icon-tile [--tile:#a78bfa]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"></path></svg>
+        </span>
+        <h3 class="mt-6 text-xl font-semibold tracking-tight">Private by default</h3>
+        <ul class="mt-4 space-y-3 text-fg-muted">
+          <li class="flex gap-3"><span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent-400"></span>Listens on localhost only, behind a per-install token.</li>
+          <li class="flex gap-3"><span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent-400"></span>Saved passwords are encrypted on your disk.</li>
+          <li class="flex gap-3"><span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent-400"></span>No account, no cloud, no telemetry.</li>
+        </ul>
+      </article>
+
+      <!-- Sessions -->
+      <article class="rv card bento-c p-7 sm:p-8">
+        <span class="icon-tile [--tile:#3ddcff]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="13" height="10" rx="2"></rect><path d="M8 18h11a2 2 0 0 0 2-2V9"></path></svg>
+        </span>
+        <h3 class="mt-6 text-xl font-semibold tracking-tight">Every server gets its own desktop</h3>
+        <p class="mt-3 leading-relaxed text-fg-muted">
+          Sign in to several at once and switch in a click. Each keeps its windows, wallpaper and layout, and comes
+          back exactly as you left it.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2" aria-hidden="true">
+          <span class="session on"><i></i>web-01</span>
+          <span class="session"><i></i>db-01</span>
+          <span class="session"><i></i>edge-sg</span>
+          <span class="session add">+</span>
+        </div>
+      </article>
+
+      <!-- Parsing -->
+      <article class="rv card bento-d p-7 sm:p-8 [--d:.06s]">
+        <span class="icon-tile [--tile:#fbbf24]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6-6-6M12 19h8"></path></svg>
+        </span>
+        <h3 class="mt-6 text-xl font-semibold tracking-tight">Command output in, interface out</h3>
+        <p class="mt-3 leading-relaxed text-fg-muted">
+          31 built-in parsers read <span class="kbd">df</span> <span class="kbd">ps</span> <span class="kbd">docker</span> and friends instantly. An AI model only steps in for output they don't recognise.
+        </p>
+        <div class="mt-6 space-y-3" aria-label="Disk usage parsed from df -h">
+          {
+            disks.map((d) => (
+              <div>
+                <div class="flex justify-between font-mono text-xs">
+                  <span class="text-fg-muted">{d.mount}</span>
+                  <span class="text-fg-subtle">{d.used}% of {d.size}</span>
+                </div>
+                <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-ink/6">
+                  <div class={`h-full rounded-full ${d.used > 80 ? "bar-warn" : "bar"}`} style={`width:${d.used}%`} />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </article>
+
+      <!-- AI -->
+      <article class="rv card bento-e p-7 sm:p-8 [--d:.12s]">
+        <span class="icon-tile [--tile:#f472b6]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M6.3 6.3l2.1 2.1m7.2 7.2l2.1 2.1m0-11.4l-2.1 2.1m-7.2 7.2l-2.1 2.1"></path></svg>
+        </span>
+        <h3 class="mt-6 text-xl font-semibold tracking-tight">An AI agent with guardrails</h3>
+        <p class="mt-3 leading-relaxed text-fg-muted">
+          Ask "why is the disk full?" and get a view, not a wall of text. It works through checked actions instead of
+          typing shell commands, and backs up any file before it changes it.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="chip">OpenAI</span>
+          <span class="chip">Claude</span>
+          <span class="chip">Ollama, fully local</span>
+        </div>
+        <p class="mt-3 text-sm text-fg-subtle">Optional. Everything else works without a key.</p>
+      </article>
+
+      <!-- Desktop app -->
+      <article class="rv card bento-f overflow-hidden p-7 sm:p-8">
+        <div class="grid items-center gap-8 md:grid-cols-[1fr_auto]">
+          <div>
+            <span class="icon-tile [--tile:#3ddcff]">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14"></path></svg>
+            </span>
+            <h3 class="mt-6 text-2xl font-semibold tracking-tight">A real app on every desktop</h3>
+            <p class="mt-3 max-w-xl leading-relaxed text-fg-muted">
+              Install it like any other app on Windows, macOS or Linux. Prefer the browser? Run it from source and open
+              localhost. Same desktop either way.
             </p>
           </div>
-        ))
-      }
+          <div class="flex flex-wrap gap-3">
+            <a href="/download#windows" class="os-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5l7.5-1v7H3v-6zm0 13l7.5 1v-7H3v6zm8.5 1.2L21 21v-8.5h-9.5v7.2zm0-15.4v7.2H21V3l-9.5 1.3z"></path></svg>
+              Windows
+            </a>
+            <a href="/download#mac" class="os-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.1-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.4-.9-2.4-3.8zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"></path></svg>
+              macOS
+            </a>
+            <a href="/download#linux" class="os-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6-6-6M12 19h8"></path></svg>
+              Linux
+            </a>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
+
+<style>
+  .bento {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Long terminal lines scroll inside their card instead of widening the grid */
+  .bento > * {
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .bento {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bento-a,
+    .bento-f {
+      grid-column: span 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .bento {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .bento-a {
+      grid-column: span 2;
+    }
+
+    .bento-f {
+      grid-column: span 3;
+    }
+  }
+
+  .session {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-fg-muted);
+    background: rgb(var(--ink) / 0.04);
+    border: 1px solid var(--color-border);
+  }
+
+  .session i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-fg-subtle);
+  }
+
+  .session.on {
+    color: var(--color-fg);
+    border-color: rgba(61, 220, 255, 0.4);
+    background: rgba(61, 220, 255, 0.08);
+  }
+
+  .session.on i {
+    background: var(--color-ok);
+    box-shadow: 0 0 8px var(--color-ok);
+  }
+
+  .session.add {
+    width: 34px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .bar {
+    background: linear-gradient(90deg, var(--color-brand-500), var(--color-accent-400));
+  }
+
+  .bar-warn {
+    background: linear-gradient(90deg, #fbbf24, #f97316);
+  }
+
+  .os-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 52px;
+    padding: 0 20px;
+    border-radius: 14px;
+    font-weight: 550;
+    color: var(--color-fg);
+    background: rgb(var(--ink) / 0.04);
+    border: 1px solid var(--color-border-strong);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .os-btn:hover {
+    background: rgb(var(--ink) / 0.08);
+    border-color: rgb(var(--ink) / 0.24);
+  }
+</style>

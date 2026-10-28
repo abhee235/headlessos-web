@@ -9,6 +9,22 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://headlessos.com",
   trailingSlash: "never",
+  // Docs moved under /docs; keep the old top-level URLs working
+  redirects: {
+    "/introduction": "/docs/introduction",
+    "/getting-started": "/docs/getting-started",
+    "/installation": "/docs/installation",
+    "/contributing": "/docs/contributing",
+    "/roadmap": "/docs/roadmap",
+    "/apps/dashboard": "/docs/apps/dashboard",
+    "/apps/docker": "/docs/apps/docker",
+    "/apps/file-explorer": "/docs/apps/file-explorer",
+    "/apps/server-admin": "/docs/apps/server-admin",
+    "/apps/terminal": "/docs/apps/terminal",
+    "/concepts/architecture": "/docs/concepts/architecture",
+    "/concepts/parsing": "/docs/concepts/parsing",
+    "/concepts/security": "/docs/concepts/security",
+  },
   vite: {
     plugins: [tailwindcss()],
   },
@@ -17,7 +33,7 @@ export default defineConfig({
     starlight({
       title: "HeadlessOS Docs",
       description:
-        "Documentation for HeadlessOS — manage Linux servers with a desktop-class UI over SSH.",
+        "Documentation for HeadlessOS, a desktop for your Linux servers over SSH.",
       logo: {
         src: "./src/assets/logo-mark.svg",
         replacesTitle: false,
@@ -34,44 +50,55 @@ export default defineConfig({
           "https://github.com/abhee235/headlessos-web/edit/main/src/content/docs/",
       },
       customCss: ["./src/styles/starlight.css"],
+      head: [
+        { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
+        { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true } },
+        {
+          tag: "link",
+          attrs: {
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap",
+          },
+        },
+      ],
       sidebar: [
         {
           label: "Getting Started",
           items: [
-            { label: "Introduction", slug: "introduction" },
-            { label: "Quick Start", slug: "getting-started" },
-            { label: "Installation", slug: "installation" },
+            { label: "Introduction", slug: "docs/introduction" },
+            { label: "Quick Start", slug: "docs/getting-started" },
+            { label: "Installation", slug: "docs/installation" },
           ],
         },
         {
           label: "Concepts",
           items: [
-            { label: "Architecture", slug: "concepts/architecture" },
-            { label: "How Parsing Works", slug: "concepts/parsing" },
-            { label: "Security Model", slug: "concepts/security" },
+            { label: "Architecture", slug: "docs/concepts/architecture" },
+            { label: "How Parsing Works", slug: "docs/concepts/parsing" },
+            { label: "Security Model", slug: "docs/concepts/security" },
           ],
         },
         {
           label: "Apps",
           items: [
-            { label: "Dashboard", slug: "apps/dashboard" },
-            { label: "File Explorer", slug: "apps/file-explorer" },
-            { label: "Docker", slug: "apps/docker" },
-            { label: "Terminal", slug: "apps/terminal" },
-            { label: "Server Admin", slug: "apps/server-admin" },
+            { label: "Dashboard", slug: "docs/apps/dashboard" },
+            { label: "File Explorer", slug: "docs/apps/file-explorer" },
+            { label: "Docker", slug: "docs/apps/docker" },
+            { label: "Terminal", slug: "docs/apps/terminal" },
+            { label: "Server Admin", slug: "docs/apps/server-admin" },
           ],
         },
         {
           label: "Contributing",
           items: [
-            { label: "Contribute", slug: "contributing" },
-            { label: "Roadmap", slug: "roadmap" },
+            { label: "Contribute", slug: "docs/contributing" },
+            { label: "Roadmap", slug: "docs/roadmap" },
           ],
         },
       ],
       components: {
-        // Use our own marketing-style header on docs too
-        // Header: "./src/components/docs/DocsHeader.astro",
+        // Default to light when no theme was picked, like the marketing pages
+        ThemeProvider: "./src/components/docs/ThemeProvider.astro",
       },
       disable404Route: true,
       pagefind: true,

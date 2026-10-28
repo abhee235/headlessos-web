@@ -6,7 +6,7 @@ applyTo: "src/content/**/*.md,src/content/**/*.mdx,src/content.config.ts,astro.c
 
 ## Docs (Starlight)
 
-- Files: `src/content/docs/` — plain Markdown (`.md`)
+- Files: `src/content/docs/docs/` — plain Markdown (`.md`), served under `/docs/…`
 - Add new docs to `astro.config.mjs` → `starlight.sidebar` array
 - Frontmatter: `title` (required), `description` (recommended)
 - Starlight handles nav, search (Pagefind), TOC, and dark theme automatically

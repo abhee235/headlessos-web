@@ -1,83 +1,103 @@
 ---
 const faqs = [
   {
-    q: "Does HeadlessOS install anything on my server?",
-    a: "No. HeadlessOS is a client-only application. It connects to your server using standard SSH and only uses tools your server already has (ls, df, docker, systemctl, etc.). Your server stays exactly as it is.",
+    q: "Is HeadlessOS an operating system?",
+    a: "No. The name is a nod to headless servers: machines with no screen that you manage through a terminal. HeadlessOS is an app that runs on your computer and gives those servers a desktop-style interface over SSH. Your server keeps its own operating system, and nothing on it is replaced.",
   },
   {
-    q: "Which Linux distros are supported?",
-    a: "Anything with a standard SSH server. We test against Ubuntu, Debian, Fedora, Alpine, and Arch. Different distros may format command output differently — HeadlessOS uses both deterministic parsers and an LLM fallback to handle the variations.",
+    q: "Does it install anything on my server?",
+    a: "No. It connects over standard SSH and runs the same tools you would: ls, df, ps, docker, systemctl and so on. If a tool isn't there (say, Docker), the matching app tells you instead of installing it. No package, service or port is ever added; HeadlessOS only changes what you ask it to, and deleted files go to a trash folder you can restore from.",
   },
   {
-    q: "Is it really open source?",
-    a: "Yes. MIT licensed, source on GitHub. You can self-host it, fork it, audit it — whatever you need.",
+    q: "Which servers does it work with?",
+    a: "Any Linux machine you can reach over SSH: a cloud VPS, a home-lab box, a Raspberry Pi, a VM. Sign in with a key, your SSH agent, or a password.",
   },
   {
-    q: "What about security?",
-    a: "All connections go through SSH using your existing credentials (key or password). The backend listens on localhost only — never exposed to the internet. We use SFTP for all file operations and validate every command path against an allowlist before execution.",
+    q: "Do I need an AI or OpenAI key?",
+    a: "No. Dashboards, files, Docker, processes, the terminal and admin tools all work without one; 31 built-in parsers handle everyday command output. Add a key in Settings to turn on the AI agent and to read output the parsers don't know. It works with OpenAI, Claude, or a local Ollama model that never leaves your machine.",
   },
   {
-    q: "Can I manage multiple servers?",
-    a: "Yes. The Multi-Session Workspace lets you connect to many servers at once with per-server identity (accent colors, names) and independent app windows.",
+    q: "Is it safe to point at a production server?",
+    a: "It's built for that. The app only listens on localhost and asks for a per-install token. Saved passwords are encrypted on your disk. Commands go through an allowlist, the AI agent can only use a fixed set of checked actions, and file edits are backed up and verified before they're kept.",
   },
   {
-    q: "Do I need an OpenAI / LLM API key?",
-    a: "Optional. Most common commands have deterministic parsers and don't touch the LLM at all. The LLM is only used as a fallback for unknown command output. You can plug in OpenAI, Anthropic, or a local Ollama model.",
+    q: "How is it different from Cockpit, Webmin or Portainer?",
+    a: "Those are installed on the server and served from it, so they need a package, a service and an open port on every machine. HeadlessOS runs on your computer instead, works across all your servers at once, and leaves each of them untouched.",
   },
   {
-    q: "How is this different from cockpit / webmin / portainer?",
-    a: "Those tools require installing an agent on every server. HeadlessOS doesn't — your server stays untouched. We're also building toward a desktop-class UX (windows, multi-server, keyboard shortcuts) rather than a single-page admin panel.",
-  },
-  {
-    q: "Will there be a hosted version at headlessos.com?",
-    a: "Possibly. The app is currently localhost-only and we ship an Electron desktop app. A secure hosted version is on the roadmap, but the localhost & Electron versions will always remain free and open source.",
+    q: "Is it really free?",
+    a: "Yes. HeadlessOS is MIT licensed and the whole thing is on GitHub. No account, no paid tier, no telemetry.",
   },
 ];
 ---
 
-<section class="relative py-28 border-t border-[var(--color-border)]">
-  <div class="mx-auto max-w-4xl px-6">
-    <div class="text-center max-w-2xl mx-auto">
-      <p class="chip mx-auto">FAQ</p>
-      <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
-        Frequently asked <span class="gradient-text">questions.</span>
-      </h2>
+<section id="faq" class="section relative">
+  <div class="container-x grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <p class="rv eyebrow">FAQ</p>
+      <h2 class="rv h2 mt-5 [--d:.05s]">Questions, answered.</h2>
+      <p class="rv lede mt-6 [--d:.1s]">
+        Something else? Ask in <a class="text-fg underline decoration-ink/30 underline-offset-4 hover:decoration-ink" href="https://github.com/abhee235/headlessos/discussions">GitHub Discussions</a>.
+      </p>
     </div>
-
-    <div class="mt-16 space-y-3">
+    <div class="rv divide-y divide-border border-y border-border [--d:.08s]">
       {
         faqs.map((f, i) => (
-          <details
-            class="group rounded-xl glass overflow-hidden"
-            open={i === 0}
-          >
-            <summary
-              class="flex items-center justify-between gap-4 cursor-pointer px-5 py-4 list-none [&::-webkit-details-marker]:hidden hover:bg-[rgba(255,255,255,0.02)] transition-colors"
-            >
-              <span class="text-base font-medium text-[var(--color-fg)]">
-                {f.q}
-              </span>
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                class="text-[var(--color-fg-muted)] group-open:rotate-180 transition-transform shrink-0"
-              >
-                <path d="m6 9 6 6 6-6" />
-              </svg>
+          <details class="faq group" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-medium">
+              {f.q}
+              <span class="plus" aria-hidden="true" />
             </summary>
-            <div
-              class="px-5 pb-5 text-sm text-[var(--color-fg-muted)] leading-relaxed"
-            >
-              {f.a}
-            </div>
+            <p class="-mt-1 pb-6 pr-10 leading-relaxed text-fg-muted">{f.a}</p>
           </details>
         ))
       }
     </div>
   </div>
 </section>
+
+<style>
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .plus {
+    position: relative;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border-strong);
+    transition: transform 0.25s ease, background 0.2s ease;
+  }
+
+  .plus::before,
+  .plus::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 11px;
+    height: 1.5px;
+    border-radius: 2px;
+    background: var(--color-fg-muted);
+    transform: translate(-50%, -50%);
+  }
+
+  .plus::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    transition: transform 0.25s ease;
+  }
+
+  .faq[open] .plus {
+    background: rgb(var(--ink) / 0.06);
+  }
+
+  .faq[open] .plus::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .faq summary:hover .plus {
+    border-color: rgb(var(--ink) / 0.3);
+  }
+</style>

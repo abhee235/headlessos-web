@@ -1,77 +1,128 @@
 ---
-const steps = [
-  {
-    n: "01",
-    title: "Clone & install",
-    desc: "Clone the repo and install dependencies. HeadlessOS runs locally on your machine.",
-    code: `git clone https://github.com/abhee235/headlessos.git
-cd headlessos
-npm install`,
-  },
-  {
-    n: "02",
-    title: "Start the app",
-    desc: "Run the dev server. The backend listens on :3001, the UI on :3000 — both on localhost only.",
-    code: `npm run dev
-
-# server  → http://localhost:3001
-# client  → http://localhost:3000`,
-  },
-  {
-    n: "03",
-    title: "Add your server",
-    desc: "Open the UI, click 'Add Server', and enter your SSH credentials. That's it — no agents, no installs.",
-    code: `Host:     your-vps.example.com
-Port:     22
-User:     root
-Auth:     SSH key or password
-
-→ Click Connect`,
-  },
+// Two ways in: the desktop app, or the source in your browser.
+const appSteps = [
+  { t: "Download", d: "Pick your platform. It's one installer, no sign-up." },
+  { t: "Add your VPS or server", d: "Host, user, and a key, agent or password." },
+  { t: "You're in", d: "Your server opens as a desktop. That's it." },
 ];
 ---
 
-<section
-  id="quickstart"
-  class="relative py-28 border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
->
-  <div class="mx-auto max-w-6xl px-6">
-    <div class="text-center max-w-2xl mx-auto">
-      <p class="chip mx-auto">Quick Start</p>
-      <h2 class="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
-        First server connected in<br />
-        <span class="gradient-text">the time it takes to brew coffee.</span>
-      </h2>
-      <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
-        Three commands to install, one form to add a server. Then you're done.
-        Really.
-      </p>
+<section id="get-started" class="section relative">
+  <div class="container-x">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="rv eyebrow">Get started</p>
+      <h2 class="rv h2 mt-5 [--d:.05s]">Your first server, in about a minute.</h2>
     </div>
 
-    <div class="mt-16 grid gap-6 lg:grid-cols-3">
-      {
-        steps.map((s) => (
-          <div class="relative rounded-xl glass p-6">
-            <div class="flex items-baseline gap-3">
-              <span class="text-sm font-mono text-[var(--color-brand-400)]">
-                {s.n}
-              </span>
-              <h3 class="text-lg font-semibold">{s.title}</h3>
-            </div>
-            <p class="mt-2 text-sm text-[var(--color-fg-muted)]">{s.desc}</p>
-            <pre class="mt-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-xs font-mono text-[var(--color-fg)] overflow-x-auto leading-relaxed"><code>{s.code}</code></pre>
-          </div>
-        ))
-      }
-    </div>
+    <div class="mt-14 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+      <article class="rv card flex min-w-0 flex-col p-7 sm:p-9">
+        <p class="font-mono text-xs uppercase tracking-[0.14em] text-brand-300">Desktop app</p>
+        <h3 class="mt-3 text-2xl font-semibold tracking-tight">Install it like any other app</h3>
+        <ol class="mt-8 space-y-6">
+          {
+            appSteps.map((s, i) => (
+              <li class="flex gap-4">
+                <span class="step-num">{i + 1}</span>
+                <div>
+                  <p class="font-medium">{s.t}</p>
+                  <p class="mt-1 text-fg-muted">{s.d}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="mt-auto pt-10">
+          <a href="/download" class="btn btn-primary btn-lg w-full sm:w-auto" data-download-cta>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14"></path></svg>
+            <span data-download-label>Download free</span>
+          </a>
+        </div>
+      </article>
 
-    <div class="mt-12 text-center">
-      <a href="/docs/getting-started" class="btn btn-primary">
-        Read the full guide
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M13 5l7 7-7 7" />
-        </svg>
-      </a>
+      <article class="rv card flex min-w-0 flex-col p-7 sm:p-9 [--d:.08s]">
+        <p class="font-mono text-xs uppercase tracking-[0.14em] text-accent-300">From source</p>
+        <h3 class="mt-3 text-2xl font-semibold tracking-tight">Or run it in your browser</h3>
+        <p class="mt-3 text-fg-muted">Needs Node.js 20 or later. Everything stays on localhost.</p>
+        <div class="relative mt-8">
+          <pre class="term !pt-12 !text-[0.85rem] sm:!pt-[14px] sm:!pr-24" data-copy-source><span class="dim">$</span> <span class="hi">git clone https://github.com/abhee235/headlessos.git</span>
+<span class="dim">$</span> <span class="hi">cd headlessos && npm install</span>
+<span class="dim">$</span> <span class="hi">npm run dev</span>
+<span class="ok">➜</span> open <span class="cy">http://localhost:3000</span></pre>
+          <button type="button" class="copy-btn" data-copy aria-label="Copy commands">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+            <span data-copy-label>Copy</span>
+          </button>
+        </div>
+        <div class="mt-auto flex flex-wrap gap-3 pt-10">
+          <a href="/docs/getting-started" class="btn btn-secondary btn-lg">Read the quick start</a>
+          <a href="https://github.com/abhee235/headlessos" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">View the code</a>
+        </div>
+      </article>
     </div>
   </div>
 </section>
+
+<style>
+  .step-num {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-brand-300);
+    background: rgba(61, 220, 255, 0.08);
+    border: 1px solid rgba(61, 220, 255, 0.25);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    /* sits on the terminal, which is dark in both themes */
+    color: #a4a8b6;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    cursor: pointer;
+  }
+
+  .copy-btn:hover {
+    color: #f4f5f8;
+    background: rgb(255 255 255 / 0.12);
+  }
+</style>
+
+<script>
+  import { labelDownloadButtons } from "@/lib/platform";
+
+  labelDownloadButtons();
+
+  const btn = document.querySelector<HTMLButtonElement>("[data-copy]");
+  const src = document.querySelector("[data-copy-source]");
+  btn?.addEventListener("click", async () => {
+    const text = (src?.textContent ?? "")
+      .split("\n")
+      .filter((l) => l.startsWith("$ "))
+      .map((l) => l.slice(2))
+      .join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      const label = btn.querySelector("[data-copy-label]");
+      if (label) {
+        label.textContent = "Copied";
+        setTimeout(() => (label.textContent = "Copy"), 1600);
+      }
+    } catch {
+      /* clipboard blocked: the commands are still selectable */
+    }
+  });
+</script>

@@ -23,7 +23,7 @@ All in `src/styles/global.css` → `@theme`:
 | Surfaces | `--color-bg`, `--color-bg-elevated`, `--color-surface`, `--color-surface-2` | Dark backgrounds |
 | Borders | `--color-border`, `--color-border-strong` | RGBA white values |
 | Text | `--color-fg`, `--color-fg-muted`, `--color-fg-subtle` | Foreground colors |
-| Fonts | `--font-sans`, `--font-mono` | Inter, JetBrains Mono |
+| Fonts | `--font-sans`, `--font-mono` | Geist, Geist Mono |
 | Radii | `--radius-sm` through `--radius-2xl` | 6px to 28px |
 
 ## Utility Classes

@@ -7,7 +7,7 @@ applyTo: "src/components/**/*.astro,src/pages/**/*.astro,src/layouts/**/*.astro"
 ## Patterns
 
 - All marketing components are **`.astro` files** — no client-side frameworks
-- Zero JS shipped: never use `client:*` directives on marketing pages
+- No frameworks: never use `client:*` directives on marketing pages; a small vanilla `<script>` is fine when CSS can't do the job
 - Components receive data via `Astro.props` with a typed `Props` interface
 - Use `@/*` import alias: `import Header from "@/components/Header.astro"`
 
@@ -23,7 +23,7 @@ applyTo: "src/components/**/*.astro,src/pages/**/*.astro,src/layouts/**/*.astro"
 
 - `BaseLayout.astro` wraps marketing pages (SEO head, Header, Footer)
 - Starlight handles its own layout for `/docs/*` pages
-- Landing page (`index.astro`) composes sections: Hero → Features → Screenshots → GetStarted → FAQ → OpenSourceCTA
+- Landing page (`index.astro`) composes sections: Hero → HowItWorks → AppsShowcase → Features → GetStarted → FAQ → OpenSourceCTA
 
 ## SEO
 
