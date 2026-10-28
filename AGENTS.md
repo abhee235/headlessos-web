@@ -58,7 +58,7 @@ headlessOS-Web/
 │   │   └── screens/              # App screenshots (WebP, 3200×2000) + the video poster
 │   ├── components/               # Astro components (marketing sections)
 │   │   ├── Header.astro, Footer.astro, Logo.astro
-│   │   ├── Hero.astro            # Rotating headline ("Your VPS / cloud server / …") + the demo video
+│   │   ├── Hero.astro            # "A desktop for your" + a rolling last line (VPS / cloud server / …) + the demo video
 │   │   ├── BeforeAfter.astro     # The commands you'd type vs the Dashboard
 │   │   ├── AppsShowcase.astro    # Tabbed screenshot gallery (auto-advances)
 │   │   ├── HowItWorks.astro      # Runs on your computer, not the server (and isn't an OS): computer → SSH → server
