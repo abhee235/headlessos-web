@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
+  type?: "website" | "article";
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description = "HeadlessOS is a free, open-source app that opens any VPS, cloud server or home-lab box as a desktop over SSH: files, Docker, processes, logs and settings. Nothing is installed on the server.",
   image = "/og-image.png",
   noindex = false,
+  type = "website",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -39,7 +41,7 @@ const socialImage = new URL(image, Astro.site);
     <meta name="theme-color" content="#f7f8fa" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
