@@ -546,6 +546,33 @@ html[data-theme="dark"] {
   content: none;
 }
 
+.prose-site :where(img) {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.prose-site :where(table) {
+  font-size: 0.9em;
+}
+
+/* On a phone a wide table scrolls sideways instead of being cut off */
+@media (max-width: 639px) {
+  .prose-site :where(table) {
+    display: block;
+    overflow-x: auto;
+    font-size: 0.85em;
+  }
+}
+
+.prose-site :where(thead th) {
+  color: var(--color-fg);
+}
+
+.prose-site :where(tbody td:first-child) {
+  color: var(--color-fg);
+  font-weight: 500;
+}
+
 /* Code blocks in blog posts (Shiki output) */
 .astro-code,
 pre.astro-code {
