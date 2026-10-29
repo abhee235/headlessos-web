@@ -29,7 +29,8 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [
-    sitemap(),
+    // /icon is a noindex design study; a sitemap must list only pages meant for search
+    sitemap({ filter: (page) => new URL(page).pathname !== "/icon" }),
     starlight({
       title: "HeadlessOS Docs",
       description:

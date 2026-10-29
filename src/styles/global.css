@@ -481,6 +481,71 @@ html[data-theme="dark"] {
   background: linear-gradient(90deg, transparent, rgb(0 212 255 / 0.4), transparent);
 }
 
+/* Blog prose: the typography plugin's colours come from the theme tokens, so posts read in both themes */
+.prose.prose-site {
+  --tw-prose-body: var(--color-fg-muted);
+  --tw-prose-headings: var(--color-fg);
+  --tw-prose-lead: var(--color-fg-muted);
+  --tw-prose-links: var(--color-fg);
+  --tw-prose-bold: var(--color-fg);
+  --tw-prose-counters: var(--color-fg-subtle);
+  --tw-prose-bullets: rgb(var(--ink) / 0.3);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-fg);
+  --tw-prose-quote-borders: var(--color-border-strong);
+  --tw-prose-captions: var(--color-fg-subtle);
+  --tw-prose-kbd: var(--color-fg);
+  --tw-prose-code: var(--color-fg);
+  --tw-prose-pre-code: #e6e8ee;
+  --tw-prose-pre-bg: #0b0d13;
+  --tw-prose-th-borders: var(--color-border-strong);
+  --tw-prose-td-borders: var(--color-border);
+  font-size: 1.075rem;
+  line-height: 1.75;
+}
+
+.prose-site :where(h2) {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin-top: 2.4em;
+  margin-bottom: 0.7em;
+}
+
+.prose-site :where(h3) {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 1.3rem;
+  margin-top: 2em;
+}
+
+.prose-site :where(a) {
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgb(0 212 255 / 0.55);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+
+.prose-site :where(a):hover {
+  text-decoration-color: currentColor;
+}
+
+.prose-site :where(code):not(:where(pre *)) {
+  font-size: 0.86em;
+  font-weight: 500;
+  padding: 0.14em 0.42em;
+  border-radius: 6px;
+  background: rgb(var(--ink) / 0.06);
+  border: 1px solid var(--color-border);
+}
+
+.prose-site :where(code):not(:where(pre *))::before,
+.prose-site :where(code):not(:where(pre *))::after {
+  content: none;
+}
+
 /* Code blocks in blog posts (Shiki output) */
 .astro-code,
 pre.astro-code {

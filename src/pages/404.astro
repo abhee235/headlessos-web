@@ -2,20 +2,39 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="404 — Page not found · HeadlessOS" noindex>
-  <section class="relative bg-mesh py-32">
-    <div class="mx-auto max-w-2xl px-6 text-center">
-      <p class="chip mx-auto">404</p>
-      <h1 class="mt-6 text-6xl font-bold tracking-tight">
-        Page <span class="gradient-text">not found.</span>
-      </h1>
-      <p class="mt-4 text-lg text-[var(--color-fg-muted)]">
-        The page you're looking for doesn't exist — or maybe it never did.
+<BaseLayout title="Page not found — HeadlessOS" noindex>
+  <section class="relative isolate overflow-hidden py-28 sm:py-36">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div class="bg-grid absolute inset-0"></div>
+      <div class="aurora left-[12%] top-[-20%] h-[380px] w-[560px] bg-[#00d4ff]/25"></div>
+      <div class="aurora right-[10%] top-[-10%] h-[360px] w-[520px] bg-[#7c3aed]/30 [animation-delay:-9s]"></div>
+    </div>
+    <div class="container-x text-center">
+      <p class="rv eyebrow">404</p>
+      <h1 class="rv display mx-auto mt-6 max-w-3xl [--d:.05s]">Nothing here</h1>
+      <p class="rv lede mx-auto mt-6 max-w-lg [--d:.1s]">
+        The page you're looking for doesn't exist, or it has moved.
       </p>
-      <div class="mt-10 flex flex-wrap justify-center gap-3">
-        <a href="/" class="btn btn-primary">Back to home</a>
-        <a href="/docs/introduction" class="btn btn-secondary">Read the docs</a>
+      <pre class="rv term mx-auto mt-10 max-w-lg text-left [--d:.14s]"><span class="dim">$</span> <span class="hi">cd <span data-path>/this-page</span></span>
+cd: no such file or directory</pre>
+      <div class="rv mt-10 flex flex-wrap justify-center gap-3 [--d:.18s]">
+        <a href="/" class="btn btn-primary btn-lg">Back to home</a>
+        <a href="/docs/introduction" class="btn btn-secondary btn-lg">Read the docs</a>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Show the path that was asked for
+  const el = document.querySelector("[data-path]");
+  if (el && location.pathname !== "/404") {
+    let path = location.pathname;
+    try {
+      path = decodeURIComponent(path);
+    } catch {
+      /* keep it encoded */
+    }
+    el.textContent = path.slice(0, 60);
+  }
+</script>

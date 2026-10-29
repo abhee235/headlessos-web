@@ -14,57 +14,49 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 ---
 
 <BaseLayout
-  title="Blog · HeadlessOS"
-  description="News, deep-dives, and updates from the HeadlessOS team."
+  title="Blog — HeadlessOS"
+  description="Release notes and deep-dives from HeadlessOS, the free, open-source desktop for your VPS, cloud servers and home lab."
 >
-  <section class="relative bg-mesh py-24">
-    <div class="mx-auto max-w-4xl px-6">
-      <p class="chip">Blog</p>
-      <h1 class="mt-5 text-5xl font-bold tracking-tight">
-        Updates from the <span class="gradient-text">HeadlessOS</span> team.
-      </h1>
-      <p class="mt-4 text-lg text-[var(--color-fg-muted)] max-w-2xl">
-        Release notes, technical deep-dives, and the occasional rant about
-        terminal output formats.
+  <section class="relative isolate overflow-hidden pb-14 pt-20 sm:pt-28">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div class="bg-grid absolute inset-0"></div>
+      <div class="aurora left-[12%] top-[-20%] h-[380px] w-[560px] bg-[#00d4ff]/25"></div>
+      <div class="aurora right-[10%] top-[-10%] h-[360px] w-[520px] bg-[#7c3aed]/30 [animation-delay:-9s]"></div>
+    </div>
+    <div class="container-x text-center">
+      <p class="rv eyebrow">Blog</p>
+      <h1 class="rv display mx-auto mt-6 max-w-4xl [--d:.05s]">The HeadlessOS blog</h1>
+      <p class="rv lede mx-auto mt-6 max-w-xl [--d:.1s]">
+        Release notes, how it works under the hood, and what's coming next.
       </p>
     </div>
   </section>
 
-  <section class="py-16">
-    <div class="mx-auto max-w-4xl px-6">
+  <section class="pb-24">
+    <div class="mx-auto max-w-3xl px-5 sm:px-7">
       {
         posts.length === 0 ? (
-          <p class="text-[var(--color-fg-muted)] text-center py-20">
-            No posts yet. Check back soon.
-          </p>
+          <p class="py-20 text-center text-fg-muted">No posts yet. Check back soon.</p>
         ) : (
-          <ul class="space-y-4">
-            {posts.map((post) => (
-              <li>
-                <a
-                  href={`/blog/${post.id}`}
-                  class="block rounded-xl glass p-6 hover:border-[rgba(0,212,255,0.3)] transition-colors"
-                >
-                  <div class="flex items-center gap-3 text-xs text-[var(--color-fg-subtle)]">
-                    <time datetime={post.data.pubDate.toISOString()}>
-                      {formatter.format(post.data.pubDate)}
-                    </time>
-                    <span>·</span>
-                    <span>{post.data.author}</span>
-                  </div>
-                  <h2 class="mt-2 text-2xl font-semibold">{post.data.title}</h2>
-                  <p class="mt-2 text-[var(--color-fg-muted)]">
-                    {post.data.description}
+          <ul class="flex flex-col gap-4">
+            {posts.map((post, i) => (
+              <li class="rv" style={`--d:${0.06 * i}s`}>
+                <a href={`/blog/${post.id}`} class="card group block p-7 transition-colors hover:border-ink/20 sm:p-8">
+                  <p class="font-mono text-xs uppercase tracking-[0.14em] text-fg-subtle">
+                    <time datetime={post.data.pubDate.toISOString()}>{formatter.format(post.data.pubDate)}</time>
+                    <span aria-hidden="true"> · </span>
+                    {post.data.author}
                   </p>
-                  {post.data.tags.length > 0 && (
-                    <div class="mt-4 flex flex-wrap gap-2">
-                      {post.data.tags.map((t) => (
-                        <span class="text-xs px-2 py-0.5 rounded-full bg-ink/5 text-[var(--color-fg-muted)]">
-                          #{t}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <h2 class="mt-3 text-2xl font-semibold tracking-tight">{post.data.title}</h2>
+                  <p class="mt-2 leading-relaxed text-fg-muted">{post.data.description}</p>
+                  <div class="mt-6 flex flex-wrap items-center gap-2">
+                    {post.data.tags.map((t) => (
+                      <span class="chip !py-0.5 !text-xs">#{t}</span>
+                    ))}
+                    <span class="ml-auto text-sm font-medium text-fg transition-transform group-hover:translate-x-0.5">
+                      Read →
+                    </span>
+                  </div>
                 </a>
               </li>
             ))}
