@@ -4,6 +4,7 @@ description: "HeadlessOS 0.2.0 adds Claude and local models through Ollama, safe
 pubDate: 2026-10-29
 author: HeadlessOS Team
 tags: [release, ai, docker]
+draft: true
 ---
 
 HeadlessOS 0.2.0 is out. It's the biggest update since the first release: a redesigned desktop, Claude and local models next to OpenAI, AI agents that can't run arbitrary commands, and files and shells inside Docker containers. It's also the first release under the MIT licence.
