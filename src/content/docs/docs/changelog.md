@@ -17,6 +17,17 @@ Every HeadlessOS release, newest first. [Download the latest version](/download)
   Settings → About, or Help → Open Logs on macOS.
 - **Linux builds**: every release now has an AppImage and a `.deb`.
 
+### Security
+- **Changes can't skip your approval.** A widget's refresh command could be written by a model and
+  ran on a timer with no click, so a view could stop a service or remove a container without
+  asking. Refreshes and view buttons now only run commands that read. `find` can no longer delete
+  or write files, and output can't be redirected to a file.
+- **SSH keys are encrypted.** Private keys and passphrases sat in `servers.json` in plain text, and
+  the server list sent them to the window. They're now encrypted like passwords, including ones
+  you've already saved, and stay in the backend.
+- **Secrets stay out of the parsing fallback.** Output sent to a model for parsing now has secrets
+  removed first, as agent runs already did.
+
 ### Changed
 - If the backend stops while the app is running, the app says so and offers Restart, Open Log
   and Quit, instead of every window quietly failing. If it stops during startup, the app says
@@ -29,6 +40,12 @@ Every HeadlessOS release, newest first. [Download the latest version](/download)
   because macOS keeps apps off the local network until you allow them. The app now says why it needs
   access, and the error says where to allow it.
 - Help → Documentation and Report Issue opened a GitHub page that doesn't exist.
+- The sign-in screen said "Connection failed. Check server credentials." for every failure. It now
+  shows the real reason.
+- A wrong password was tried four times, which could trip fail2ban and lock you out. It's now tried
+  once.
+- If a saved password couldn't be decrypted, the whole server list was lost on the next save. Your
+  servers now stay, and you sign in again.
 
 ## 0.2.0 — 2026-10-29
 
