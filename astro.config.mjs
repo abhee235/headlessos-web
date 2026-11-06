@@ -5,6 +5,9 @@ import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 
+/** A sidebar link with its icon, from src/styles/docs-icons.css */
+const page = (label, slug, icon) => ({ label, slug, attrs: { class: `ic ic-${icon}` } });
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://headlessos.com",
@@ -50,7 +53,7 @@ export default defineConfig({
         baseUrl:
           "https://github.com/abhee235/headlessos-web/edit/main/src/content/docs/",
       },
-      customCss: ["./src/styles/starlight.css"],
+      customCss: ["./src/styles/starlight.css", "./src/styles/docs.css", "./src/styles/docs-icons.css"],
       head: [
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true } },
@@ -66,40 +69,44 @@ export default defineConfig({
         {
           label: "Getting Started",
           items: [
-            { label: "Introduction", slug: "docs/introduction" },
-            { label: "Quick Start", slug: "docs/getting-started" },
-            { label: "Installation", slug: "docs/installation" },
+            page("Docs home", "docs", "book-open"),
+            page("Introduction", "docs/introduction", "file-text"),
+            page("Quick Start", "docs/getting-started", "rocket"),
+            page("Installation", "docs/installation", "download"),
           ],
         },
         {
           label: "Concepts",
           items: [
-            { label: "Architecture", slug: "docs/concepts/architecture" },
-            { label: "How Parsing Works", slug: "docs/concepts/parsing" },
-            { label: "Security Model", slug: "docs/concepts/security" },
+            page("Architecture", "docs/concepts/architecture", "layers"),
+            page("How Parsing Works", "docs/concepts/parsing", "braces"),
+            page("Security Model", "docs/concepts/security", "shield"),
           ],
         },
         {
           label: "Apps",
           items: [
-            { label: "Dashboard", slug: "docs/apps/dashboard" },
-            { label: "File Explorer", slug: "docs/apps/file-explorer" },
-            { label: "Docker", slug: "docs/apps/docker" },
-            { label: "Terminal", slug: "docs/apps/terminal" },
-            { label: "Server Admin", slug: "docs/apps/server-admin" },
+            page("Dashboard", "docs/apps/dashboard", "gauge"),
+            page("File Explorer", "docs/apps/file-explorer", "folder"),
+            page("Docker", "docs/apps/docker", "container"),
+            page("Terminal", "docs/apps/terminal", "terminal"),
+            page("Server Admin", "docs/apps/server-admin", "server"),
           ],
         },
         {
           label: "Contributing",
           items: [
-            { label: "Contribute", slug: "docs/contributing" },
-            { label: "Roadmap", slug: "docs/roadmap" },
+            page("Contribute", "docs/contributing", "git-pull-request"),
+            page("Roadmap", "docs/roadmap", "map"),
           ],
         },
       ],
       components: {
         // Default to light when no theme was picked, like the marketing pages
         ThemeProvider: "./src/components/docs/ThemeProvider.astro",
+        Header: "./src/components/docs/Header.astro",
+        PageTitle: "./src/components/docs/PageTitle.astro",
+        Head: "./src/components/docs/Head.astro",
       },
       disable404Route: true,
       pagefind: true,

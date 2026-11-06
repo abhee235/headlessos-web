@@ -1,0 +1,44 @@
+---
+// Starlight's head, plus what search engines read to understand a docs page and where it sits
+import Default from "@astrojs/starlight/components/Head.astro";
+import { docsTrail } from "./trail";
+
+const route = Astro.locals.starlightRoute;
+const { title, description } = route.entry.data;
+const site = "https://headlessos.com";
+const url = new URL(Astro.url.pathname, site).href;
+const trail = docsTrail(route.sidebar);
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description,
+  url,
+  author: { "@type": "Organization", name: "HeadlessOS", url: site },
+  publisher: {
+    "@type": "Organization",
+    name: "HeadlessOS",
+    logo: { "@type": "ImageObject", url: `${site}/brand/icon-512.png` },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  isPartOf: { "@type": "WebSite", name: "HeadlessOS", url: site },
+};
+
+// Google wants a link on every step but the last, so a sidebar group with no page is left out
+const steps = [{ label: "Home", href: "/" }, ...trail].filter((step, index, all) => step.href || index === all.length - 1);
+const breadcrumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: steps.map((step, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: step.label,
+    item: step.href ? new URL(step.href, site).href : url,
+  })),
+};
+---
+
+<Default />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(article)} />
+{trail.length > 0 && <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbs)} />}

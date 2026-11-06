@@ -1,0 +1,144 @@
+---
+// Above every docs page: where you are, a way to copy the page, the title and its summary.
+// The h1 keeps Starlight's id, _top, which its "Overview" link and skip link point to.
+import { docsTrail } from "./trail";
+
+const route = Astro.locals.starlightRoute;
+const { title, description } = route.entry.data;
+const trail = docsTrail(route.sidebar);
+---
+
+<div class="docs-title-row">
+  {
+    trail.length > 0 ? (
+      <nav aria-label="Breadcrumb">
+        <ol class="docs-trail">
+          {trail.map((step) => (
+            <li>
+              {step.href ? <a href={step.href}>{step.label}</a> : <span>{step.label}</span>}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    ) : (
+      <span></span>
+    )
+  }
+  <button type="button" class="docs-copy" data-copy-page>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+    </svg>
+    <span data-copy-label>Copy page</span>
+  </button>
+</div>
+
+<h1 id="_top">{title}</h1>
+{description && <p class="docs-lede">{description}</p>}
+
+<script>
+  document.querySelector("[data-copy-page]")?.addEventListener("click", async (event) => {
+    const button = event.currentTarget as HTMLButtonElement;
+    const label = button.querySelector("[data-copy-label]");
+    const title = document.querySelector("h1")?.textContent ?? "Documentation";
+    const body = document.querySelector<HTMLElement>(".sl-markdown-content")?.innerText ?? "";
+    await navigator.clipboard.writeText(`${title}\n\n${body}`);
+    if (label) {
+      label.textContent = "Copied";
+      setTimeout(() => (label.textContent = "Copy page"), 2000);
+    }
+  });
+</script>
+
+<style>
+  .docs-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .docs-trail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .docs-trail li + li::before {
+    content: "›";
+    margin-inline: 0.5rem;
+    color: var(--sl-color-gray-4);
+  }
+
+  .docs-trail a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .docs-trail a:hover {
+    color: var(--sl-color-white);
+  }
+
+  .docs-trail li:last-child span {
+    font-weight: 500;
+    color: var(--sl-color-white);
+  }
+
+  .docs-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    padding: 0.5rem 0.75rem;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--sl-color-gray-3);
+    cursor: pointer;
+    background: var(--docs-surface-muted);
+    border: 1px solid var(--docs-border);
+    border-radius: 0.625rem;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .docs-copy:hover {
+    color: var(--sl-color-white);
+    border-color: var(--docs-border-strong);
+  }
+
+  .docs-copy svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    color: var(--sl-color-white);
+  }
+
+  .docs-lede {
+    margin: 1rem 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--docs-prose-muted);
+  }
+</style>

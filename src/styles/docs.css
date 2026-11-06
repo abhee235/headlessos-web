@@ -1,0 +1,545 @@
+/* The docs design: a fixed sidebar, a 42rem article for a readable line length, and "On this
+   page" on the right. Colours come from the site's tokens in starlight.css. */
+
+:root {
+  --docs-primary: #0a7ea4;
+  --docs-primary-hover: #0b4f63;
+  --docs-on-primary: #ffffff;
+  --docs-primary-soft: color-mix(in srgb, #0a7ea4 8%, transparent);
+  --docs-primary-tint: color-mix(in srgb, #0a7ea4 6%, white);
+  --docs-border: #e5e7eb;
+  --docs-border-subtle: #f0f1f3;
+  --docs-border-strong: #c9ccd5;
+  --docs-surface-muted: #f7f8fa;
+  --docs-surface-raised: #ffffff;
+  --docs-prose-muted: #4b5563;
+  --docs-prose-faint: #9ca3af;
+  --docs-code-bg: #f3f4f6;
+  --docs-code-text: #1f2937;
+}
+
+:root[data-theme="dark"] {
+  --docs-primary: #00d4ff;
+  --docs-primary-hover: #b1edff;
+  --docs-on-primary: #07080c;
+  --docs-primary-soft: color-mix(in srgb, #00d4ff 10%, transparent);
+  --docs-primary-tint: color-mix(in srgb, #00d4ff 6%, #0b0d13);
+  --docs-border: #262935;
+  --docs-border-subtle: #1b1e29;
+  --docs-border-strong: #3b404c;
+  --docs-surface-muted: #11131b;
+  --docs-surface-raised: #0f111a;
+  --docs-prose-muted: #a4a8b6;
+  --docs-prose-faint: #6d7182;
+  --docs-code-bg: #1b1e29;
+  --docs-code-text: #e4e6ec;
+}
+
+/* ── Frame ─────────────────────────────────────────────────────────────── */
+
+:root {
+  --sl-nav-height: 4rem;
+  --sl-sidebar-width: 17.5rem;
+  --sl-content-width: 42rem;
+  --sl-sidebar-pad-x: 2rem;
+}
+
+@media (min-width: 50rem) {
+  :root {
+    --sl-nav-pad-x: 2rem;
+  }
+}
+
+/* Starlight stops at the sidebar's edge; this design has no rule there */
+.sidebar-pane {
+  border-inline-end: 0;
+  background: var(--sl-color-bg);
+}
+
+header.header {
+  border-bottom: 1px solid var(--docs-border);
+}
+
+/* ── Sidebar ───────────────────────────────────────────────────────────── */
+
+.sidebar-content {
+  --docs-sidebar-gap: 1.75rem;
+  padding-top: 2rem;
+}
+
+.sidebar-content ul.top-level {
+  gap: var(--docs-sidebar-gap);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sections are always open, so their headings are labels rather than controls */
+.sidebar-content summary {
+  padding: 0 0 0.75rem;
+  pointer-events: none;
+}
+
+.sidebar-content summary .caret {
+  display: none;
+}
+
+.sidebar-content .group-label .large {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+}
+
+.sidebar-content ul ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.sidebar-content ul ul li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.sidebar-content a {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--sl-color-gray-3);
+  border-radius: 0.5rem;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.sidebar-content a:hover {
+  color: var(--sl-color-white);
+  background: var(--docs-surface-muted);
+}
+
+.sidebar-content a[aria-current="page"],
+.sidebar-content a[aria-current="page"]:hover {
+  font-weight: 600;
+  color: var(--docs-on-primary);
+  background: var(--docs-primary);
+}
+
+.sidebar-content a.ic::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  background: currentColor;
+  opacity: 0.55;
+  -webkit-mask: var(--ic) center / contain no-repeat;
+  mask: var(--ic) center / contain no-repeat;
+}
+
+.sidebar-content a[aria-current="page"].ic::before {
+  opacity: 1;
+}
+
+/* ── On this page ──────────────────────────────────────────────────────── */
+
+.right-sidebar {
+  border-inline-start: 0;
+  background: transparent;
+}
+
+.right-sidebar-panel {
+  padding-top: 2rem;
+}
+
+starlight-toc h2 {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+  border-bottom: 1px solid var(--docs-border);
+}
+
+starlight-toc ul {
+  --depth: 0;
+  padding: 0;
+}
+
+starlight-toc ul ul {
+  margin: 0;
+}
+
+starlight-toc a {
+  display: block;
+  padding: 0.375rem 0.5rem 0.375rem calc(0.75rem + var(--depth) * 0.75rem);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--docs-prose-faint);
+  border-inline-start: 2px solid transparent;
+  transition: color 0.15s ease;
+}
+
+starlight-toc a:hover {
+  color: var(--sl-color-gray-2);
+}
+
+starlight-toc a[aria-current="true"],
+starlight-toc a[aria-current="true"]:hover,
+starlight-toc a[aria-current="true"]:focus {
+  font-weight: 600;
+  color: var(--docs-primary);
+  border-inline-start-color: var(--docs-primary);
+}
+
+/* ── Search ────────────────────────────────────────────────────────────── */
+
+site-search > button {
+  min-width: 15rem;
+  height: 2.375rem;
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--sl-color-gray-3);
+  background: var(--docs-surface-muted);
+  border: 1px solid var(--docs-border);
+  border-radius: 0.75rem;
+}
+
+site-search > button:hover {
+  color: var(--sl-color-white);
+  border-color: var(--docs-border-strong);
+}
+
+@media (max-width: 50rem) {
+  site-search > button {
+    min-width: 0;
+    background: transparent;
+    border: 0;
+  }
+}
+
+/* ── Article ───────────────────────────────────────────────────────────── */
+
+.sl-markdown-content {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--docs-prose-muted);
+}
+
+.sl-markdown-content h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  scroll-margin-top: 5.5rem;
+  color: var(--sl-color-white);
+}
+
+.sl-markdown-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 5.5rem;
+  color: var(--sl-color-white);
+}
+
+.sl-markdown-content > h2:first-child {
+  margin-top: 0;
+}
+
+.sl-markdown-content strong {
+  font-weight: 600;
+  color: var(--sl-color-white);
+}
+
+.sl-markdown-content :is(ul, ol) {
+  margin-block: 1rem;
+}
+
+.sl-markdown-content ul {
+  padding-inline-start: 1.625rem;
+}
+
+.sl-markdown-content ul > li::marker {
+  color: var(--docs-prose-faint);
+}
+
+.sl-markdown-content li {
+  margin-block: 0.5rem;
+  line-height: 1.7;
+}
+
+/* Numbers stand clear of the text, in the heading colour */
+.sl-markdown-content ol {
+  counter-reset: docs-ol;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.sl-markdown-content ol > li {
+  position: relative;
+  padding-inline-start: 2rem;
+  counter-increment: docs-ol;
+}
+
+.sl-markdown-content ol > li::before {
+  content: counter(docs-ol) ".";
+  position: absolute;
+  inset-inline-start: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--sl-color-white);
+}
+
+.sl-markdown-content a:not(.doc-card) {
+  font-weight: 500;
+  color: var(--docs-primary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--docs-primary) 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+
+.sl-markdown-content a:not(.doc-card):hover {
+  color: var(--docs-primary-hover);
+  text-decoration-color: var(--docs-primary);
+}
+
+.sl-markdown-content hr {
+  height: 1px;
+  margin-block: 3rem;
+  background: var(--docs-border);
+  border: 0;
+}
+
+.sl-markdown-content code:not(pre *) {
+  padding: 0.125rem 0.375rem;
+  font-size: 0.84em;
+  color: var(--docs-code-text);
+  background: var(--docs-code-bg);
+  border-radius: 0.375rem;
+}
+
+.sl-markdown-content blockquote {
+  margin-block: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--docs-primary-tint);
+  border: 1px solid color-mix(in srgb, var(--docs-primary) 20%, transparent);
+  border-radius: 0.625rem;
+}
+
+/* ── Tables ────────────────────────────────────────────────────────────── */
+
+.sl-markdown-content table {
+  display: table;
+  width: 100%;
+  margin-block: 1.5rem;
+  overflow: hidden;
+  font-size: 0.875rem;
+  border: 1px solid var(--docs-border);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.625rem;
+}
+
+.sl-markdown-content :is(th, td) {
+  padding: 0.625rem 0.875rem;
+  text-align: start;
+  border: 0;
+  border-bottom: 1px solid var(--docs-border-subtle);
+}
+
+.sl-markdown-content th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--docs-primary);
+  background: var(--docs-primary-tint);
+  border-bottom-color: var(--docs-border);
+}
+
+.sl-markdown-content td {
+  line-height: 1.55;
+}
+
+.sl-markdown-content tbody tr:hover {
+  background: var(--docs-primary-soft);
+}
+
+.sl-markdown-content tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* A wide table scrolls on a phone instead of pushing the page sideways */
+@media (max-width: 40rem) {
+  .sl-markdown-content table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* ── Callouts ──────────────────────────────────────────────────────────── */
+
+.starlight-aside {
+  margin-block: 1.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  background: color-mix(in srgb, var(--sl-color-asides-text-accent) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--sl-color-asides-text-accent) 30%, transparent);
+  border-radius: 0.75rem;
+}
+
+.starlight-aside__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ── Code blocks: a labelled bar with Copy always in reach ─────────────── */
+
+.sl-markdown-content .expressive-code {
+  margin-block: 1.5rem;
+}
+
+.expressive-code .frame {
+  overflow: hidden;
+  border: 1px solid var(--docs-border);
+  border-radius: 0.625rem;
+  box-shadow: none;
+}
+
+.expressive-code .frame pre {
+  border: 0;
+  border-radius: 0;
+}
+
+.expressive-code .frame .header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 2.5rem;
+  padding: 0 0.875rem;
+  background: var(--docs-surface-muted);
+  border-bottom: 1px solid var(--docs-border);
+}
+
+.expressive-code .frame .header::before,
+.expressive-code .frame .header::after {
+  display: none;
+}
+
+.expressive-code .frame .header .title {
+  padding: 0;
+  font-size: 0.75rem;
+  color: var(--sl-color-gray-3);
+  background: none;
+  border: 0;
+}
+
+.expressive-code .frame .copy {
+  inset-block-start: 0.375rem;
+  inset-inline-end: 0.5rem;
+}
+
+.expressive-code .frame .copy button {
+  width: 1.75rem;
+  height: 1.75rem;
+  opacity: 1;
+}
+
+/* ── Docs home ─────────────────────────────────────────────────────────── */
+
+.doc-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .doc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Previous and next */
+.pagination-links a {
+  border-color: var(--docs-border);
+  border-radius: 0.75rem;
+  box-shadow: none;
+}
+
+.pagination-links a:hover {
+  border-color: var(--docs-primary);
+}
+
+/* The title and the article read as one page */
+.content-panel + .content-panel {
+  border-top: 0;
+}
+
+.content-panel:first-of-type {
+  padding-bottom: 0;
+}
+
+/* The header floats over the page as it scrolls */
+header.header {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+/* The bar names the language, unless the block has a file name of its own */
+.expressive-code .frame:has(pre[data-language="bash"]) {
+  --docs-code-label: "Bash";
+}
+
+.expressive-code .frame:has(pre[data-language="env"]) {
+  --docs-code-label: "Env";
+}
+
+.expressive-code .frame:has(pre[data-language="json"]) {
+  --docs-code-label: "JSON";
+}
+
+.expressive-code .frame:has(pre[data-language="typescript"]),
+.expressive-code .frame:has(pre[data-language="ts"]) {
+  --docs-code-label: "TypeScript";
+}
+
+.expressive-code .frame:has(pre[data-language="yaml"]) {
+  --docs-code-label: "YAML";
+}
+
+.expressive-code .frame .header:not(:has(.title:not(:empty)))::after {
+  content: var(--docs-code-label, "");
+  display: block;
+  position: static;
+  inset: auto;
+  width: auto;
+  height: auto;
+  font-family: var(--sl-font);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+  background: none;
+  border: 0;
+  opacity: 1;
+}
+
+.expressive-code .frame .header .title::before,
+.expressive-code .frame .header .title::after {
+  display: none;
+}
