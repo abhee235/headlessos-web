@@ -180,6 +180,17 @@ To allow it:
 
 The hint says "may" because a device that's switched off gives the same error, so check that it's on too. If HeadlessOS isn't in the list, or turning it on doesn't help, [report it](#report-a-bug). Running [from source](/docs/installation#run-from-source) in Terminal avoids the permission, since tools run from Terminal are exempt.
 
+### Saved logins are locked
+
+The desktop app keeps the key to your saved logins in your computer's keychain. If it can't reach the key, your logins are locked. They aren't lost: your servers stay in the list, and you can still type a password to sign in.
+
+- **On a Mac:** quit HeadlessOS and open it again, then click **Always Allow** when macOS asks. The app isn't signed yet, so macOS can ask once after each update.
+- **On Linux:** check that your keyring is unlocked, then open the app again.
+- **On Windows:** quit the app and open it again. If you removed the app's data, the key is gone. Remove the server and add it again.
+- **Running from source on a computer that also has the desktop app:** add `HEADLESSOS_INSTALL_SECRET` to your `.env`.
+
+If you kept an `enc-key` file from a backup, put it back in the `.headlessos` folder and open the app. It takes priority and moves into the keychain.
+
 ### Saved servers are missing
 
 If `servers.json` can't be read, the app starts with an empty list and says so. The damaged file is kept as `servers.json.broken` in the `.headlessos` folder, so nothing is deleted. Add your servers again.

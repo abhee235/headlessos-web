@@ -28,7 +28,8 @@ Everything stays in `~/.headlessos/` on your computer. The folder is created `07
 | SSH passwords | `servers.json` | AES-256-GCM |
 | SSH private keys, passphrases | `servers.json` | AES-256-GCM, never returned to the UI |
 | OpenAI and Anthropic keys | `llm.json` | AES-256-GCM, never returned to the UI |
-| Encryption secret, API token | `enc-key`, `api-token` | Plain text |
+| Encryption secret | `enc-key.keychain` | Held by the OS keychain in the desktop app |
+| API token | `api-token` | Plain text |
 | Agent audit log, desktop log | `audit/`, `logs/` | Plain text. The desktop log masks secrets. |
 | Traces, sessions | `observatory/`, `sessions/` | Plain JSON |
 
@@ -38,12 +39,23 @@ Everything stays in `~/.headlessos/` on your computer. The folder is created `07
 
 ### How encryption works
 
-The key is derived with scrypt from a random secret in `enc-key` and your OS user ID. As a result:
+The key is derived with scrypt from a random secret and your OS user ID. The desktop app keeps that secret in your computer's keychain. Where there's no keychain, or when you run from source, it's a plain file called `enc-key`. As a result:
 
 - Renaming the computer or changing networks doesn't affect them.
-- Deleting `enc-key`, or copying `servers.json` to another computer without it, makes them unreadable. Your servers stay in the list. Type the password again at sign-in. A server that used an SSH key has to be removed and added again.
+- Losing the secret, or copying `servers.json` to another computer without it, makes them unreadable. Your servers stay in the list. Type the password again at sign-in. A server that used an SSH key has to be removed and added again.
 - If `servers.json` itself can't be read, the app starts with an empty list and keeps the damaged file as `servers.json.broken`.
-- Encryption stops casual reading of a file. It doesn't stop code running as your user, or anyone with a full copy of the folder, because the key material sits beside the data.
+
+### What the keychain protects
+
+| Threat | macOS | Windows | Linux, with a secret store | Linux, without one |
+| --- | --- | --- | --- | --- |
+| A copy of the folder alone | Protected | Protected | Protected | Not protected |
+| Another account on the computer | Protected | Protected | Protected | Not protected |
+| A program running as you | Protected: the Keychain asks, naming the program | Not protected | Not protected | Not protected |
+
+On Windows and Linux, a program running as you can ask the system to decrypt, and no app can change that. If you install something malicious, it can also read your `~/.ssh` keys and record what you type, whatever HeadlessOS does. Only run software you trust.
+
+On a Mac, if any app other than HeadlessOS asks for "HeadlessOS Safe Storage", click **Deny**.
 
 ## The local API
 
