@@ -32,6 +32,18 @@ Click an app to open it or bring it forward. Click the front app to minimize it.
 
 Right-click an app for **Pin to Dock** or **Unpin from Dock**, and **Close Window**. Right-click the dock for **Show Desktop**.
 
+### When a window is maximized
+
+A maximized window takes the dock's space, so the dock slides away. To bring it back, do any of these:
+
+- Hover over the thin handle at the edge of the screen, or click it.
+- Click **Show launcher** in the top bar. It's there only while the dock is away.
+- Press Tab until you reach the dock.
+
+The dock floats over the app, and slides away again when you move off it or click somewhere else.
+
+With the dock on the right, a maximized window stops just short of the edge, so the handle stays clear of the window's scrollbar.
+
 ## Use the launcher
 
 Click **Launcher** or press Ctrl+Space. Search apps, or use the quick actions, the app grid, **My Apps** (views you saved as apps) and **Recent**.
