@@ -7,11 +7,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "sync:changelog": "node scripts/sync-changelog.mjs",
+    "prebuild": "npm run sync:changelog",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "wrangler:dev": "astro build && wrangler dev",
-    "deploy": "astro build && wrangler deploy",
+    "deploy": "npm run build && wrangler deploy",
     "format": "prettier --write ."
   },
   "dependencies": {

@@ -1,27 +1,44 @@
 ---
 title: Dashboard
-description: At-a-glance system metrics for any connected server.
+description: See CPU, memory, disk, network and uptime for a Linux server in the HeadlessOS Dashboard, with live load and traffic graphs read over SSH.
 ---
 
-The Dashboard app shows live metrics for the active server — CPU, memory, disk, network, uptime, and container counts — in a clean grid of cards.
+The Dashboard shows the health of one server in a single window. It needs no extra tools on the server. It reads standard commands such as `df -h`, `free -m` and `ip -brief addr` over SSH.
 
-## What it shows
+To open it, click **Dashboard** in the dock or double-click its desktop icon.
 
-- **CPU usage** — percentage utilization, with per-core breakdown on hover.
-- **Memory** — used / total, with swap stats.
-- **Disk** — usage per filesystem (parsed from `df -h`).
-- **Network** — RX/TX rate per interface.
-- **Uptime** — current uptime and load averages.
-- **Containers** — running container count if Docker is available.
+![The Dashboard for a server named web-01, with cards for Processor, Memory, System, Disk usage and Network](../../../../assets/screens/dashboard.webp)
 
-## How it works
+## What the Dashboard shows
 
-Behind the scenes, the dashboard issues a single multi-command execution plan that runs all the queries in parallel over separate SSH `exec()` channels. The orchestrator collects results, parses each, and returns a typed payload.
+The header shows the server's hostname, operating system, kernel and architecture. Next to them are the latency of the last refresh, the time since that refresh, and a **Refresh** button.
 
-## Refresh
+| Card | What it shows |
+|---|---|
+| **Processor** | Overall load, the number of cores, and a tile for each core. Hover a tile to see that core's load. |
+| **Memory** | RAM in use, the amount available, and swap use. |
+| **System** | Uptime, OS, kernel and architecture. |
+| **Disk usage** | A ring for each mounted filesystem, with percent used, mount point, and used and total size. |
+| **Network** | Download and upload rates, a graph of recent traffic, and each network interface with its state and addresses. |
 
-Auto-refreshes every 30 seconds. The output cache means an unchanged result costs essentially nothing to re-fetch.
+A disk ring turns amber at 70% and red at 90%. The download and upload rates add up all interfaces.
 
-## Customization (planned)
+## How often the Dashboard refreshes
 
-Per-server widget selection, alert thresholds, and historical charts are on the roadmap.
+| Data | How often it refreshes |
+|---|---|
+| Processor and network rates | Every 2 seconds |
+| Memory, disks and system details | Every 30 seconds by default |
+
+To change the second interval, open [Settings](/docs/guides/settings), go to **General** and set **Auto-Refresh Interval**. Choose **Off** to update those cards only when you click **Refresh**.
+
+Updates stop while the window is minimized. They start again when you restore it.
+
+## If the connection drops
+
+If the SSH connection is lost, the Dashboard says so and shows a **Reconnect** button.
+
+## Related apps
+
+- To see which process is using the CPU or memory, open [Task Manager](/docs/apps/task-manager).
+- To compare all your servers, use the [Fleet overview](/docs/guides/sessions-and-fleet).

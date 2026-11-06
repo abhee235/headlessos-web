@@ -5,6 +5,9 @@ import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 
+/** A sidebar link with its icon, from src/styles/docs-icons.css */
+const page = (label, slug, icon) => ({ label, slug, attrs: { class: `ic ic-${icon}` } });
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://headlessos.com",
@@ -50,7 +53,7 @@ export default defineConfig({
         baseUrl:
           "https://github.com/abhee235/headlessos-web/edit/main/src/content/docs/",
       },
-      customCss: ["./src/styles/starlight.css"],
+      customCss: ["./src/styles/starlight.css", "./src/styles/docs.css", "./src/styles/docs-icons.css"],
       head: [
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true } },
@@ -66,40 +69,73 @@ export default defineConfig({
         {
           label: "Getting Started",
           items: [
-            { label: "Introduction", slug: "docs/introduction" },
-            { label: "Quick Start", slug: "docs/getting-started" },
-            { label: "Installation", slug: "docs/installation" },
+            page("Docs home", "docs", "book-open"),
+            page("Introduction", "docs/introduction", "file-text"),
+            page("Quick Start", "docs/getting-started", "rocket"),
+            page("Installation", "docs/installation", "download"),
+            page("Connect a server", "docs/connect-a-server", "plug"),
           ],
         },
         {
-          label: "Concepts",
+          label: "Using HeadlessOS",
           items: [
-            { label: "Architecture", slug: "docs/concepts/architecture" },
-            { label: "How Parsing Works", slug: "docs/concepts/parsing" },
-            { label: "Security Model", slug: "docs/concepts/security" },
+            page("The desktop", "docs/guides/desktop", "app-window"),
+            page("Sessions and Fleet", "docs/guides/sessions-and-fleet", "network"),
+            page("Settings", "docs/guides/settings", "settings"),
           ],
         },
         {
           label: "Apps",
           items: [
-            { label: "Dashboard", slug: "docs/apps/dashboard" },
-            { label: "File Explorer", slug: "docs/apps/file-explorer" },
-            { label: "Docker", slug: "docs/apps/docker" },
-            { label: "Terminal", slug: "docs/apps/terminal" },
-            { label: "Server Admin", slug: "docs/apps/server-admin" },
+            page("Dashboard", "docs/apps/dashboard", "gauge"),
+            page("File Explorer", "docs/apps/file-explorer", "folder"),
+            page("Terminal", "docs/apps/terminal", "terminal"),
+            page("Docker", "docs/apps/docker", "container"),
+            page("Services", "docs/apps/services", "cog"),
+            page("Task Manager", "docs/apps/task-manager", "activity"),
+            page("Server Admin", "docs/apps/server-admin", "server"),
           ],
         },
         {
-          label: "Contributing",
+          label: "AI",
           items: [
-            { label: "Contribute", slug: "docs/contributing" },
-            { label: "Roadmap", slug: "docs/roadmap" },
+            page("Set up AI", "docs/ai/setup", "sparkles"),
+            page("AI Agent", "docs/ai/agent", "bot"),
+            page("UI Agent", "docs/ai/ui-agent", "wand-sparkles"),
+            page("Safety and approvals", "docs/ai/safety", "shield-check"),
+            page("LLM Observatory", "docs/ai/observatory", "telescope"),
+          ],
+        },
+        {
+          label: "Concepts",
+          items: [
+            page("Architecture", "docs/concepts/architecture", "layers"),
+            page("How parsing works", "docs/concepts/parsing", "braces"),
+            page("Security model", "docs/concepts/security", "shield"),
+          ],
+        },
+        {
+          label: "Help",
+          items: [
+            page("Troubleshooting", "docs/troubleshooting", "life-buoy"),
+            page("FAQ", "docs/faq", "circle-help"),
+            page("Changelog", "docs/changelog", "history"),
+          ],
+        },
+        {
+          label: "Project",
+          items: [
+            page("Contribute", "docs/contributing", "git-pull-request"),
+            page("Roadmap", "docs/roadmap", "map"),
           ],
         },
       ],
       components: {
         // Default to light when no theme was picked, like the marketing pages
         ThemeProvider: "./src/components/docs/ThemeProvider.astro",
+        Header: "./src/components/docs/Header.astro",
+        PageTitle: "./src/components/docs/PageTitle.astro",
+        Head: "./src/components/docs/Head.astro",
       },
       disable404Route: true,
       pagefind: true,
