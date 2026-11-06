@@ -14,7 +14,9 @@ Every HeadlessOS release, newest first. [Download the latest version](/download)
 ### Added
 - **A log file**. The desktop app writes `~/.headlessos/logs/headlessos.log`, with
   passwords, keys and tokens masked. It stays on your computer. Open it from Global Settings,
-  Settings → About, or Help → Open Logs on macOS.
+  Settings → About, or Help → Open Logs.
+- **Help at the top of Control Center**: Documentation, Troubleshooting, Open log and
+  Report an issue, before you've signed in to anything.
 - **Linux builds**: every release now has an AppImage and a `.deb`.
 
 ### Security
@@ -29,6 +31,8 @@ Every HeadlessOS release, newest first. [Download the latest version](/download)
   removed first, as agent runs already did.
 
 ### Changed
+- A maximized window now takes the full height. The dock slides away, and comes back when you hover
+  the handle at the screen's edge, click it, or click **Show launcher** in the top bar.
 - If the backend stops while the app is running, the app says so and offers Restart, Open Log
   and Quit, instead of every window quietly failing. If it stops during startup, the app says
   so at once instead of waiting 20 seconds.
@@ -41,11 +45,21 @@ Every HeadlessOS release, newest first. [Download the latest version](/download)
   access, and the error says where to allow it.
 - Help → Documentation and Report Issue opened a GitHub page that doesn't exist.
 - The sign-in screen said "Connection failed. Check server credentials." for every failure. It now
-  shows the real reason.
+  says what happened and what to try, shows the exact error to copy, and links to the fix and the
+  log.
 - A wrong password was tried four times, which could trip fail2ban and lock you out. It's now tried
   once.
 - If a saved password couldn't be decrypted, the whole server list was lost on the next save. Your
   servers now stay, and you sign in again.
+- Saved passwords, SSH keys and AI keys depended on the computer's name, so renaming it could make
+  them unreadable, and a Mac can pick up a new name from the network. They no longer do, and
+  existing ones move over at the next start.
+- A server whose saved key can't be read said "SSH key configured", then "The server refused this
+  login". It now says the key is gone and what to do.
+- A damaged server list looked like a new install. The screen now says so and names the kept file
+ .
+- In the installed app, windows, panels and the top bar had no blur, so the desktop showed through
+  them. They now match the browser.
 
 ## 0.2.0 — 2026-10-29
 
