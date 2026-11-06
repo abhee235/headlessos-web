@@ -153,6 +153,8 @@ The log says `getaddrinfo ENOTFOUND`. Your computer can't turn that hostname int
 | "File does not appear to be a valid SSH private key" | You chose a file that isn't a private key, such as a `.pub` file. A PuTTY `.ppk` file is also refused here |
 | "No SSH keys found in ~/.ssh — try uploading or pasting a key" | Your key isn't named `id_*`, or it's in another folder. Use **Upload File** or **Paste Key** |
 
+If a key that worked before now shows `The server refused this login`, and `ssh` with the same key still works, the app may have lost its saved copy. This happens after you rename the computer, delete `enc-key`, or copy `~/.headlessos` to another computer. The sign-in screen still says "SSH key configured". Hover over the server, click the trash icon, and add it again. See [How encryption works](/docs/concepts/security#how-encryption-works).
+
 ### Local network access on macOS
 
 Since macOS 15, an app needs your permission to reach a device on your local network. Tools run from Terminal are exempt, so `ssh` can work while HeadlessOS fails. A public server isn't affected.

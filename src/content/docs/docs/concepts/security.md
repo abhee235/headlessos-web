@@ -41,7 +41,8 @@ Everything stays in `~/.headlessos/` on your computer. The folder is created `07
 The key is derived with scrypt from a random secret in `enc-key`, the computer's hostname and your OS user ID. As a result:
 
 - Stored secrets don't move between machines. On a new computer, re-enter them.
-- Renaming the computer or deleting `enc-key` makes them unreadable, and the app shows an empty server list.
+- Renaming the computer or deleting `enc-key` makes them unreadable. Your servers stay in the list. Type the password again at sign-in. A server that used an SSH key has to be removed and added again.
+- If `servers.json` itself can't be read, the app starts with an empty list and keeps the damaged file as `servers.json.broken`.
 - Encryption stops casual reading of a file. It doesn't stop code running as your user, or anyone with a copy of the folder who can guess the hostname and user ID, because the key material sits beside the data.
 
 ## The local API
