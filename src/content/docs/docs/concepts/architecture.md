@@ -1,60 +1,90 @@
 ---
 title: Architecture
-description: How HeadlessOS works under the hood — the SSH pipeline, parsing, and rendering.
+description: How the HeadlessOS app, its local backend and your Linux server fit together, on desktop and from source, and where state is stored.
 ---
 
-HeadlessOS is built around a single idea: **turn raw terminal output into typed JSON, then render it as UI.**
+HeadlessOS has three parts: a user interface, a backend that runs on your own computer, and the SSH service your Linux server already has. The server gets no new software. All the logic stays on your machine.
 
-## High-level flow
+## How the parts fit together
 
+```text
+Your computer                                     Linux server
++--------------------------------------+         +--------------+
+| UI: React, in Electron or a browser  |         | sshd         |
+|    |                                 |         |              |
+|    | REST and WebSocket, with token  |         | commands,    |
+|    v                                 |   SSH   | SFTP and     |
+| Backend: Node.js and Fastify         |<------->| shells, as   |
+|    listens on 127.0.0.1 only         |         | your user    |
+|    keeps state in ~/.headlessos/     |         |              |
++--------------------------------------+         +--------------+
+     |
+     | only if you choose a provider
+     v
+OpenAI, Anthropic, or your Ollama server
 ```
-React UI → Fastify backend → SSH (ssh2) → Linux server
-                ↓
-         Command output (raw text)
-                ↓
-         Strip ANSI codes
-                ↓
-         Deterministic parser  (preferred — fast, free)
-                ↓ (if no parser exists)
-         LLM with Zod schema   (fallback — accurate, costs $)
-                ↓
-         Validated typed JSON
-                ↓
-         React UI renders it
-```
 
-## Components
+- **The UI** draws the desktop and its apps. It never talks to your server. It calls the backend.
+- **The backend** holds the SSH connections, runs commands, parses output and keeps state. Every request to it needs a per-install token. See [Security model](/docs/concepts/security).
+- **The server** sees ordinary SSH sessions from the user you log in as.
 
-### Backend (Fastify + TypeScript)
+## Desktop app and running from source
 
-A Node.js process listening on `localhost:3001` only. Never exposed to the internet.
+The same backend and UI code runs both ways.
 
-Key services (all extend a `BaseService` and live in a `ServiceContainer`):
+| | Desktop app | From source (`npm run dev`) |
+| --- | --- | --- |
+| Backend | Bundled `server.mjs` in an Electron utility process | `tsx watch` on port 3001 |
+| UI | Built files loaded from `file://` | Vite dev server on port 3000 |
+| Backend port | A free port the OS picks at startup | 3001 |
+| UI to backend | Direct to `http://localhost:<port>` | Vite proxies `/api` and `/ws` |
+| API token | Handed to the page by the preload script | Added by the Vite proxy |
+| Logs | `~/.headlessos/logs/headlessos.log` | The terminal running `npm run dev` |
 
-- **ConnectionManager** — manages SSH connections via `ssh2` directly. One connection per server, multiple `exec()` channels for parallel command execution, one `shell()` channel per interactive terminal, lazy-initialized `sftp()` for file operations.
-- **CommandOrchestrator** — runs multi-command execution plans in parallel, retries with error context on parse failure, tries fallback commands on shell failure (e.g., `ip addr` → `ifconfig`).
-- **ParsingPipeline** — strips ANSI, calls a deterministic parser if one is registered for the command, falls back to LLM otherwise, and validates the result with Zod.
-- **OutputCache** — hash-based cache keyed by `(serverId, command, rawOutput)`. Identical output is parsed once and reused.
-- **LLMUsageStats** — tracks tokens, cost, and latency for every LLM call so you can see exactly what the AI is costing you.
+At startup the desktop app sets `PORT=0`. The backend prints the port it got on standard output, and `electron/main.js` reads it before it opens the window. The preload script passes the port and token to the page.
 
-### Frontend (React 19 + Vite + Zustand)
+The window runs with Node integration off, context isolation on and the sandbox on. If the backend stops, a dialog offers Restart, Open Log and Quit.
 
-A SPA that talks to the backend over REST + WebSocket. Built with TailwindCSS 4 and styled like a desktop OS — windows, taskbar, command palette, multiple sessions.
+## Inside the backend
 
-### Schemas (Zod)
+`server/src/index.ts` is the single wiring point. It creates the components, boots them, registers parsers and routes, and handles shutdown.
 
-Every piece of data crossing a boundary has a Zod schema. Schemas serve a dual purpose:
+- **Service container.** Long-lived services extend `BaseService` and boot in two phases: first construct, then connect to each other. These include the config store, SSH manager, parsing pipeline, orchestrator, command policy and domain services. Other parts are plain classes, such as the output cache, usage tracker, Dynamic UI generator and agents.
+- **Routes.** Each route file is a Fastify plugin that gets its dependencies through plugin options. Routes stay thin and call a domain service in `server/src/services/domain/`.
+- **SSH.** `server/src/ssh/connection-manager.ts` uses the `ssh2` library directly and keeps one connection per server. Commands run on separate exec channels, at most four at a time by default. Each terminal gets its own shell channel, and file work shares one SFTP session.
+- **Command policy.** Every command sent through the manager's `exec()` passes a policy check first. See [The command policy](/docs/concepts/security#the-command-policy).
+- **Reconnect.** A request hook reconnects a dropped server with stored credentials before a data route runs.
 
-1. **Runtime validation** — `Schema.parse(data)` throws on bad data.
-2. **LLM structured output** — `zodResponseFormat(Schema, 'name')` constrains what the LLM can return.
+## Two paths for server data
 
-This means the LLM literally can't return malformed JSON. We validate everything.
+**Classic apps** (Dashboard, Files, Docker, Services, Task Manager, Server Admin) run fixed commands or use SFTP, then turn the output into typed data. See [How parsing works](/docs/concepts/parsing).
 
-## Security boundaries
+**AI features** never send command text. The [AI Agent](/docs/ai/agent) and [UI Agent](/docs/ai/ui-agent) call typed actions from a catalog in `server/src/agent/actions/catalog/`, and an action runner validates the parameters, then builds and runs the command. A view from the UI Agent is JSON, which a generic renderer in `client/src/components/DynamicUI/` draws. See [AI safety](/docs/ai/safety).
 
-- The backend listens on `127.0.0.1` only. Never `0.0.0.0`.
-- All file operations use **SFTP** — never `exec('cat ...')` or `exec('rm ...')`.
-- All user input is validated against allowlists (paths, container IDs, PIDs, service names) before being interpolated into commands.
-- Frontend never sends raw HTML to the DOM — terminal output is rendered through `xterm.js` only.
+Models sit behind one `LLMProvider` interface, with OpenAI, Anthropic and Ollama implementations. You pick one in Settings → AI. See [AI setup](/docs/ai/setup). With no provider, the classic apps keep working on deterministic parsers.
 
-See the [Security](/docs/concepts/security) page for the full threat model.
+## Inside the UI
+
+The UI uses React 19, Vite, Zustand and Tailwind CSS 4. The desktop is a window manager: `store/window-store.ts` opens windows, `components/Desktop/WindowManager.tsx` maps each app to its component, and `lib/apps.ts` holds app metadata, all under `client/src/`.
+
+Each server is a persistent session with its own windows and preference overrides. Backend calls go through `lib/api.ts`. Live data uses WebSockets under `/ws/`.
+
+## Where state lives
+
+Everything on disk is in `~/.headlessos/`, in your home folder. Desktop and source runs share it.
+
+| Path | Holds |
+| --- | --- |
+| `servers.json` | Server list and credentials |
+| `llm.json` | Chosen provider, models and API keys |
+| `enc-key`, `api-token` | Per-install secrets |
+| `sessions/<id>.json` | Each server's windows, preferences and agent history |
+| `observatory/traces/` | Traces of model and tool calls, kept 30 days, up to 10,000 |
+| `audit/actions.jsonl` | Agent actions and your answers |
+| `dynamic-ui-cache/`, `user-apps/` | Generated views and saved apps |
+| `wallpapers/` | Wallpapers you upload |
+| `logs/` | Desktop app log |
+
+Two things are not in that folder. The output cache is in memory, so a restart clears it. Global preferences such as the theme are in the UI's `localStorage`, so the desktop app and a browser keep separate copies.
+
+On a clean shutdown the backend marks sessions with live connections as hibernated, denies any unanswered approvals and closes its SSH connections. You can wake those sessions on the next launch. See [Sessions and Fleet](/docs/guides/sessions-and-fleet).

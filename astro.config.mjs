@@ -73,14 +73,15 @@ export default defineConfig({
             page("Introduction", "docs/introduction", "file-text"),
             page("Quick Start", "docs/getting-started", "rocket"),
             page("Installation", "docs/installation", "download"),
+            page("Connect a server", "docs/connect-a-server", "plug"),
           ],
         },
         {
-          label: "Concepts",
+          label: "Using HeadlessOS",
           items: [
-            page("Architecture", "docs/concepts/architecture", "layers"),
-            page("How Parsing Works", "docs/concepts/parsing", "braces"),
-            page("Security Model", "docs/concepts/security", "shield"),
+            page("The desktop", "docs/guides/desktop", "app-window"),
+            page("Sessions and Fleet", "docs/guides/sessions-and-fleet", "network"),
+            page("Settings", "docs/guides/settings", "settings"),
           ],
         },
         {
@@ -88,13 +89,41 @@ export default defineConfig({
           items: [
             page("Dashboard", "docs/apps/dashboard", "gauge"),
             page("File Explorer", "docs/apps/file-explorer", "folder"),
-            page("Docker", "docs/apps/docker", "container"),
             page("Terminal", "docs/apps/terminal", "terminal"),
+            page("Docker", "docs/apps/docker", "container"),
+            page("Services", "docs/apps/services", "cog"),
+            page("Task Manager", "docs/apps/task-manager", "activity"),
             page("Server Admin", "docs/apps/server-admin", "server"),
           ],
         },
         {
-          label: "Contributing",
+          label: "AI",
+          items: [
+            page("Set up AI", "docs/ai/setup", "sparkles"),
+            page("AI Agent", "docs/ai/agent", "bot"),
+            page("UI Agent", "docs/ai/ui-agent", "wand-sparkles"),
+            page("Safety and approvals", "docs/ai/safety", "shield-check"),
+            page("LLM Observatory", "docs/ai/observatory", "telescope"),
+          ],
+        },
+        {
+          label: "Concepts",
+          items: [
+            page("Architecture", "docs/concepts/architecture", "layers"),
+            page("How parsing works", "docs/concepts/parsing", "braces"),
+            page("Security model", "docs/concepts/security", "shield"),
+          ],
+        },
+        {
+          label: "Help",
+          items: [
+            page("Troubleshooting", "docs/troubleshooting", "life-buoy"),
+            page("FAQ", "docs/faq", "circle-help"),
+            page("Changelog", "docs/changelog", "history"),
+          ],
+        },
+        {
+          label: "Project",
           items: [
             page("Contribute", "docs/contributing", "git-pull-request"),
             page("Roadmap", "docs/roadmap", "map"),
