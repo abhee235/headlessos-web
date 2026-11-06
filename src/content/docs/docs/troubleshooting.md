@@ -11,9 +11,10 @@ The desktop app writes its log to `~/.headlessos/logs/headlessos.log` on your co
 
 | Where you are | How to open it |
 | --- | --- |
-| Sign-in screen, no server needed | **Global Settings → Open log** |
+| After a failed sign-in | **Open log** on the error |
+| Sign-in screen, no server needed | **Help → Open log** at the top right, or **Global Settings → Open log** |
 | Desktop | **Settings → About → Open log** |
-| macOS menu bar | **Help → Open Logs** |
+| Menu bar | **Help → Open Logs** |
 | Backend-stopped dialog | **Open Log** |
 
 Each of these shows the file in Explorer, Finder or your file manager.
@@ -98,16 +99,20 @@ Make it executable with `chmod +x HeadlessOS-0.2.1.AppImage`, then run it. On De
 
 ### What the error means
 
-The sign-in screen shows why the connection failed. A wrong password fails straight away. A network problem can take close to a minute, because HeadlessOS tries up to four times first.
+When a connection fails, the sign-in screen says what happened and what to try, and shows the exact error. **Copy** it to search for it, **How to fix this** opens the matching section here, and **Open log** shows the app's log.
 
-| What you see | What it means | Go to |
+A wrong password fails straight away. A network problem can take close to a minute, because HeadlessOS tries up to four times first.
+
+| What you see | The exact error | Go to |
 | --- | --- | --- |
-| `The server refused this login` | The server turned down the login | [Login rejected](#login-rejected) |
-| `connect ECONNREFUSED` | Nothing is listening on that port | [Connection refused](#connection-refused) |
-| `Timed out while waiting for handshake` | No answer within 10 seconds | [Connection timed out](#connection-timed-out) |
-| `getaddrinfo ENOTFOUND` | The hostname doesn't resolve | [Host not found](#host-not-found) |
-| `connect EHOSTUNREACH` | No route to the host | [Local network access on macOS](#local-network-access-on-macos) |
-| `Cannot parse privateKey` | The key can't be read | [SSH key problems](#ssh-key-problems) |
+| The server refused this login | `All configured authentication methods failed` | [Login rejected](#login-rejected) |
+| No password was sent | `All configured authentication methods failed` | [Login rejected](#login-rejected) |
+| Nothing is answering at the address | `connect ECONNREFUSED` | [Connection refused](#connection-refused) |
+| The address didn't answer | `Timed out while waiting for handshake` | [Connection timed out](#connection-timed-out) |
+| Can't find the host | `getaddrinfo ENOTFOUND` | [Host not found](#host-not-found) |
+| Can't reach the host, on macOS | `connect EHOSTUNREACH` | [Local network access on macOS](#local-network-access-on-macos) |
+| Can't reach the host, on Windows or Linux | `connect EHOSTUNREACH` | [No route to host](#no-route-to-host) |
+| This SSH key can't be read, or a passphrase message | `Cannot parse privateKey` | [SSH key problems](#ssh-key-problems) |
 
 To compare, try the same login from a terminal on the same computer: `ssh -p 22 pi@192.168.1.20`.
 
@@ -144,6 +149,10 @@ The log says `Timed out while waiting for handshake`. Nothing answered within 10
 
 The log says `getaddrinfo ENOTFOUND`. Your computer can't turn that hostname into an address. Check the spelling, or use the IP address instead.
 
+### No route to host
+
+The log says `connect EHOSTUNREACH` or `connect ENETUNREACH`. Your computer has no path to that network. Check that you're on the right network or VPN, and that the server's address hasn't changed.
+
 ### SSH key problems
 
 | Message | What to do |
@@ -153,7 +162,7 @@ The log says `getaddrinfo ENOTFOUND`. Your computer can't turn that hostname int
 | "File does not appear to be a valid SSH private key" | You chose a file that isn't a private key, such as a `.pub` file. A PuTTY `.ppk` file is also refused here |
 | "No SSH keys found in ~/.ssh — try uploading or pasting a key" | Your key isn't named `id_*`, or it's in another folder. Use **Upload File** or **Paste Key** |
 
-If a key that worked before now shows `The server refused this login`, and `ssh` with the same key still works, the app may have lost its saved copy. This happens after you rename the computer, delete `enc-key`, or copy `~/.headlessos` to another computer. The sign-in screen still says "SSH key configured". Hover over the server, click the trash icon, and add it again. See [How encryption works](/docs/concepts/security#how-encryption-works).
+If the sign-in screen says "Saved key can't be read", the app has lost its saved copy of the key. This happens if `enc-key` is deleted, or `servers.json` is copied to another computer without it. Go back, hover over the server, click the trash icon, and add it again. See [How encryption works](/docs/concepts/security#how-encryption-works).
 
 ### Local network access on macOS
 
@@ -170,6 +179,10 @@ To allow it:
 3. Sign in again.
 
 The hint says "may" because a device that's switched off gives the same error, so check that it's on too. If HeadlessOS isn't in the list, or turning it on doesn't help, [report it](#report-a-bug). Running [from source](/docs/installation#run-from-source) in Terminal avoids the permission, since tools run from Terminal are exempt.
+
+### Saved servers are missing
+
+If `servers.json` can't be read, the app starts with an empty list and says so. The damaged file is kept as `servers.json.broken` in the `.headlessos` folder, so nothing is deleted. Add your servers again.
 
 ### "Server disconnected"
 
@@ -199,7 +212,7 @@ The same goes for "fail2ban is not installed". HeadlessOS checks for these throu
 
 ## Report a bug
 
-Open an issue at [github.com/abhee235/headlessos/issues](https://github.com/abhee235/headlessos/issues). On macOS, **Help → Report Issue** goes to the same page. Include:
+Open an issue at [github.com/abhee235/headlessos/issues](https://github.com/abhee235/headlessos/issues). **Help → Report an issue** in Control Center goes to the same page. Include:
 
 - The version, from **Settings → About** or the file you downloaded.
 - Your operating system, and how you run the app: installer, portable, AppImage, `.deb` or source.
