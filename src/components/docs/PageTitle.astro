@@ -67,7 +67,7 @@ const trail = docsTrail(route.sidebar);
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 0.875rem;
+    font-size: var(--docs-text-ui);
     color: var(--sl-color-gray-3);
   }
 
@@ -89,7 +89,7 @@ const trail = docsTrail(route.sidebar);
 
   .docs-trail li:last-child span {
     font-weight: 500;
-    color: var(--sl-color-white);
+    color: var(--docs-primary);
   }
 
   .docs-copy {
@@ -99,7 +99,7 @@ const trail = docsTrail(route.sidebar);
     flex-shrink: 0;
     padding: 0.5rem 0.75rem;
     font: inherit;
-    font-size: 0.875rem;
+    font-size: var(--docs-text-ui);
     font-weight: 500;
     color: var(--sl-color-gray-3);
     cursor: pointer;
@@ -128,17 +128,17 @@ const trail = docsTrail(route.sidebar);
 
   h1 {
     margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.25;
+    font-size: var(--docs-text-h1);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
     color: var(--sl-color-white);
   }
 
   .docs-lede {
     margin: 1rem 0 0;
-    font-size: 1.0625rem;
-    line-height: 1.7;
+    font-size: var(--docs-text-body);
+    line-height: 1.75;
     color: var(--docs-prose-muted);
   }
 </style>

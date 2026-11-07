@@ -1,38 +1,51 @@
 /* The docs design: a fixed sidebar, a 42rem article for a readable line length, and "On this
    page" on the right. Colours come from the site's tokens in starlight.css. */
 
+/* One type scale, in rem, so a page can't drift into near-miss sizes. Everything people read is
+   body size; sidebars, breadcrumbs and code are one step down. */
 :root {
-  --docs-primary: #0a7ea4;
-  --docs-primary-hover: #0b4f63;
-  --docs-on-primary: #ffffff;
-  --docs-primary-soft: color-mix(in srgb, #0a7ea4 8%, transparent);
-  --docs-primary-tint: color-mix(in srgb, #0a7ea4 6%, white);
-  --docs-border: #e5e7eb;
-  --docs-border-subtle: #f0f1f3;
-  --docs-border-strong: #c9ccd5;
-  --docs-surface-muted: #f7f8fa;
+  --docs-text-h1: 2.25rem;
+  --docs-text-h2: 1.5rem;
+  --docs-text-h3: 1.25rem;
+  --docs-text-body: 1rem;
+  --docs-text-ui: 0.875rem;
+  --docs-text-label: 0.75rem;
+}
+
+/* --docs-primary is dark enough for text. The light green can't be read on white, so it is for
+   fills and marks only: the tint behind the current page, and the bright line in "On this page". */
+:root {
+  --docs-primary: #0e7a4b;
+  --docs-primary-hover: #0a5c39;
+  --docs-primary-bright: #34c77b;
+  --docs-primary-soft: color-mix(in srgb, #34c77b 8%, transparent);
+  --docs-primary-tint: #e3f7ec;
+  --docs-border: #e4e9e5;
+  --docs-border-subtle: #eff2f0;
+  --docs-border-strong: #cdd4cf;
+  --docs-surface-muted: #f6f8f6;
   --docs-surface-raised: #ffffff;
-  --docs-prose-muted: #4b5563;
-  --docs-prose-faint: #9ca3af;
-  --docs-code-bg: #f3f4f6;
-  --docs-code-text: #1f2937;
+  --docs-prose-muted: #3f4642;
+  --docs-prose-faint: #6b756f;
+  --docs-code-bg: #f1f4f2;
+  --docs-code-text: #1f2622;
 }
 
 :root[data-theme="dark"] {
-  --docs-primary: #00d4ff;
-  --docs-primary-hover: #b1edff;
-  --docs-on-primary: #07080c;
-  --docs-primary-soft: color-mix(in srgb, #00d4ff 10%, transparent);
-  --docs-primary-tint: color-mix(in srgb, #00d4ff 6%, #0b0d13);
-  --docs-border: #262935;
-  --docs-border-subtle: #1b1e29;
-  --docs-border-strong: #3b404c;
-  --docs-surface-muted: #11131b;
-  --docs-surface-raised: #0f111a;
-  --docs-prose-muted: #a4a8b6;
-  --docs-prose-faint: #6d7182;
-  --docs-code-bg: #1b1e29;
-  --docs-code-text: #e4e6ec;
+  --docs-primary: #4ade8f;
+  --docs-primary-hover: #b5f5d2;
+  --docs-primary-bright: #4ade8f;
+  --docs-primary-soft: color-mix(in srgb, #4ade8f 10%, transparent);
+  --docs-primary-tint: #0f2a1d;
+  --docs-border: #252c28;
+  --docs-border-subtle: #1a201c;
+  --docs-border-strong: #3a433e;
+  --docs-surface-muted: #111613;
+  --docs-surface-raised: #0e1210;
+  --docs-prose-muted: #b4bdb7;
+  --docs-prose-faint: #8b958f;
+  --docs-code-bg: #1a201c;
+  --docs-code-text: #e2e7e4;
 }
 
 /* ── Frame ─────────────────────────────────────────────────────────────── */
@@ -113,11 +126,9 @@ header.header {
 }
 
 .sidebar-content .group-label .large {
-  font-size: 0.6875rem;
+  font-size: var(--docs-text-label);
   font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--sl-color-gray-3);
+  color: var(--sl-color-white);
 }
 
 .sidebar-content ul ul {
@@ -137,9 +148,9 @@ header.header {
   align-items: center;
   gap: 0.625rem;
   padding: 0.5rem 0.75rem;
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: var(--sl-color-gray-3);
+  font-size: var(--docs-text-ui);
+  font-weight: 400;
+  color: var(--docs-prose-muted);
   border-radius: 0.5rem;
   transition:
     color 0.15s ease,
@@ -154,8 +165,8 @@ header.header {
 .sidebar-content a[aria-current="page"],
 .sidebar-content a[aria-current="page"]:hover {
   font-weight: 600;
-  color: var(--docs-on-primary);
-  background: var(--docs-primary);
+  color: var(--docs-primary);
+  background: var(--docs-primary-tint);
 }
 
 .sidebar-content a.ic::before {
@@ -186,18 +197,19 @@ header.header {
 
 starlight-toc h2 {
   margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
-  font-size: 0.6875rem;
+  font-size: var(--docs-text-ui);
   font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--sl-color-gray-3);
-  border-bottom: 1px solid var(--docs-border);
+  color: var(--sl-color-white);
 }
 
 starlight-toc ul {
   --depth: 0;
   padding: 0;
+}
+
+/* A soft rail down the list, so the current section reads as a position on it */
+starlight-toc nav > ul {
+  border-inline-start: 1px solid var(--docs-border);
 }
 
 starlight-toc ul ul {
@@ -206,24 +218,37 @@ starlight-toc ul ul {
 
 starlight-toc a {
   display: block;
+  margin-inline-start: -1px;
   padding: 0.375rem 0.5rem 0.375rem calc(0.75rem + var(--depth) * 0.75rem);
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  color: var(--docs-prose-faint);
+  font-size: var(--docs-text-ui);
+  line-height: 1.5;
+  color: var(--docs-prose-muted);
   border-inline-start: 2px solid transparent;
   transition: color 0.15s ease;
 }
 
-starlight-toc a:hover {
-  color: var(--sl-color-gray-2);
+starlight-toc ul ul a {
+  color: var(--docs-prose-faint);
+}
+
+starlight-toc a:hover,
+starlight-toc ul ul a:hover {
+  color: var(--docs-primary);
 }
 
 starlight-toc a[aria-current="true"],
 starlight-toc a[aria-current="true"]:hover,
 starlight-toc a[aria-current="true"]:focus {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--docs-primary);
-  border-inline-start-color: var(--docs-primary);
+  border-inline-start-color: var(--docs-primary-bright);
+}
+
+/* Starlight marks nothing until the first scroll, so the first row stands in until it does */
+starlight-toc:not(:has(a[aria-current="true"])) nav > ul > li:first-child > a {
+  font-weight: 500;
+  color: var(--docs-primary);
+  border-inline-start-color: var(--docs-primary-bright);
 }
 
 /* ── Search ────────────────────────────────────────────────────────────── */
@@ -232,7 +257,7 @@ site-search > button {
   min-width: 15rem;
   height: 2.375rem;
   padding-inline: 0.75rem;
-  font-size: 0.875rem;
+  font-size: var(--docs-text-ui);
   color: var(--sl-color-gray-3);
   background: var(--docs-surface-muted);
   border: 1px solid var(--docs-border);
@@ -255,7 +280,7 @@ site-search > button:hover {
 /* ── Article ───────────────────────────────────────────────────────────── */
 
 .sl-markdown-content {
-  font-size: 0.9375rem;
+  font-size: var(--docs-text-body);
   line-height: 1.75;
   color: var(--docs-prose-muted);
 }
@@ -263,9 +288,9 @@ site-search > button:hover {
 .sl-markdown-content h2 {
   margin-top: 3rem;
   margin-bottom: 1rem;
-  font-size: 1.375rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  font-size: var(--docs-text-h2);
+  font-weight: 500;
+  letter-spacing: -0.02em;
   line-height: 1.3;
   scroll-margin-top: 5.5rem;
   color: var(--sl-color-white);
@@ -274,9 +299,10 @@ site-search > button:hover {
 .sl-markdown-content h3 {
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: var(--docs-text-h3);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.4;
   scroll-margin-top: 5.5rem;
   color: var(--sl-color-white);
 }
@@ -304,7 +330,6 @@ site-search > button:hover {
 
 .sl-markdown-content li {
   margin-block: 0.5rem;
-  line-height: 1.7;
 }
 
 /* Numbers stand clear of the text, in the heading colour */
@@ -355,7 +380,7 @@ site-search > button:hover {
 
 .sl-markdown-content code:not(pre *) {
   padding: 0.125rem 0.375rem;
-  font-size: 0.84em;
+  font-size: var(--docs-text-ui);
   color: var(--docs-code-text);
   background: var(--docs-code-bg);
   border-radius: 0.375rem;
@@ -376,7 +401,7 @@ site-search > button:hover {
   width: 100%;
   margin-block: 1.5rem;
   overflow: hidden;
-  font-size: 0.875rem;
+  font-size: var(--docs-text-body);
   border: 1px solid var(--docs-border);
   border-collapse: separate;
   border-spacing: 0;
@@ -385,23 +410,17 @@ site-search > button:hover {
 
 .sl-markdown-content :is(th, td) {
   padding: 0.625rem 0.875rem;
+  line-height: 1.6;
   text-align: start;
   border: 0;
   border-bottom: 1px solid var(--docs-border-subtle);
 }
 
 .sl-markdown-content th {
-  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: var(--docs-primary);
   background: var(--docs-primary-tint);
   border-bottom-color: var(--docs-border);
-}
-
-.sl-markdown-content td {
-  line-height: 1.55;
 }
 
 .sl-markdown-content tbody tr:hover {
@@ -425,14 +444,14 @@ site-search > button:hover {
 .starlight-aside {
   margin-block: 1.5rem;
   padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  font-size: var(--docs-text-body);
   background: color-mix(in srgb, var(--sl-color-asides-text-accent) 6%, transparent);
   border: 1px solid color-mix(in srgb, var(--sl-color-asides-text-accent) 30%, transparent);
   border-radius: 0.75rem;
 }
 
 .starlight-aside__title {
-  font-size: 0.875rem;
+  font-size: var(--docs-text-body);
   font-weight: 600;
 }
 
@@ -471,7 +490,7 @@ site-search > button:hover {
 
 .expressive-code .frame .header .title {
   padding: 0;
-  font-size: 0.75rem;
+  font-size: var(--docs-text-label);
   color: var(--sl-color-gray-3);
   background: none;
   border: 0;
@@ -558,10 +577,8 @@ header.header {
   width: auto;
   height: auto;
   font-family: var(--sl-font);
-  font-size: 0.6875rem;
+  font-size: var(--docs-text-label);
   font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   color: var(--sl-color-gray-3);
   background: none;
   border: 0;

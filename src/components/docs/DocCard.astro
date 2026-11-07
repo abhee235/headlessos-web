@@ -41,7 +41,7 @@ const { href, title, description } = Astro.props;
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.5rem;
-    font-size: 0.9375rem;
+    font-size: var(--docs-text-body);
     font-weight: 600;
     color: var(--sl-color-white);
     transition: color 0.15s ease;
@@ -52,7 +52,7 @@ const { href, title, description } = Astro.props;
   }
 
   .doc-card-text {
-    font-size: 0.875rem;
+    font-size: var(--docs-text-ui);
     line-height: 1.5;
     color: var(--docs-prose-muted);
   }
