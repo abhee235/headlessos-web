@@ -1,0 +1,26 @@
+---
+// A phone has no room for the site's links in the header, so they sit in the docs menu
+import Default from "@astrojs/starlight/components/MobileMenuFooter.astro";
+import { navLinks } from "@/data/nav";
+---
+
+<nav class="docs-site-links" aria-label="HeadlessOS">
+  <a href="/">Home</a>
+  {navLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+  <a href="/download">Download</a>
+</nav>
+<Default />
+
+<style>
+  .docs-site-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.75rem;
+    padding-block: 0.5rem;
+    border-top: 1px solid var(--docs-border);
+  }
+
+  .docs-site-links a {
+    text-decoration: none;
+  }
+</style>
