@@ -98,8 +98,24 @@
   }
 }
 
+/* The bar itself is SiteBar. This is the frame around it, matching the site's header. */
 header.header {
-  border-bottom: 1px solid var(--docs-border);
+  background: color-mix(in srgb, var(--sl-color-bg) 72%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--sl-color-white) 7%, transparent);
+}
+
+/* The docs add search, so the site's links need more width here than on the site */
+@media (max-width: 60rem) {
+  header.header .site-bar-nav {
+    display: none;
+  }
+}
+
+/* A phone keeps room for the docs menu button; Download is in that menu */
+@media (max-width: 30rem) {
+  header.header .site-bar-download {
+    display: none;
+  }
 }
 
 /* ── Sidebar ───────────────────────────────────────────────────────────── */
@@ -249,14 +265,14 @@ starlight-toc:not(:has(a[aria-current="true"])) nav > ul > li:first-child > a {
 /* ── Search ────────────────────────────────────────────────────────────── */
 
 site-search > button {
-  min-width: 15rem;
-  height: 2.375rem;
+  min-width: 11rem;
+  height: 2.25rem;
   padding-inline: 0.75rem;
   font-size: var(--docs-text-ui);
   color: var(--sl-color-gray-3);
   background: var(--docs-surface-muted);
   border: 1px solid var(--docs-border);
-  border-radius: 0.75rem;
+  border-radius: 0.625rem;
 }
 
 site-search > button:hover {
@@ -264,9 +280,22 @@ site-search > button:hover {
   border-color: var(--docs-border-strong);
 }
 
+/* Below this the header can't spare the width, so search is just its icon */
+@media (max-width: 70rem) {
+  site-search > button {
+    justify-content: center;
+    min-width: 0;
+    width: 2.25rem;
+    padding-inline: 0;
+  }
+
+  site-search > button :is(span, kbd) {
+    display: none;
+  }
+}
+
 @media (max-width: 50rem) {
   site-search > button {
-    min-width: 0;
     background: transparent;
     border: 0;
   }
@@ -538,8 +567,8 @@ site-search > button:hover {
 
 /* The header floats over the page as it scrolls */
 header.header {
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
 }
 
 /* The bar names the language, unless the block has a file name of its own */

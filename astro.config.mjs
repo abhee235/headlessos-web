@@ -134,6 +134,7 @@ export default defineConfig({
         // Default to light when no theme was picked, like the marketing pages
         ThemeProvider: "./src/components/docs/ThemeProvider.astro",
         Header: "./src/components/docs/Header.astro",
+        MobileMenuFooter: "./src/components/docs/MobileMenuFooter.astro",
         PageTitle: "./src/components/docs/PageTitle.astro",
         Head: "./src/components/docs/Head.astro",
       },
