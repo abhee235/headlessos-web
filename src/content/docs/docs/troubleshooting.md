@@ -93,7 +93,7 @@ xattr -cr /Applications/HeadlessOS.app
 
 ### Linux: the AppImage won't start
 
-Make it executable with `chmod +x HeadlessOS-0.2.1.AppImage`, then run it. On Debian or Ubuntu, you can install the `.deb` instead.
+Make it executable with `chmod +x HeadlessOS-0.3.1.AppImage`, then run it. On Debian or Ubuntu, you can install the `.deb` instead.
 
 ## A server won't connect
 
