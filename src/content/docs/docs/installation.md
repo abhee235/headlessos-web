@@ -7,16 +7,16 @@ HeadlessOS runs on your computer, not on your server. You can install the deskto
 
 ## Download the desktop app
 
-Get the latest version from the [download page](/download). These are the files for version 0.2.1:
+Get the latest version from the [download page](/download). These are the files for version 0.3.1:
 
 | System | File | Notes |
 | --- | --- | --- |
-| Windows | `HeadlessOS Setup 0.2.1.exe` | Installer |
-| Windows | `HeadlessOS 0.2.1.exe` | Portable, no install needed |
-| macOS | `HeadlessOS-0.2.1-universal.dmg` | Apple silicon and Intel |
-| macOS | `HeadlessOS-0.2.1-universal-mac.zip` | Apple silicon and Intel |
-| Linux | `HeadlessOS-0.2.1.AppImage` | Most distributions |
-| Linux | `headlessos-desktop_0.2.1_amd64.deb` | Debian and Ubuntu |
+| Windows | `HeadlessOS.Setup.0.3.1.exe` | Installer |
+| Windows | `HeadlessOS.0.3.1.exe` | Portable, no install needed |
+| macOS | `HeadlessOS-0.3.1-universal.dmg` | Apple silicon and Intel |
+| macOS | `HeadlessOS-0.3.1-universal-mac.zip` | Apple silicon and Intel |
+| Linux | `HeadlessOS-0.3.1.AppImage` | Most distributions |
+| Linux | `headlessos-desktop_0.3.1_amd64.deb` | Debian and Ubuntu |
 
 You need 64-bit Windows 10 or 11, macOS 11 or later, or a 64-bit Linux desktop.
 
@@ -39,6 +39,8 @@ If macOS says the app is damaged, run this in Terminal and open it again:
 xattr -cr /Applications/HeadlessOS.app
 ```
 
+HeadlessOS keeps the key to your saved logins in the macOS Keychain, so other apps can't read it. When macOS asks, enter your Mac password and click **Always Allow**. The app isn't signed yet, so this can happen once after each update. If any other app asks for "HeadlessOS Safe Storage", click **Deny**.
+
 To reach a device on your local network, the app also needs [local network access](/docs/troubleshooting#local-network-access-on-macos).
 
 ### Install on Linux
@@ -46,14 +48,14 @@ To reach a device on your local network, the app also needs [local network acces
 Make the AppImage executable and run it:
 
 ```bash
-chmod +x HeadlessOS-0.2.1.AppImage
-./HeadlessOS-0.2.1.AppImage
+chmod +x HeadlessOS-0.3.1.AppImage
+./HeadlessOS-0.3.1.AppImage
 ```
 
 Or install the `.deb` with your package manager:
 
 ```bash
-sudo apt install ./headlessos-desktop_0.2.1_amd64.deb
+sudo apt install ./headlessos-desktop_0.3.1_amd64.deb
 ```
 
 ## Run from source

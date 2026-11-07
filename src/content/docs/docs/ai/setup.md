@@ -78,7 +78,7 @@ Encryption stops casual reading. It doesn't stop someone who can run code as you
 | **Prompts and server output** | Sent to OpenAI | Sent to Anthropic | Stay on hardware you control |
 | **Quality** | Depends on the model | Haiku is fastest, Opus is most capable | Depends on the model. Small models make more mistakes |
 
-Prices are as listed in version 0.2.1. Check your provider for current ones.
+Prices are as listed in version 0.3.1. Check your provider for current ones.
 
 For the lowest cost on both agents, start with Claude Haiku 5.5, since GPT-6 Luna's price doesn't apply to the UI Agent. If server output must not leave your hardware, use Ollama.
 
