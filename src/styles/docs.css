@@ -56,6 +56,35 @@
   background: var(--sl-color-bg);
 }
 
+/* A thin scrollbar that shows only while the pointer is over the sidebar. Its width stays reserved,
+   so nothing moves when it appears. Chromium redraws a scrollbar only when the scrolling element's
+   own style changes, so hover sets a variable here: :hover::-webkit-scrollbar-thumb never draws.
+   Setting scrollbar-width or scrollbar-color turns the ::-webkit-scrollbar rules off in Chromium,
+   so those two are for Firefox alone. */
+.sidebar-pane:hover {
+  --docs-sidebar-thumb: var(--sl-color-gray-5);
+}
+
+.sidebar-pane::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-pane::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-pane::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: var(--docs-sidebar-thumb, transparent);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .sidebar-pane {
+    scrollbar-width: thin;
+    scrollbar-color: var(--docs-sidebar-thumb, transparent) transparent;
+  }
+}
+
 header.header {
   border-bottom: 1px solid var(--docs-border);
 }
