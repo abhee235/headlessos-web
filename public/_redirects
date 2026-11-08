@@ -1,0 +1,3 @@
+# Cloudflare reads this file from the site's root. Astro's sitemap is sitemap-index.xml; tools and
+# crawlers that guess the usual name find it here.
+/sitemap.xml /sitemap-index.xml 301
