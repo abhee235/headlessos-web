@@ -1,5 +1,5 @@
 /* The docs design: a fixed sidebar, a 42rem article for a readable line length, and "On this
-   page" on the right. Colours come from the site's tokens in starlight.css. */
+   page" against the window's right edge. Colours come from the site's tokens in starlight.css. */
 
 /* One type scale, in rem, so a page can't drift into near-miss sizes. Everything people read is
    body size; sidebars, breadcrumbs and code are one step down. */
@@ -204,6 +204,33 @@ header.header {
 
 .right-sidebar-panel {
   padding-top: 2rem;
+}
+
+/* Like the sidebar on the left, "On this page" keeps to the window's right edge, and the article is
+   centred between the two. Starlight puts the list just after the article instead, and splits the
+   spare width between the far left and the far right. */
+@media (min-width: 72rem) {
+  .right-sidebar-container {
+    flex-shrink: 0;
+    width: var(--sl-sidebar-width);
+  }
+
+  /* It is position: fixed, so a percentage width would be the window's */
+  .right-sidebar {
+    width: var(--sl-sidebar-width);
+  }
+
+  [data-has-sidebar][data-has-toc] .main-pane {
+    --sl-content-margin-inline: auto;
+    flex: 1;
+    min-width: 0;
+    width: auto;
+  }
+
+  .right-sidebar-panel .sl-container {
+    width: auto;
+    max-width: none;
+  }
 }
 
 starlight-toc h2 {
