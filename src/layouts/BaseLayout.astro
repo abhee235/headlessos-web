@@ -38,7 +38,7 @@ const socialImage = new URL(image, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#f7f8fa" />
+    <meta name="theme-color" content="#f6f8f8" />
 
     <!-- Open Graph -->
     <meta property="og:type" content={type} />
@@ -54,11 +54,11 @@ const socialImage = new URL(image, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
 
-    <!-- Fonts: Geist + Geist Mono -->
+    <!-- Fonts: Manrope (the app's own face) for text, Geist Mono for code. Geist stays for the logo. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Geist:wght@600;700&family=Geist+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
@@ -76,7 +76,7 @@ const socialImage = new URL(image, Astro.site);
         } catch (e) {}
         d.dataset.theme = t;
         var m = document.querySelector('meta[name="theme-color"]');
-        if (m) m.setAttribute("content", t === "dark" ? "#07080c" : "#f7f8fa");
+        if (m) m.setAttribute("content", t === "dark" ? "#0e1316" : "#f6f8f8");
       })();
     </script>
 

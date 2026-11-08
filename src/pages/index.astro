@@ -1,22 +1,30 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/Hero.astro";
+import AppsBento from "@/components/AppsBento.astro";
 import BeforeAfter from "@/components/BeforeAfter.astro";
 import AppsShowcase from "@/components/AppsShowcase.astro";
+import AIAgent from "@/components/AIAgent.astro";
 import HowItWorks from "@/components/HowItWorks.astro";
 import Features from "@/components/Features.astro";
+import Testimonials from "@/components/Testimonials.astro";
 import GetStarted from "@/components/GetStarted.astro";
 import FAQ from "@/components/FAQ.astro";
 import OpenSourceCTA from "@/components/OpenSourceCTA.astro";
 ---
 
-<!-- Promise and proof first (hero, before/after, apps), then trust (how it works, features), then the way in -->
+<!-- Promise and proof first (hero, the apps at a glance, before/after, every app, the AI agent), then trust
+     (how it works, features, what people say), then the way in. Testimonials stays hidden until
+     src/data/testimonials.ts has quotes. -->
 <BaseLayout>
   <Hero />
+  <AppsBento />
   <BeforeAfter />
   <AppsShowcase />
+  <AIAgent />
   <HowItWorks />
   <Features />
+  <Testimonials />
   <GetStarted />
   <FAQ />
   <OpenSourceCTA />

@@ -1,0 +1,38 @@
+---
+// "What people say". Renders nothing until src/data/testimonials.ts has real quotes in it.
+import { testimonials } from "@/data/testimonials";
+---
+
+{
+  testimonials.length > 0 && (
+    <section class="section pt-0" aria-labelledby="quotes-title">
+      <div class="container-x">
+        <div class="section-head">
+          <h2 id="quotes-title" class="h2">What people say</h2>
+          <p class="text-[1.03rem]">
+            <a class="font-semibold text-accent-text underline-offset-4 hover:underline" href="https://github.com/abhee235/headlessos/issues">
+              Tell us how you use it
+            </a>
+          </p>
+        </div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {testimonials.map((t) => (
+            <figure class="card flex flex-col gap-5 p-6">
+              <blockquote class="text-[1.08rem] leading-relaxed">{t.quote}</blockquote>
+              <figcaption class="mt-auto text-sm text-fg-subtle">
+                {t.href ? (
+                  <a href={t.href} class="block font-semibold text-fg hover:underline">
+                    {t.name}
+                  </a>
+                ) : (
+                  <span class="block font-semibold text-fg">{t.name}</span>
+                )}
+                {t.role}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,4 @@
+App icons from the HeadlessOS (LumenOS) design.
+files.svg, folder.svg, txt.svg, package.svg, terminal.svg, home.svg: Fluent icon theme by vinceliuice (https://github.com/vinceliuice/Fluent-icon-theme), GPL-3.0.
+sysdash.svg, activity.svg, serveradmin.svg, settings.svg: Fluent UI System Icons by Microsoft (https://github.com/microsoft/fluentui-system-icons), MIT.
+docker.svg: path from Simple Icons 11.0.0 (https://simpleicons.org), CC0-1.0, filled with Docker blue. The Docker logo is a trademark of Docker, Inc., used only to identify the Docker app.

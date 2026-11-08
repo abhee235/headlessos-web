@@ -1,0 +1,28 @@
+---
+// A screenshot of the app in the page's own theme: the light capture on the light site, the dark one on the
+// dark site. Both are in the page; CSS shows one, and a lazy image that isn't shown is never fetched.
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  light: ImageMetadata;
+  dark: ImageMetadata;
+  alt: string;
+  sizes: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const { light, dark, alt, sizes, eager = false, class: className } = Astro.props;
+const widths = [800, 1200, 1600, 2400];
+---
+
+<Image src={light} alt={alt} widths={widths} sizes={sizes} loading={eager ? "eager" : "lazy"} class:list={["shot-light", className]} />
+<Image src={dark} alt={alt} widths={widths} sizes={sizes} loading="lazy" class:list={["shot-dark", className]} />
+
+<style>
+  :global(html[data-theme="dark"] .shot-light),
+  :global(html:not([data-theme="dark"]) .shot-dark) {
+    display: none;
+  }
+</style>

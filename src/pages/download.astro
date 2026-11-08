@@ -139,17 +139,24 @@ const platforms = [
 </BaseLayout>
 
 <style>
+  /* The visitor's own platform: an accent ring, as on the landing page's download cards */
   .platform[data-mine="true"] {
-    border-color: rgba(61, 220, 255, 0.35);
     box-shadow:
-      0 1px 0 rgb(var(--ink) / 0.05) inset,
-      0 30px 80px -40px rgba(0, 212, 255, 0.45);
+      0 0 0 2px var(--color-accent),
+      var(--card-shadow);
   }
 
   .platform:not([data-mine="true"]) .btn-primary {
     background: rgb(var(--ink) / 0.08);
     color: var(--color-fg);
+    text-shadow: none;
+    border-color: transparent;
     box-shadow: 0 0 0 1px var(--color-border-strong) inset;
+  }
+
+  /* The muted buttons drop the glossy sheen of the lit one */
+  .platform:not([data-mine="true"]) .btn-primary::before {
+    display: none;
   }
 
   .platform:not([data-mine="true"]) .btn-primary:hover {
@@ -167,9 +174,9 @@ const platforms = [
   }
 
   .mine-badge {
-    color: var(--color-brand-200);
-    border-color: rgba(61, 220, 255, 0.35);
-    background: rgba(61, 220, 255, 0.08);
+    color: var(--color-accent-text);
+    border-color: rgb(106 79 176 / 0.3);
+    background: var(--color-accent-soft);
   }
 </style>
 

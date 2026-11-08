@@ -1,0 +1,8 @@
+Wallpapers from the LumenOS design (Claude Design project "Custom OS UI Design").
+They are Unsplash photos, taken from picsum.photos, under the Unsplash License (https://unsplash.com/license).
+Photographer and original link for each: https://picsum.photos/id/<id>/info
+
+alpine.jpg     picsum id 1036
+aurora.jpg     picsum id 1022
+highlands.jpg  picsum id 1018
+mist.jpg       picsum id 1045

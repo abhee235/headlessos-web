@@ -1,57 +1,81 @@
 ---
-// The problem, then the answer: what checking on a server looks like today, next to the Dashboard.
-import { Image } from "astro:assets";
-import dashboard from "@/assets/screens/dashboard.webp";
+// The problem, then the answer: what checking on a server takes today, next to the Dashboard.
+// Two tiles in the same language as the apps section above: tinted panels, a white card, the app itself.
+import ThemedShot from "@/components/ThemedShot.astro";
+import dashLight from "@/assets/app/light/dashboard.webp";
+import dashDark from "@/assets/app/dark/dashboard.webp";
+
+const commands = [
+  "ssh deploy@web-01.example.com",
+  "df -h | grep -v tmpfs",
+  "free -m",
+  "ps aux --sort=-%cpu | head",
+  'docker ps --format "table {{.Names}}\\t{{.Status}}"',
+  "docker logs --tail 50 app-web",
+  "sudo journalctl -u nginx --since -1h | grep err",
+  "sudo ss -tulpn",
+  "sudo ufw status numbered",
+  "crontab -l",
+];
 ---
 
-<section id="why" class="section relative">
-  <div class="container-x">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="rv eyebrow">Before &amp; after</p>
-      <h2 class="rv h2 mt-5 [--d:.05s]">
-        Stop memorizing flags.
-        <span class="dim">Just look at your server.</span>
-      </h2>
-      <p class="rv lede mx-auto mt-6 max-w-2xl [--d:.1s]">
-        "Is the disk full? Which container restarted? What's eating the CPU?" Each answer is another command to
-        remember. HeadlessOS asks them for you and keeps the answers on screen.
-      </p>
-    </div>
+<section id="why" class="sect container-x">
+  <div class="section-head">
+    <h2 class="h2 max-w-[11em]">Stop memorizing flags. <span class="block">Look at your server.</span></h2>
+    <p class="lede">
+      Is the disk full? Which container restarted? What's eating the CPU? Each answer is another command to remember.
+      HeadlessOS asks for you and keeps the answers on screen.
+    </p>
+  </div>
 
-    <div class="mt-14 grid grid-cols-1 items-stretch gap-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-6">
-      <figure class="rv card flex min-w-0 flex-col p-5 sm:p-6">
-        <figcaption class="flex items-center justify-between">
-          <span class="font-mono text-xs uppercase tracking-[0.14em] text-fg-subtle">Before</span>
-          <span class="font-mono text-xs text-fg-subtle">10 commands before coffee</span>
-        </figcaption>
-        <pre class="term mt-4 flex-1 !text-[0.78rem] !leading-[2]"><span class="dim">$</span> <span class="hi">ssh deploy@web-01.example.com</span>
-<span class="dim">$</span> <span class="hi">df -h | grep -v tmpfs</span>
-<span class="dim">$</span> <span class="hi">free -m</span>
-<span class="dim">$</span> <span class="hi">ps aux --sort=-%cpu | head</span>
-<span class="dim">$</span> <span class="hi">docker ps --format "table &#123;&#123;.Names&#125;&#125;\t&#123;&#123;.Status&#125;&#125;"</span>
-<span class="dim">$</span> <span class="hi">docker logs --tail 50 shop-api</span>
-<span class="dim">$</span> <span class="hi">sudo journalctl -u nginx --since -1h | grep err</span>
-<span class="dim">$</span> <span class="hi">sudo ss -tulpn</span>
-<span class="dim">$</span> <span class="hi">sudo ufw status numbered</span>
-<span class="dim">$</span> <span class="hi">crontab -l</span>
-<span class="dim"># …and was that on web-01 or web-02?</span></pre>
-      </figure>
+  <div class="flex flex-wrap gap-5">
+    <!-- Today: the commands, as a quiet list -->
+    <article class="flex min-w-0 flex-[5_1_340px] flex-col rounded-[24px] bg-tint p-7 sm:p-9">
+      <h3 class="h3">Today</h3>
+      <p class="mt-2.5 mb-7 max-w-[23em] text-fg-muted">Ten commands before coffee, and you still line up the answers in your head.</p>
+      <div class="card mt-auto overflow-x-auto py-1.5">
+        <ol class="min-w-max font-mono text-[12.5px] leading-snug">
+          {
+            commands.map((c) => (
+              <li class="flex gap-3 border-b-[0.5px] border-ink/10 px-4 py-[7px]">
+                <span class="text-fg-subtle select-none" aria-hidden="true">$</span>
+                <span>{c}</span>
+              </li>
+            ))
+          }
+          <li class="px-4 pt-[7px] pb-1.5 text-fg-subtle"># …and was that on web-01 or web-02?</li>
+        </ol>
+      </div>
+    </article>
 
-      <figure class="rv flex min-w-0 flex-col [--d:.08s]">
-        <figcaption class="mb-4 flex items-center justify-between px-1">
-          <span class="font-mono text-xs uppercase tracking-[0.14em] text-brand-300">With HeadlessOS</span>
-          <span class="font-mono text-xs text-fg-subtle">one window, live</span>
-        </figcaption>
-        <div class="frame">
-          <Image
-            src={dashboard}
-            alt="The HeadlessOS Dashboard for web-01: processor, memory, disks, network and uptime on one screen"
-            widths={[800, 1200, 1600]}
-            sizes="(min-width: 1200px) 680px, 94vw"
-            class="frame-media"
-          />
-        </div>
-      </figure>
-    </div>
+    <!-- With HeadlessOS: the Dashboard, resting on the tile's lower edge -->
+    <article class="flex min-w-0 flex-[7_1_440px] flex-col overflow-hidden rounded-[24px] bg-tint px-7 pt-7 sm:px-9 sm:pt-9">
+      <h3 class="h3">With HeadlessOS</h3>
+      <p class="mt-2.5 max-w-[26em] text-fg-muted">One window, live: processor, memory, disks and network, refreshed while you watch.</p>
+      <div class="peek mt-auto -mr-7 pt-7 sm:-mr-9">
+        <ThemedShot
+          light={dashLight}
+          dark={dashDark}
+          alt="The HeadlessOS Dashboard for web-01, with processor, memory, uptime, disk usage and live network traffic"
+          sizes="(min-width: 1200px) 620px, 92vw"
+          class="block h-auto w-full"
+        />
+      </div>
+    </article>
   </div>
 </section>
+
+<style>
+  /* The capture sits on the tile's bottom edge, like a screen seen over a desk */
+  .peek {
+    margin-bottom: -2px;
+  }
+
+  /* It runs off the tile's right and bottom edges, so only the top-left corner is rounded */
+  .peek :global(img) {
+    border-radius: 14px 0 0 0;
+    box-shadow:
+      0 0 0 1px rgb(var(--ink) / 0.08),
+      0 -10px 40px -18px rgb(10 30 40 / 0.35);
+  }
+</style>

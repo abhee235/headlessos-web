@@ -31,24 +31,20 @@ const faqs = [
 ];
 ---
 
-<section id="faq" class="section relative">
-  <div class="container-x grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
-    <div class="lg:sticky lg:top-28 lg:self-start">
-      <p class="rv eyebrow">FAQ</p>
-      <h2 class="rv h2 mt-5 [--d:.05s]">Questions, answered.</h2>
-      <p class="rv lede mt-6 [--d:.1s]">
-        Something else? Ask in <a class="text-fg underline decoration-ink/30 underline-offset-4 hover:decoration-ink" href="https://github.com/abhee235/headlessos/issues">GitHub Issues</a>.
+<section id="faq" class="sect">
+  <div class="container-x flex flex-wrap gap-x-[72px] gap-y-8">
+    <div class="flex-[1_1_300px] lg:sticky lg:top-28 lg:self-start">
+      <h2 class="h2 max-w-[8em] text-[clamp(2.1rem,3.6vw,3rem)]">Questions about HeadlessOS</h2>
+      <p class="mt-4 text-[1.03rem]">
+        <a class="font-semibold text-accent-text underline-offset-4 hover:underline" href="https://github.com/abhee235/headlessos/issues">Ask anything else on GitHub</a>
       </p>
     </div>
-    <div class="rv divide-y divide-border border-y border-border [--d:.08s]">
+    <div class="min-w-0 flex-[2_1_520px] border-b-[0.5px] border-ink/20">
       {
         faqs.map((f, i) => (
-          <details class="faq group" open={i === 0}>
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-medium">
-              {f.q}
-              <span class="plus" aria-hidden="true" />
-            </summary>
-            <p class="-mt-1 pb-6 pr-10 leading-relaxed text-fg-muted">{f.a}</p>
+          <details class="faq border-t-[0.5px] border-ink/20" open={i === 0}>
+            <summary>{f.q}</summary>
+            <p class="max-w-[38em] pb-6 text-[1.03rem] leading-relaxed text-fg-muted">{f.a}</p>
           </details>
         ))
       }
@@ -57,47 +53,41 @@ const faqs = [
 </section>
 
 <style>
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    min-height: 68px;
+    padding-block: 12px;
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    list-style: none;
+    cursor: pointer;
+  }
+
   .faq summary::-webkit-details-marker {
     display: none;
   }
 
-  .plus {
-    position: relative;
+  .faq summary::after {
+    content: "+";
     flex: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 999px;
-    border: 1px solid var(--color-border-strong);
-    transition: transform 0.25s ease, background 0.2s ease;
+    color: var(--color-fg-subtle);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+    transition: transform 0.15s ease;
   }
 
-  .plus::before,
-  .plus::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 11px;
-    height: 1.5px;
-    border-radius: 2px;
-    background: var(--color-fg-muted);
-    transform: translate(-50%, -50%);
+  .faq[open] summary::after {
+    transform: rotate(45deg);
   }
 
-  .plus::after {
-    transform: translate(-50%, -50%) rotate(90deg);
-    transition: transform 0.25s ease;
-  }
-
-  .faq[open] .plus {
-    background: rgb(var(--ink) / 0.06);
-  }
-
-  .faq[open] .plus::after {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  .faq summary:hover .plus {
-    border-color: rgb(var(--ink) / 0.3);
+  @media (prefers-reduced-motion: reduce) {
+    .faq summary::after {
+      transition: none;
+    }
   }
 </style>

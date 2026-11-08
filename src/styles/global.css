@@ -3,44 +3,52 @@
 
 /* ============================================================
    HeadlessOS Web — design tokens
-   Light by default, dark on html[data-theme="dark"]. The app's own
-   screenshots carry the colour; the page stays quiet around them,
-   with the logo's cyan → violet as the accent.
+   Light by default, dark on html[data-theme="dark"]. The look follows the
+   app itself (LumenOS): cool paper, ink text, the iris accent, and the app's
+   own wallpapers as the only illustration. No glows, no gradient text.
    ============================================================ */
 
 @theme {
-  /* Brand — the logo's cyan → violet. 200/300 and accent 300/400 are used as text
-     accents, so they are deeper here and re-set for the dark theme below. */
+  /* Brand — the logo's cyan → violet. Kept for the logo, docs and blog links. */
   --color-brand-200: #0b6f8c;
   --color-brand-300: #0a7ea4;
   --color-brand-400: #0891b2;
   --color-brand-500: #00d4ff;
   --color-brand-600: #00a8d4;
-  --color-accent-300: #6d28d9;
-  --color-accent-400: #7c3aed;
-  --color-accent-500: #7c3aed;
+
+  /* Accent — the app's iris. 300/400 are text accents, re-set for dark below. */
+  --color-accent-300: #4f3790;
+  --color-accent-400: #6a4fb0;
+  --color-accent-500: #6a4fb0;
+  --color-accent: #6a4fb0;
+  --color-accent-text: #4f3790;
+  --color-accent-soft: rgb(106 79 176 / 0.12);
 
   /* Surfaces */
-  --color-bg: #f7f8fa;
+  --color-bg: #f6f8f8;
   --color-bg-elevated: #ffffff;
   --color-surface: #ffffff;
-  --color-surface-2: #f0f2f6;
-  --color-border: rgb(14 16 24 / 0.09);
-  --color-border-strong: rgb(14 16 24 / 0.16);
+  --color-surface-2: #eaf0f0;
+  --color-tint: #eaf0f0;
+  --color-border: rgb(16 32 42 / 0.1);
+  --color-border-strong: rgb(16 32 42 / 0.18);
 
   /* Text */
-  --color-fg: #0e1018;
-  --color-fg-muted: #4a4f5e;
-  --color-fg-subtle: #7a7f8f;
+  --color-fg: #10202a;
+  --color-fg-muted: #46565e;
+  --color-fg-subtle: #5c6b72;
 
-  /* "Ink" is the text colour as a translucent layer for hover fills, hairlines and grids:
+  /* "Ink" is the text colour as a translucent layer for hover fills and hairlines:
      bg-ink/5, border-ink/20 … in markup, rgb(var(--ink) / 0.05) in CSS. */
   --color-ink: rgb(var(--ink));
 
-  /* Status (terminal snippets) */
+  /* Status */
   --color-ok: #4ade80;
+  --color-ok-text: #24663f;
+  --color-warn-text: #7a4e00;
+  --color-err-text: #9a2626;
 
-  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Manrope", "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   --radius-sm: 6px;
@@ -52,54 +60,60 @@
 
 /* Theme channels: --ink is the text colour and --paper the page colour, as "r g b" */
 :root {
-  --ink: 14 16 24;
-  --paper: 255 255 255;
+  --ink: 16 32 42;
+  --paper: 246 248 248;
   --card-bg: #ffffff;
-  --card-shadow: 0 1px 2px rgb(14 16 24 / 0.04), 0 12px 32px -18px rgb(14 16 24 / 0.18);
-  --frame-bg: linear-gradient(180deg, #ffffff, #e9ecf2);
-  --frame-shadow: 0 1px 0 #ffffff inset, 0 40px 90px -36px rgb(14 16 24 / 0.38), 0 0 0 1px rgb(14 16 24 / 0.06);
+  --card-shadow: 0 16px 34px -16px rgb(10 30 40 / 0.26), 0 0 0 1px rgb(10 30 40 / 0.06);
+  --frame-bg: #ffffff;
+  --frame-shadow: 0 30px 60px -28px rgb(10 30 40 / 0.4), 0 0 0 1px rgb(10 30 40 / 0.08);
   --tile-strength: 58%;
   --logo-accent: #0891b2;
-  --shadow-strong: rgb(14 16 24 / 0.22);
-  --glow-strength: 0.55;
+  --shadow-strong: rgb(16 32 42 / 0.22);
+  --glow-strength: 0.3;
   --gradient-text: linear-gradient(100deg, #0891b2 0%, #0a84c6 30%, #6d4fe0 68%, #7c3aed 100%);
+  /* The glossy primary button (the app's "lit" pill): same in both themes */
+  --lit-1: #8c72cf;
+  --lit-2: #7558bc;
+  --lit-3: #6a4fb0;
+  --lit-4: #583f98;
+  --lit-rim: rgb(255 255 255 / 0.85);
+  --lit-glow: rgb(106 79 176 / 0.4);
 }
 
-/* The dark theme: the original palette */
 html[data-theme="dark"] {
-  --color-brand-200: #b1edff;
-  --color-brand-300: #7ce7ff;
-  --color-brand-400: #3ddcff;
-  --color-accent-300: #c4b5fd;
-  --color-accent-400: #a78bfa;
-  --color-bg: #07080c;
-  --color-bg-elevated: #0b0d13;
-  --color-surface: #10121a;
-  --color-surface-2: #161924;
-  --color-border: rgb(255 255 255 / 0.08);
-  --color-border-strong: rgb(255 255 255 / 0.14);
-  --color-fg: #f4f5f8;
-  --color-fg-muted: #a4a8b6;
-  --color-fg-subtle: #6d7182;
+  --color-accent-300: #d0c2ff;
+  --color-accent-400: #b9a2ff;
+  --color-accent-text: #d0c2ff;
+  --color-accent-soft: rgb(185 162 255 / 0.16);
+  --color-bg: #0e1316;
+  --color-bg-elevated: #121a1e;
+  --color-surface: #151d21;
+  --color-surface-2: #1a2328;
+  --color-tint: #1a2328;
+  --color-border: rgb(255 255 255 / 0.09);
+  --color-border-strong: rgb(255 255 255 / 0.16);
+  --color-fg: #eef3f4;
+  --color-fg-muted: #aab6bb;
+  --color-fg-subtle: #8a979d;
+  --color-ok-text: #7fd3a0;
+  --color-warn-text: #f2c66d;
+  --color-err-text: #ff9b94;
   --ink: 255 255 255;
-  --paper: 7 8 12;
-  /* opaque, so lines drawn behind cards stay hidden */
-  --card-bg: linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.012)), #07080c;
-  --card-shadow: 0 1px 0 rgb(255 255 255 / 0.05) inset;
-  --frame-bg: linear-gradient(180deg, rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.03));
-  --frame-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 40px 120px -30px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(0 0 0 / 0.6);
+  --paper: 14 19 22;
+  --card-bg: #151d21;
+  --card-shadow: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 16px 34px -16px rgb(0 0 0 / 0.7), 0 0 0 1px rgb(255 255 255 / 0.06);
+  --frame-bg: #151d21;
+  --frame-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(255 255 255 / 0.08);
   --tile-strength: 100%;
   --logo-accent: #00d4ff;
   --shadow-strong: rgb(0 0 0 / 0.8);
-  --glow-strength: 1;
+  --glow-strength: 0.6;
   --gradient-text: linear-gradient(100deg, #8ff0ff 0%, #00d4ff 32%, #8b7bff 70%, #c4b5fd 100%);
+  --lit-rim: rgb(255 255 255 / 0.3);
+  --lit-glow: rgb(0 0 0 / 0.5);
 }
 
 @layer base {
-  /* ============================================================
-     Base
-     ============================================================ */
-
   html {
     background: var(--color-bg);
     color-scheme: light;
@@ -123,12 +137,12 @@ html[data-theme="dark"] {
   }
 
   ::selection {
-    background: rgb(0 212 255 / 0.3);
+    background: rgb(106 79 176 / 0.22);
     color: var(--color-fg);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-brand-400);
+    outline: 2px solid var(--color-accent-400);
     outline-offset: 3px;
     border-radius: 6px;
   }
@@ -156,39 +170,49 @@ html[data-theme="dark"] {
     padding-block: clamp(88px, 11vw, 148px);
   }
 
+  /* Landing-page sections: space above only, so the gap between two sections is one step */
+  .sect {
+    padding-top: clamp(64px, 7vw, 100px);
+  }
+
+  /* A section's opening: the title on the left, a short paragraph on the right */
+  .section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 64px;
+    margin-bottom: clamp(32px, 4vw, 52px);
+  }
+
+  .section-head > p {
+    max-width: 26rem;
+    padding-bottom: 6px;
+  }
+
+  /* A small label above a title. Plain and quiet, in the accent. */
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-brand-300);
-  }
-
-  .eyebrow::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 2px;
-    background: linear-gradient(135deg, var(--color-brand-500), var(--color-accent-400));
-    box-shadow: 0 0 12px rgb(0 212 255 / calc(0.6 * var(--glow-strength)));
+    font-size: 0.95rem;
+    font-weight: 650;
+    letter-spacing: -0.005em;
+    color: var(--color-accent-text);
   }
 
   .display {
-    font-weight: 600;
+    font-weight: 680;
     letter-spacing: -0.045em;
-    line-height: 0.98;
-    font-size: clamp(2.6rem, 7.4vw, 5.6rem);
+    line-height: 1;
+    font-size: clamp(2.75rem, 6vw, 5.4rem);
+    text-wrap: balance;
   }
 
   .h2 {
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 1.04;
-    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    font-weight: 660;
+    letter-spacing: -0.038em;
+    line-height: 1.05;
+    font-size: clamp(2.1rem, 4.2vw, 3.6rem);
     text-wrap: balance;
   }
 
@@ -196,9 +220,25 @@ html[data-theme="dark"] {
     color: var(--color-fg-subtle);
   }
 
+  /* The quieter section title: Built to leave…, What people say, Questions */
+  .h2-compact {
+    font-weight: 660;
+    letter-spacing: -0.034em;
+    line-height: 1.06;
+    font-size: clamp(2.125rem, 3.6vw, 3rem);
+    text-wrap: balance;
+  }
+
+  .h3 {
+    font-weight: 660;
+    letter-spacing: -0.024em;
+    line-height: 1.15;
+    font-size: clamp(1.5rem, 2.1vw, 1.75rem);
+  }
+
   .lede {
-    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
-    line-height: 1.65;
+    font-size: clamp(1.06rem, 1.45vw, 1.25rem);
+    line-height: 1.55;
     color: var(--color-fg-muted);
     text-wrap: pretty;
   }
@@ -215,15 +255,18 @@ html[data-theme="dark"] {
      ============================================================ */
 
   .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.55rem;
     height: 44px;
-    padding: 0 1.15rem;
-    border-radius: 12px;
+    padding: 0 1.25rem;
+    border-radius: 999px;
     font-size: 0.95rem;
-    font-weight: 550;
+    font-weight: 620;
     line-height: 1;
     white-space: nowrap;
     cursor: pointer;
@@ -232,7 +275,7 @@ html[data-theme="dark"] {
       transform 0.15s ease,
       background 0.2s ease,
       border-color 0.2s ease,
-      box-shadow 0.2s ease,
+      filter 0.2s ease,
       color 0.2s ease;
   }
 
@@ -242,43 +285,55 @@ html[data-theme="dark"] {
 
   .btn-lg {
     height: 52px;
-    padding: 0 1.5rem;
-    border-radius: 14px;
+    padding: 0 1.65rem;
     font-size: 1rem;
   }
 
   .btn-sm {
     height: 36px;
-    padding: 0 0.9rem;
-    border-radius: 10px;
+    padding: 0 0.95rem;
     font-size: 0.875rem;
   }
 
-  /* Primary inverts the page: near-black in light, near-white in dark */
+  /* Primary: the app's glossy "lit" pill */
   .btn-primary {
-    background: var(--color-fg);
-    color: var(--color-bg);
+    color: #fff;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 0.18);
+    border: 1.5px solid var(--lit-rim);
+    background: linear-gradient(180deg, var(--lit-1) 0%, var(--lit-2) 40%, var(--lit-3) 75%, var(--lit-4) 100%);
     box-shadow:
-      0 0 0 1px rgb(var(--ink) / 0.6) inset,
-      0 10px 30px -10px rgb(0 212 255 / 0.55);
+      0 0 0 0.5px var(--lit-4),
+      0 2px 10px var(--lit-glow);
+  }
+
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 1px;
+    left: 10px;
+    right: 10px;
+    height: 42%;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0));
+    pointer-events: none;
   }
 
   .btn-primary:hover {
-    background: color-mix(in srgb, var(--color-fg) 86%, var(--color-brand-500));
-    box-shadow:
-      0 0 0 1px rgb(var(--ink) / 0.8) inset,
-      0 14px 36px -10px rgb(0 212 255 / 0.75);
+    color: #fff;
+    filter: brightness(1.07);
   }
 
+  /* Secondary: a plain pill on the page colour */
   .btn-secondary {
-    background: rgb(var(--ink) / 0.04);
     color: var(--color-fg);
-    border: 1px solid var(--color-border-strong);
+    background: var(--card-bg);
+    border: 0.5px solid rgb(var(--ink) / 0.28);
   }
 
   .btn-secondary:hover {
-    background: rgb(var(--ink) / 0.08);
-    border-color: rgb(var(--ink) / 0.24);
+    color: var(--color-fg);
+    background: var(--color-tint);
   }
 
   .btn-ghost {
@@ -298,9 +353,9 @@ html[data-theme="dark"] {
     padding: 0.32rem 0.75rem;
     border-radius: 999px;
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 550;
     color: var(--color-fg-muted);
-    background: rgb(var(--ink) / 0.04);
+    background: rgb(var(--ink) / 0.05);
     border: 1px solid var(--color-border);
   }
 
@@ -318,8 +373,13 @@ html[data-theme="dark"] {
     position: relative;
     border-radius: var(--radius-xl);
     background: var(--card-bg);
-    border: 1px solid var(--color-border);
     box-shadow: var(--card-shadow);
+  }
+
+  /* A flat tinted panel: the mat a screenshot or a group sits on */
+  .mat {
+    border-radius: 24px;
+    background: var(--color-tint);
   }
 
   .glass {
@@ -330,7 +390,7 @@ html[data-theme="dark"] {
   }
 
   .glass-strong {
-    background: rgb(var(--paper) / 0.78);
+    background: rgb(var(--paper) / 0.85);
     backdrop-filter: blur(20px) saturate(150%);
     -webkit-backdrop-filter: blur(20px) saturate(150%);
   }
@@ -338,13 +398,100 @@ html[data-theme="dark"] {
   .icon-tile {
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    /* Tile colours are bright; in light mode they mix toward the text colour to stay legible */
-    color: color-mix(in srgb, var(--tile, var(--color-brand-400)) var(--tile-strength), var(--color-fg));
-    background: color-mix(in srgb, var(--tile, var(--color-brand-400)) 13%, transparent);
-    border: 1px solid color-mix(in srgb, var(--tile, var(--color-brand-400)) 28%, transparent);
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    color: var(--color-accent-text);
+    background: var(--color-accent-soft);
+  }
+
+  /* Status badges: tinted fill, hairline of the same hue */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+
+  .badge-ok {
+    color: var(--color-ok-text);
+    background: rgb(47 122 79 / 0.12);
+    box-shadow: inset 0 0 0 1px rgb(47 122 79 / 0.3);
+  }
+
+  .badge-off {
+    color: var(--color-fg-muted);
+    background: rgb(var(--ink) / 0.06);
+    box-shadow: inset 0 0 0 1px rgb(var(--ink) / 0.16);
+  }
+
+  .badge-warn {
+    color: var(--color-warn-text);
+    background: rgb(183 121 31 / 0.14);
+    box-shadow: inset 0 0 0 1px rgb(183 121 31 / 0.34);
+  }
+
+  .badge-err {
+    color: var(--color-err-text);
+    background: rgb(161 44 44 / 0.1);
+    box-shadow: inset 0 0 0 1px rgb(161 44 44 / 0.3);
+  }
+
+  /* ============================================================
+     LumenOS, the app's own look, for windows drawn on a wallpaper.
+     .lumen holds its light-mode tokens; .win is a frosted window.
+     ============================================================ */
+
+  .lumen {
+    --label: rgb(16 30 38 / 0.9);
+    --label2: rgb(16 30 38 / 0.72);
+    --fill: rgb(16 30 38 / 0.06);
+    --mat: rgb(255 255 255 / 0.56);
+    --field: rgb(255 255 255 / 0.45);
+    --edge: rgb(255 255 255 / 0.42);
+    --edge2: rgb(255 255 255 / 0.62);
+    --spec: inset 0 1px 0 rgb(255 255 255 / 0.55);
+    --spec2: rgb(255 255 255 / 0.8);
+    --panel: linear-gradient(150deg, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.32));
+    color: var(--label);
+  }
+
+  .win {
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0) 42%), var(--mat);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    border: 1px solid var(--edge);
+    box-shadow: var(--spec), 0 30px 60px -24px rgb(0 0 0 / 0.5);
+  }
+
+  .win-bar {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 8px 0 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .plate {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.35));
+    border: 1px solid rgb(255 255 255 / 0.75);
   }
 
   /* Terminal-style snippet: always a dark terminal, in both themes */
@@ -353,8 +500,8 @@ html[data-theme="dark"] {
     font-size: 0.8rem;
     line-height: 1.85;
     color: #a4a8b6;
-    background: #0b0d13;
-    border: 1px solid rgb(14 16 24 / 0.5);
+    background: #0c1116;
+    border: 1px solid rgb(16 32 42 / 0.5);
     border-radius: var(--radius-lg);
     padding: 14px 16px;
     overflow-x: auto;
@@ -380,7 +527,62 @@ html[data-theme="dark"] {
   }
 
   /* ============================================================
-     Backgrounds
+     Wallpaper bands: a rounded panel inset from the page edges, with one of
+     the app's wallpapers behind it (an <Image class="band-media">).
+     ============================================================ */
+
+  .band {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    margin-inline: 12px;
+    border-radius: 28px;
+  }
+
+  .band-media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 639px) {
+    .band {
+      margin-inline: 8px;
+      border-radius: 22px;
+    }
+  }
+
+  /* A photo has the same brightness in both themes, so what sits on it keeps one palette */
+  .scope-light {
+    --ink: 16 32 42;
+    --color-fg: #10202a;
+    --color-fg-muted: #2f3f47;
+    --color-fg-subtle: #46565e;
+    --color-border: rgb(16 32 42 / 0.1);
+    --color-border-strong: rgb(16 32 42 / 0.18);
+    --color-tint: #eaf0f0;
+    --color-accent-text: #4f3790;
+    --color-accent-soft: rgb(106 79 176 / 0.12);
+    --color-ok-text: #24663f;
+    --card-bg: #ffffff;
+    --card-shadow: 0 16px 34px -16px rgb(10 30 40 / 0.4), 0 0 0 1px rgb(10 30 40 / 0.06);
+    color: var(--color-fg);
+  }
+
+  .scope-dark {
+    --ink: 255 255 255;
+    --color-fg: #ffffff;
+    --color-fg-muted: rgb(255 255 255 / 0.85);
+    --color-fg-subtle: rgb(255 255 255 / 0.74);
+    --color-accent-text: #d0c2ff;
+    color: var(--color-fg);
+  }
+
+  /* ============================================================
+     Legacy backgrounds (still used by other pages)
      ============================================================ */
 
   .bg-grid {
@@ -394,8 +596,8 @@ html[data-theme="dark"] {
 
   .bg-mesh {
     background:
-      radial-gradient(ellipse 70% 50% at 50% -10%, rgb(0 212 255 / 0.14), transparent 60%),
-      radial-gradient(ellipse 50% 40% at 85% 20%, rgb(124 58 237 / 0.12), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 50% -10%, rgb(0 212 255 / 0.1), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 20%, rgb(124 58 237 / 0.08), transparent 60%),
       var(--color-bg);
   }
 
@@ -420,10 +622,9 @@ html[data-theme="dark"] {
   /* The product frame: a thin bezel around screenshots and the demo video */
   .frame {
     position: relative;
-    padding: 7px;
-    border-radius: 22px;
+    padding: 6px;
+    border-radius: 20px;
     background: var(--frame-bg);
-    border: 1px solid rgb(var(--ink) / 0.1);
     box-shadow: var(--frame-shadow);
   }
 
@@ -434,13 +635,14 @@ html[data-theme="dark"] {
     display: block;
     width: 100%;
     height: auto;
-    border-radius: 15px;
-    background: #0b0d13;
+    border-radius: 14px;
+    background: #0c1116;
   }
 
   /* ============================================================
      Scroll reveal — content is visible without JS; the class only
      animates it in when JS is present and motion is welcome.
+     The landing page doesn't use it: everything there shows at once.
      ============================================================ */
 
   @media (prefers-reduced-motion: no-preference) {
@@ -475,10 +677,10 @@ html[data-theme="dark"] {
   fill: var(--logo-accent);
 }
 
-/* A hairline divider with a soft cyan centre (blog posts) */
+/* A hairline divider (blog posts) */
 .glow-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(0 212 255 / 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgb(var(--ink) / 0.18), transparent);
 }
 
 /* Blog prose: the typography plugin's colours come from the theme tokens, so posts read in both themes */
@@ -497,7 +699,7 @@ html[data-theme="dark"] {
   --tw-prose-kbd: var(--color-fg);
   --tw-prose-code: var(--color-fg);
   --tw-prose-pre-code: #e6e8ee;
-  --tw-prose-pre-bg: #0b0d13;
+  --tw-prose-pre-bg: #0c1116;
   --tw-prose-th-borders: var(--color-border-strong);
   --tw-prose-td-borders: var(--color-border);
   font-size: 1.075rem;
@@ -505,7 +707,7 @@ html[data-theme="dark"] {
 }
 
 .prose-site :where(h2) {
-  font-weight: 600;
+  font-weight: 660;
   letter-spacing: -0.03em;
   font-size: 1.75rem;
   line-height: 1.2;
@@ -514,16 +716,16 @@ html[data-theme="dark"] {
 }
 
 .prose-site :where(h3) {
-  font-weight: 600;
+  font-weight: 660;
   letter-spacing: -0.02em;
   font-size: 1.3rem;
   margin-top: 2em;
 }
 
 .prose-site :where(a) {
-  font-weight: 500;
+  font-weight: 550;
   text-decoration: underline;
-  text-decoration-color: rgb(0 212 255 / 0.55);
+  text-decoration-color: rgb(106 79 176 / 0.5);
   text-decoration-thickness: 1.5px;
   text-underline-offset: 4px;
 }
@@ -570,13 +772,13 @@ html[data-theme="dark"] {
 
 .prose-site :where(tbody td:first-child) {
   color: var(--color-fg);
-  font-weight: 500;
+  font-weight: 550;
 }
 
 /* Code blocks in blog posts (Shiki output) */
 .astro-code,
 pre.astro-code {
-  background: #0b0d13 !important;
+  background: #0c1116 !important;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 1rem 1.2rem;

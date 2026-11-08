@@ -1,0 +1,143 @@
+---
+// The apps, as designed: a Files window on the Highlands wallpaper, the Docker list, and the system journal.
+// Example data only (host web-01, user deploy).
+import { Image } from "astro:assets";
+import highlands from "@/assets/wallpapers/highlands.jpg";
+import iconFiles from "@/assets/icons/files.svg";
+import iconFolder from "@/assets/icons/folder.svg";
+import iconTxt from "@/assets/icons/txt.svg";
+import iconPackage from "@/assets/icons/package.svg";
+
+const files = [
+  { name: "config", icon: iconFolder },
+  { name: "logs", icon: iconFolder },
+  { name: "public", icon: iconFolder },
+  { name: "compose.yml", icon: iconTxt, selected: true },
+  { name: ".env", icon: iconTxt },
+  { name: "README.md", icon: iconTxt },
+];
+const containers = [
+  { name: "app-web", status: "Up 3 days", running: true },
+  { name: "postgres", status: "Up 3 days", running: true },
+  { name: "redis", status: "Exited (0) 2 hours ago", running: false },
+];
+const journal = [
+  { time: "16:41:02", unit: "sshd", text: "Accepted publickey for deploy", level: "info", badge: "badge-off" },
+  { time: "16:38:11", unit: "kernel", text: "Possible SYN flooding on port 22", level: "warning", badge: "badge-warn" },
+  { time: "16:35:47", unit: "dockerd", text: "Container app-web started", level: "info", badge: "badge-off" },
+  { time: "16:22:19", unit: "systemd", text: "Failed to start certbot.service", level: "error", badge: "badge-err" },
+];
+---
+
+<section id="overview" class="sect container-x">
+  <div class="section-head">
+    <h2 class="h2 max-w-[11em]">Stop reading output. Look at your server.</h2>
+    <p class="lede !max-w-[22em]">Each app runs ordinary commands over SSH and turns what comes back into something you can scan.</p>
+  </div>
+
+  <div class="flex flex-wrap gap-5">
+    <!-- Files, as a window on the wallpaper -->
+    <article class="lumen tile-files relative isolate min-h-[520px] min-w-0 flex-[7_1_440px] overflow-hidden rounded-[24px] p-9">
+      <Image src={highlands} alt="" widths={[800, 1200, 1600]} sizes="(min-width: 1200px) 640px, 94vw" class="band-media" />
+      <div class="scope-light relative -mt-1.5 -ml-2 max-w-[23em] rounded-[18px] bg-white/80 px-[18px] py-4 backdrop-blur-md">
+        <h3 class="h3">Files, over SFTP</h3>
+        <p class="mt-2 text-fg-muted">Browse the whole server from the root folder down, in the same kind of window you use on your own computer.</p>
+      </div>
+      <div class="win absolute right-7 -bottom-6 left-7 h-[300px]" aria-hidden="true">
+        <div class="win-bar">
+          <img src={iconFiles.src} alt="" width="20" height="20" />
+          <span>Files</span>
+          <span class="ml-1.5 flex h-7 items-center rounded-full border border-[var(--edge)] bg-[var(--field)] px-3 font-mono text-xs font-normal text-[var(--label2)]">
+            / › srv › app
+          </span>
+        </div>
+        <div class="grid grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-1.5 px-3.5 py-2.5">
+          {
+            files.map((f) => (
+              <div class:list={["flex flex-col items-center gap-1.5 rounded-[14px] px-1 py-2.5", { "file-on": f.selected }]}>
+                <img src={f.icon.src} alt="" width="52" height="52" />
+                <span class:list={["text-[12.5px]", { "font-semibold": f.selected }]}>{f.name}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </article>
+
+    <!-- Docker -->
+    <article class="flex min-w-0 flex-[5_1_340px] flex-col rounded-[24px] bg-tint p-9">
+      <h3 class="h3">Docker and services</h3>
+      <p class="mt-2.5 mb-7 max-w-[23em] text-fg-muted">
+        See what's running and what stopped, without lining up the columns of <span class="font-mono text-[0.9em]">docker ps</span> in your head.
+      </p>
+      <div class="card mt-auto p-2 text-sm leading-snug">
+        <div class="flex items-center gap-2.5 px-3 pt-2.5 pb-2">
+          <img src={iconPackage.src} alt="" width="22" height="22" />
+          <span class="font-[650]">Containers</span>
+          <span class="ml-auto text-[12.5px] text-fg-subtle">3 total</span>
+        </div>
+        <div class="mx-3 h-[0.5px] bg-ink/15"></div>
+        {
+          containers.map((c) => (
+            <div class="flex items-center gap-3 px-3 py-[11px]">
+              <div class="min-w-0 flex-1">
+                <div class="font-semibold">{c.name}</div>
+                <div class="font-mono text-xs text-fg-subtle">{c.status}</div>
+              </div>
+              <span class:list={["badge", c.running ? "badge-ok" : "badge-off"]}>{c.running ? "Running" : "Stopped"}</span>
+            </div>
+          ))
+        }
+      </div>
+    </article>
+
+    <!-- Logs, ports and users -->
+    <article class="flex min-w-0 flex-[1_1_100%] flex-wrap items-center gap-x-14 gap-y-8 rounded-[24px] bg-tint p-9">
+      <div class="min-w-0 flex-[1_1_280px]">
+        <h3 class="h3">Logs, ports and users</h3>
+        <p class="mt-2.5 max-w-[23em] text-fg-muted">
+          Server Admin puts the system journal, listening ports, users and mounts in one window. Task Manager shows live
+          processes and every CPU core.
+        </p>
+      </div>
+      <div class="card min-w-0 flex-[2_1_520px] overflow-x-auto py-1.5">
+        <table class="w-full min-w-[560px] border-collapse text-[13.5px]">
+          <caption class="sr-only">Example system journal</caption>
+          <tbody>
+            {
+              journal.map((j, i) => (
+                <tr class:list={[{ "border-b-[0.5px] border-ink/15": i < journal.length - 1 }]}>
+                  <td class="py-[11px] pr-2 pl-[18px] font-mono text-xs whitespace-nowrap text-fg-subtle">{j.time}</td>
+                  <td class="px-2 py-[11px] font-semibold">{j.unit}</td>
+                  <td class="px-2 py-[11px] text-fg-muted">{j.text}</td>
+                  <td class="py-[11px] pr-[18px] pl-2 text-right">
+                    <span class:list={["badge", j.badge]}>{j.level}</span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  /* The wallpaper stays put; on a narrow tile the window still clears the text */
+  .tile-files :global(.band-media) {
+    object-position: center 60%;
+  }
+
+  .file-on {
+    background: rgb(106 79 176 / 0.12);
+    box-shadow: 0 0 0 1px rgb(106 79 176 / 0.4);
+  }
+
+  @media (max-width: 520px) {
+    .tile-files {
+      min-height: 560px;
+      padding: 28px;
+    }
+  }
+</style>

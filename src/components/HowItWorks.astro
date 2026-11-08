@@ -2,114 +2,91 @@
 // "Not an operating system": where HeadlessOS runs, and what it does to the server (nothing).
 const steps = [
   {
-    where: "Your computer",
+    where: "On your computer",
     title: "HeadlessOS runs here",
     body: "As a desktop app for Windows, macOS or Linux, or in your browser on localhost. The windows, the parsing and the AI all live on your side.",
-    tile: "#3ddcff",
-    icon: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/>',
   },
   {
-    where: "SSH",
+    where: "Over SSH",
     title: "It signs in like you do",
     body: "With the key, agent or password you already use, on the port you already have open. No agent, no new port, no account.",
-    tile: "#a78bfa",
-    icon: '<circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3m-3 3l3 3m-6 0l2 2"/>',
   },
   {
-    where: "Your server",
+    where: "On your server",
     title: "It stays exactly as it was",
     body: "A VPS, a cloud server, a home-lab box or a Raspberry Pi: any Linux machine you can reach. Close HeadlessOS, and nothing is left behind.",
-    tile: "#4ade80",
-    icon: '<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
   },
 ];
 const commands = ["ls", "df", "ps", "ss", "docker", "systemctl", "journalctl", "ufw"];
 ---
 
-<section id="how" class="section relative">
-  <div class="container-x">
-    <div class="max-w-3xl">
-      <p class="rv eyebrow">How it works</p>
-      <h2 class="rv h2 mt-5 [--d:.05s]">
-        Nothing to install.
-        <span class="dim block">It runs on your computer, not your server.</span>
-      </h2>
-      <p class="rv lede mt-6 max-w-2xl [--d:.1s]">
-        HeadlessOS isn't an operating system. It's an app for your laptop or desktop that signs in to your
-        server over SSH, runs the same commands you would, and turns the answers into windows. Your server keeps
-        its own OS, packages and config.
-      </p>
-    </div>
-
-    <ol class="relative mt-16 grid gap-4 lg:grid-cols-3 lg:gap-6">
-      <div aria-hidden="true" class="wire hidden lg:block"></div>
-      {
-        steps.map((s, i) => (
-          <li class="rv card relative p-7" style={`--d:${0.08 * i}s`}>
-            <div class="flex items-center justify-between">
-              <span class="icon-tile" style={`--tile:${s.tile}`}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={s.icon} />
-              </span>
-              <span class="font-mono text-xs text-fg-subtle">0{i + 1}</span>
-            </div>
-            <p class="mt-6 font-mono text-xs uppercase tracking-[0.14em] text-fg-subtle">{s.where}</p>
-            <h3 class="mt-2 text-xl font-semibold tracking-tight">{s.title}</h3>
-            <p class="mt-3 leading-relaxed text-fg-muted">{s.body}</p>
-            {i === 2 && (
-              <div class="mt-6 flex flex-wrap gap-1.5">
-                {commands.map((c) => (
-                  <span class="kbd text-fg-muted">{c}</span>
-                ))}
-              </div>
-            )}
-          </li>
-        ))
-      }
-    </ol>
+<section id="how" class="sect container-x">
+  <div class="section-head">
+    <h2 class="h2 max-w-[8em]">It runs on your computer, not your server.</h2>
+    <p class="lede">
+      HeadlessOS isn't an operating system. It's an app that signs in to your server over SSH, runs the same commands
+      you would, and turns the answers into windows. Your server keeps its own OS, packages and config.
+    </p>
   </div>
+
+  <ol class="mat grid grid-cols-1 lg:grid-cols-3">
+    {
+      steps.map((s, i) => (
+        <li class="step relative p-6 sm:p-9">
+          {i > 0 && (
+            <span class="step-arrow" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          )}
+          <p class="text-sm font-semibold text-accent-text">{s.where}</p>
+          <h3 class="mt-2 text-[19px] font-[650] tracking-[-0.012em]">{s.title}</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-fg-muted">{s.body}</p>
+          {i === 2 && (
+            <div class="mt-5 flex flex-wrap gap-1.5">
+              {commands.map((c) => (
+                <span class="kbd text-fg-muted">{c}</span>
+              ))}
+            </div>
+          )}
+        </li>
+      ))
+    }
+  </ol>
 </section>
 
 <style>
-  /* A line with travelling pulses that links the three cards */
-  .wire {
-    position: absolute;
-    left: 8%;
-    right: 8%;
-    top: 47px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgb(var(--ink) / 0.16) 12%, rgb(var(--ink) / 0.16) 88%, transparent);
-    z-index: 0;
+  /* The three steps share one tinted panel, split by a groove in the page colour */
+  .step + .step {
+    border-top: 1px solid var(--color-bg);
   }
 
-  .wire::after {
-    content: "";
+  .step-arrow {
     position: absolute;
-    top: -1px;
-    left: 0;
-    width: 90px;
-    height: 3px;
-    border-radius: 3px;
-    background: linear-gradient(90deg, transparent, #3ddcff, #a78bfa, transparent);
-    animation: travel 3.6s linear infinite;
+    left: 50%;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    color: var(--color-accent-text);
+    background: var(--card-bg);
+    box-shadow: 0 2px 8px -3px rgb(10 30 40 / 0.3);
+    transform: translate(-50%, -50%) rotate(90deg);
   }
 
-  @keyframes travel {
-    from {
+  @media (min-width: 1024px) {
+    .step + .step {
+      border-top: 0;
+      border-left: 1px solid var(--color-bg);
+    }
+
+    .step-arrow {
       left: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
-    to {
-      left: calc(100% - 90px);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .wire::after {
-      animation: none;
-      display: none;
-    }
-  }
-
-  li {
-    z-index: 1;
   }
 </style>

@@ -1,0 +1,44 @@
+---
+// "Built to leave your server alone": the title on the left, four short points in a 2×2 grid on the right.
+const points = [
+  {
+    title: "Nothing left behind",
+    text: "No agent and no packages. The server only answers ordinary SSH commands, so closing the app leaves it as it was.",
+    icon: '<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+  },
+  {
+    title: "Pick up where you left off",
+    text: "Each server gets its own session, and you can come back to it later.",
+    icon: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/>',
+  },
+  {
+    title: "Build the view you need",
+    text: "Describe a view in plain words and the UI agent builds it for that server.",
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+  },
+  {
+    title: "See what the AI costs",
+    text: "The LLM Observatory traces every model and tool call, with tokens, latency and cost.",
+    icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  },
+];
+---
+
+<section class="sect container-x" aria-labelledby="essentials-title">
+  <div class="flex flex-wrap gap-x-[72px] gap-y-9">
+    <h2 id="essentials-title" class="h2-compact max-w-[8em] flex-[1_1_320px]">Built to leave your server alone</h2>
+    <div class="grid min-w-0 flex-[2_1_520px] grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-x-12 gap-y-10">
+      {
+        points.map((p) => (
+          <div>
+            <div class="icon-tile">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={p.icon} />
+            </div>
+            <h3 class="mt-4 mb-1.5 text-[19px] font-[640] tracking-[-0.012em]">{p.title}</h3>
+            <p class="text-[16.5px] leading-normal text-fg-muted">{p.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,125 @@
+---
+// The AI agent, on the app's night wallpaper: ask a question, see what it looked at, approve any change.
+import { Image } from "astro:assets";
+import aurora from "@/assets/wallpapers/aurora.jpg";
+
+const guardrails = [
+  "It works through a fixed set of checked actions. It never runs a shell command a model wrote.",
+  "Anything that changes the server waits for your yes, and files are backed up before they're edited.",
+  "Passwords and keys are stripped from command output before a model sees it.",
+];
+---
+
+<section id="ai" class="band scope-dark mt-[clamp(64px,7vw,100px)] scroll-mt-5" aria-labelledby="ai-title">
+  <Image src={aurora} alt="" widths={[960, 1600, 2400]} sizes="100vw" class="band-media" />
+  <div aria-hidden="true" class="shade"></div>
+
+  <div class="container-x grid items-center gap-12 py-[clamp(56px,7vw,104px)] lg:grid-cols-2 lg:gap-16">
+    <div class="min-w-0">
+      <h2 id="ai-title" class="h2 max-w-[9em]">Ask your server what's wrong.</h2>
+      <p class="lede mt-5 max-w-[27rem] !text-fg-muted">
+        Ask "why is the disk full?" and get a view, not a wall of text. The agent shows what it looked at, and
+        nothing on the server changes until you say yes.
+      </p>
+      <ul class="mt-8 space-y-3.5">
+        {
+          guardrails.map((g) => (
+            <li class="flex gap-3 text-[1rem] leading-relaxed text-fg-muted">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-accent-text" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+              <span>{g}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-8 text-[0.95rem] text-fg-subtle">
+        Works with OpenAI, Claude, or an Ollama model that never leaves your machine. Optional: everything else works
+        without a key.
+      </p>
+    </div>
+
+    <!-- An example conversation. The card keeps the app's light look on any page theme. -->
+    <div class="card scope-light mx-auto w-full max-w-[30rem] p-5 text-[0.95rem] leading-normal sm:p-6" data-agent>
+      <div class="flex items-center gap-2 font-semibold">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+        </svg>
+        <span>AI agent</span>
+        <span class="ml-auto text-xs font-semibold text-fg-subtle">Example</span>
+      </div>
+
+      <p class="mt-4 ml-auto w-fit max-w-[85%] rounded-[16px_16px_4px_16px] bg-tint px-4 py-2.5">Why is the disk on / almost full?</p>
+
+      <p class="mt-4 text-fg-muted">
+        <code class="font-mono text-[0.85em] text-fg">/var/lib/docker</code> takes 74 GB of the 96 GB disk. Most of it is six
+        images no container uses.
+      </p>
+
+      <div class="mt-3 rounded-xl bg-tint px-3.5 py-2.5 text-[0.85rem] leading-7">
+        <p class="text-xs font-semibold text-fg-subtle">What it looked at</p>
+        <p class="flex justify-between gap-4"><span>Disk · /</span><span class="font-mono">91% used</span></p>
+        <p class="flex justify-between gap-4"><span>Docker · images</span><span class="font-mono">6 unused</span></p>
+      </div>
+
+      <div class="mt-4 border-t-[0.5px] border-ink/15 pt-4">
+        <p class="flex items-center gap-2 font-semibold">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4M12 16h.01"></path>
+          </svg>
+          Remove 6 unused Docker images?
+        </p>
+        <p class="mt-0.5 ml-[25px] text-sm text-fg-subtle">This changes the server, so it waits for you.</p>
+
+        <div class="mt-3.5 flex gap-2" data-agent-ask>
+          <button type="button" class="btn btn-primary btn-sm" data-agent-answer="approved">Approve</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-agent-answer="denied">Deny</button>
+        </div>
+        <p class="mt-3.5 hidden items-center gap-3 text-sm text-fg-muted" data-agent-result="approved" role="status">
+          <span class="badge badge-ok">Approved</span> Removed, and written to the audit log.
+          <button type="button" class="ml-auto text-sm font-semibold text-accent-text underline-offset-4 hover:underline" data-agent-reset>Reset</button>
+        </p>
+        <p class="mt-3.5 hidden items-center gap-3 text-sm text-fg-muted" data-agent-result="denied" role="status">
+          <span class="badge badge-off">Denied</span> Nothing on the server changed.
+          <button type="button" class="ml-auto text-sm font-semibold text-accent-text underline-offset-4 hover:underline" data-agent-reset>Reset</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Darkens the side the text sits on, so it reads over the bright parts of the aurora */
+  .shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgb(4 12 9 / 0.86) 0%, rgb(4 12 9 / 0.62) 48%, rgb(4 12 9 / 0.3) 100%);
+  }
+
+  @media (max-width: 1023px) {
+    .shade {
+      background: linear-gradient(180deg, rgb(4 12 9 / 0.84) 0%, rgb(4 12 9 / 0.6) 55%, rgb(4 12 9 / 0.4) 100%);
+    }
+  }
+</style>
+
+<script>
+  // The example's Approve / Deny. Without JS the card still reads; the buttons just do nothing.
+  const card = document.querySelector<HTMLElement>("[data-agent]");
+  if (card) {
+    const ask = card.querySelector<HTMLElement>("[data-agent-ask]");
+    const results = [...card.querySelectorAll<HTMLElement>("[data-agent-result]")];
+    const show = (answer: string | null) => {
+      ask?.classList.toggle("hidden", answer !== null);
+      results.forEach((r) => {
+        r.classList.toggle("hidden", r.dataset.agentResult !== answer);
+        r.classList.toggle("flex", r.dataset.agentResult === answer);
+      });
+    };
+    card.querySelectorAll<HTMLButtonElement>("[data-agent-answer]").forEach((b) =>
+      b.addEventListener("click", () => show(b.dataset.agentAnswer ?? null)),
+    );
+    card.querySelectorAll<HTMLButtonElement>("[data-agent-reset]").forEach((b) => b.addEventListener("click", () => show(null)));
+  }
+</script>

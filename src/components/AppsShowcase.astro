@@ -1,156 +1,184 @@
 ---
-// The apps, one tab each. Screenshots are 1600×1000 captures of the real app at 2× density.
-import { Image } from "astro:assets";
-import dashboard from "@/assets/screens/dashboard.webp";
-import home from "@/assets/screens/home-hub.webp";
-import files from "@/assets/screens/files.webp";
-import docker from "@/assets/screens/docker.webp";
-import tasks from "@/assets/screens/task-manager.webp";
-import terminal from "@/assets/screens/terminal.webp";
-import admin from "@/assets/screens/server-admin.webp";
-import personalize from "@/assets/screens/personalize.webp";
+// Every app, one at a time: a list of apps on a white card, the app itself next to it, in the page's theme.
+// The list advances on its own while the section is on screen; a click or arrow key takes over.
+import ThemedShot from "@/components/ThemedShot.astro";
+import iconDash from "@/assets/icons/sysdash.svg";
+import iconHome from "@/assets/icons/home.svg";
+import iconFiles from "@/assets/icons/files.svg";
+import iconDocker from "@/assets/icons/docker.svg";
+import iconTasks from "@/assets/icons/activity.svg";
+import iconTerminal from "@/assets/icons/terminal.svg";
+import iconAdmin from "@/assets/icons/serveradmin.svg";
+import iconSettings from "@/assets/icons/settings.svg";
+import dashL from "@/assets/app/light/dashboard.webp";
+import dashD from "@/assets/app/dark/dashboard.webp";
+import homeL from "@/assets/app/light/home-hub.webp";
+import homeD from "@/assets/app/dark/home-hub.webp";
+import filesL from "@/assets/app/light/files.webp";
+import filesD from "@/assets/app/dark/files.webp";
+import dockerL from "@/assets/app/light/docker.webp";
+import dockerD from "@/assets/app/dark/docker.webp";
+import tasksL from "@/assets/app/light/task-manager.webp";
+import tasksD from "@/assets/app/dark/task-manager.webp";
+import termL from "@/assets/app/light/terminal.webp";
+import termD from "@/assets/app/dark/terminal.webp";
+import adminL from "@/assets/app/light/server-admin.webp";
+import adminD from "@/assets/app/dark/server-admin.webp";
+import persL from "@/assets/app/light/personalize.webp";
+import persD from "@/assets/app/dark/personalize.webp";
 
 const apps = [
   {
     id: "dashboard",
     name: "Dashboard",
-    img: dashboard,
-    alt: "The Dashboard for web-01: processor, memory, disks, network and uptime, live",
+    icon: iconDash,
+    light: dashL,
+    dark: dashD,
+    alt: "The Dashboard for web-01: processor, memory, uptime, disk usage and live network traffic",
     body: "Processor, memory, disks, network and uptime on one live screen: the first thing you open when something feels slow.",
   },
   {
     id: "home",
     name: "Home hub",
-    img: home,
-    alt: "The Home hub: server health, network traffic, weather, recent apps and a photo frame",
+    icon: iconHome,
+    light: homeL,
+    dark: homeD,
+    alt: "The Home hub for web-01: server health, recent apps, weather and live network traffic",
     body: "One glance at the server you're on: health, live network traffic, recent apps, and the other servers in your session bar.",
   },
   {
     id: "files",
     name: "Files",
-    img: files,
-    alt: "File Explorer editing a docker-compose.yml on the server, with syntax highlighting",
+    icon: iconFiles,
+    light: filesL,
+    dark: filesD,
+    alt: "File Explorer with compose.yml from /srv/app open in the code editor",
     body: "Browse, upload, rename and edit over SFTP. A real code editor with syntax highlighting, two-pane mode, drag-and-drop uploads, and a recycle bin you can restore from.",
   },
   {
     id: "docker",
     name: "Docker",
-    img: docker,
-    alt: "The Docker app listing running and stopped containers with their images and ports",
+    icon: iconDocker,
+    light: dockerL,
+    dark: dockerD,
+    alt: "The Docker app listing six containers with their image, state, status and ports",
     body: "Containers, images, ports and logs at a glance. Start, stop and restart without remembering a single flag.",
   },
   {
     id: "tasks",
     name: "Task Manager",
-    img: tasks,
-    alt: "Task Manager with live CPU, memory and network graphs",
+    icon: iconTasks,
+    light: tasksL,
+    dark: tasksD,
+    alt: "Task Manager listing processes with their user, CPU and memory, above CPU, memory and network totals",
     body: "Live CPU, memory, disk and network, plus every process with who owns it and what it costs.",
   },
   {
     id: "terminal",
     name: "Terminal",
-    img: terminal,
-    alt: "A terminal window running htop on the server, with three busy worker processes",
+    icon: iconTerminal,
+    light: termL,
+    dark: termD,
+    alt: "A Terminal on web-01 showing uptime, the Docker containers, disk space and the nginx service status",
     body: "When you want the shell, it's one click away: a real terminal with a persistent session, tabs and your own theme.",
   },
   {
     id: "admin",
     name: "Server Admin",
-    img: admin,
-    alt: "Server Admin showing listening ports with the process behind each",
+    icon: iconAdmin,
+    light: adminL,
+    dark: adminD,
+    alt: "Server Admin on the Network page, listing listening ports with the process behind each",
     body: "Network, firewall, services, packages, cron, logs and storage: the admin chores, as forms and tables instead of man pages.",
   },
   {
     id: "personalize",
     name: "Personalize",
-    img: personalize,
-    alt: "Settings showing the wallpaper picker with photo and gradient wallpapers",
+    icon: iconSettings,
+    light: persL,
+    dark: persD,
+    alt: "Settings on the Wallpaper page, with the system wallpapers to choose from",
     body: "Wallpapers, accent colours, light or dark, terminal themes and shortcuts. Give each server its own look, so you always know which one you're on.",
   },
 ];
 ---
 
-<section id="apps" class="section relative overflow-hidden">
-  <div class="container-x">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="rv eyebrow">Apps</p>
-      <h2 class="rv h2 mt-5 [--d:.05s]">Everything you SSH in for, already open.</h2>
-      <p class="rv lede mx-auto mt-6 max-w-2xl [--d:.1s]">
-        Each app runs the commands you'd type and shows the answer as an interface. Windows move, resize,
-        snap and remember where you put them.
-      </p>
+<section id="apps" class="sect container-x">
+  <div class="section-head">
+    <h2 class="h2 max-w-[10em]">Everything you SSH in for, already open.</h2>
+    <p class="lede">
+      Each app runs the commands you'd type and shows the answer as an interface. Windows move, resize, snap and
+      remember where you put them.
+    </p>
+  </div>
+
+  <div class="tour rounded-[24px] bg-tint p-3.5 sm:p-7 lg:p-9" data-tabs>
+    <!-- The app list: a white card of rows on wide screens, a sideways row of chips on narrow ones -->
+    <div class="tabs-scroll">
+      <div role="tablist" aria-label="HeadlessOS apps" class="tabs card">
+        {
+          apps.map((a, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${a.id}`}
+              aria-controls={`panel-${a.id}`}
+              aria-selected={i === 0 ? "true" : "false"}
+              tabindex={i === 0 ? 0 : -1}
+              class="tab"
+            >
+              <img src={a.icon.src} alt="" width="22" height="22" />
+              <span>{a.name}</span>
+              <span class="tab-progress" aria-hidden="true" />
+            </button>
+          ))
+        }
+      </div>
     </div>
 
-    <div class="rv mt-12 [--d:.12s]" data-tabs>
-      <div class="tabs-scroll">
-        <div role="tablist" aria-label="HeadlessOS apps" class="tabs">
-          {
-            apps.map((a, i) => (
-              <button
-                type="button"
-                role="tab"
-                id={`tab-${a.id}`}
-                aria-controls={`panel-${a.id}`}
-                aria-selected={i === 0 ? "true" : "false"}
-                tabindex={i === 0 ? 0 : -1}
-                class="tab"
-              >
-                {a.name}
-                <span class="tab-progress" aria-hidden="true" />
-              </button>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="relative mx-auto mt-8 max-w-[1120px]">
-        <div aria-hidden="true" class="glow"></div>
-        <div class="frame">
-          <div class="screens">
-            {
-              apps.map((a, i) => (
-                <div
-                  role="tabpanel"
-                  id={`panel-${a.id}`}
-                  aria-labelledby={`tab-${a.id}`}
-                  class="screen"
-                  data-active={i === 0 ? "true" : "false"}
-                >
-                  <Image
-                    src={a.img}
-                    alt={a.alt}
-                    widths={[800, 1200, 1600, 2400]}
-                    sizes="(min-width: 1180px) 1120px, 96vw"
-                    loading={i === 0 ? "eager" : "lazy"}
-                    class="frame-media"
-                  />
-                </div>
-              ))
-            }
+    <div class="screens">
+      {
+        apps.map((a, i) => (
+          <div role="tabpanel" id={`panel-${a.id}`} aria-labelledby={`tab-${a.id}`} class="screen" data-active={i === 0 ? "true" : "false"}>
+            <ThemedShot
+              light={a.light}
+              dark={a.dark}
+              alt={a.alt}
+              sizes="(min-width: 1200px) 800px, 92vw"
+              eager={i === 0}
+              class="block h-auto w-full"
+            />
           </div>
-        </div>
-        <div class="captions mt-6 text-center">
-          {
-            apps.map((a, i) => (
-              <p class="caption lede mx-auto max-w-2xl text-base" data-active={i === 0 ? "true" : "false"}>
-                <span class="font-medium text-fg">{a.name}.</span> {a.body}
-              </p>
-            ))
-          }
-        </div>
-      </div>
+        ))
+      }
+    </div>
+
+    <div class="captions">
+      {
+        apps.map((a, i) => (
+          <p class="caption text-[15px] leading-relaxed text-fg-muted" data-active={i === 0 ? "true" : "false"}>
+            <span class="font-semibold text-fg">{a.name}.</span> {a.body}
+          </p>
+        ))
+      }
     </div>
   </div>
 </section>
 
 <style>
+  /* Narrow: chips, then the picture, then the caption. Wide: list and caption on the left, picture on the right. */
+  .tour {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .tabs-scroll {
     position: relative; /* offsetParent for the tabs, so offsetLeft is measured in the row */
     display: flex;
+    min-width: 0;
     overflow-x: auto;
     scrollbar-width: none;
-    margin-inline: -20px;
-    padding-inline: 20px;
   }
 
   .tabs-scroll::-webkit-scrollbar {
@@ -159,45 +187,55 @@ const apps = [
 
   .tabs {
     display: inline-flex;
-    margin-inline: auto; /* centred when it fits, scrollable from the first tab when it doesn't */
-    gap: 4px;
+    gap: 2px;
     padding: 5px;
     border-radius: 999px;
-    background: rgb(var(--ink) / 0.035);
-    border: 1px solid var(--color-border);
   }
 
   .tab {
     position: relative;
     overflow: hidden;
+    display: flex;
     flex: none;
+    align-items: center;
+    gap: 8px;
     height: 38px;
-    padding: 0 16px;
+    padding: 0 14px 0 10px;
     border-radius: 999px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.875rem;
+    font-weight: 560;
+    white-space: nowrap;
     color: var(--color-fg-muted);
     cursor: pointer;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .tab img {
+    width: 20px;
+    height: 20px;
   }
 
   .tab:hover {
     color: var(--color-fg);
+    background: rgb(var(--ink) / 0.04);
   }
 
   .tab[aria-selected="true"] {
-    color: var(--color-bg);
-    background: var(--color-fg);
+    color: var(--color-accent-text);
+    background: var(--color-accent-soft);
   }
 
   .tab-progress {
     position: absolute;
     left: 14px;
     right: 14px;
-    bottom: 5px;
+    bottom: 4px;
     height: 2px;
     border-radius: 2px;
-    background: rgb(var(--paper) / 0.4);
+    background: var(--color-accent);
+    opacity: 0.45;
     transform: scaleX(0);
     transform-origin: left;
   }
@@ -212,31 +250,31 @@ const apps = [
     }
   }
 
-  .glow {
-    position: absolute;
-    inset: 12% 6% -4% 6%;
-    background:
-      radial-gradient(ellipse at 30% 60%, rgba(0, 212, 255, 0.22), transparent 60%),
-      radial-gradient(ellipse at 70% 40%, rgba(124, 58, 237, 0.24), transparent 60%);
-    filter: blur(60px);
-    z-index: -1;
-  }
-
   .screens {
     display: grid;
+    min-width: 0;
   }
 
   .screen {
     grid-area: 1 / 1;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+    transition:
+      opacity 0.45s ease,
+      visibility 0s linear 0.45s;
   }
 
   .screen[data-active="true"] {
     opacity: 1;
     visibility: visible;
     transition: opacity 0.45s ease;
+  }
+
+  .screen :global(img) {
+    border-radius: 14px;
+    box-shadow:
+      0 0 0 1px rgb(var(--ink) / 0.08),
+      0 24px 48px -28px rgb(10 30 40 / 0.45);
   }
 
   .captions {
@@ -251,6 +289,61 @@ const apps = [
 
   .caption[data-active="true"] {
     opacity: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .tour {
+      grid-template-columns: 236px minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      column-gap: 36px;
+      row-gap: 24px;
+    }
+
+    .tabs-scroll {
+      grid-column: 1;
+      grid-row: 1;
+      overflow: visible;
+    }
+
+    .tabs {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 2px;
+      padding: 8px;
+      border-radius: 18px;
+    }
+
+    .tab {
+      height: 44px;
+      padding: 0 14px 0 10px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+    }
+
+    .tab img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .tab-progress {
+      left: 12px;
+      right: 12px;
+      bottom: 5px;
+    }
+
+    .screens {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: start;
+    }
+
+    .captions {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+      padding-inline: 6px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -282,7 +375,7 @@ const apps = [
         captions[j].dataset.active = String(on);
       });
       if (focus) tabs[current].focus({ preventScroll: true });
-      // Keep the active tab visible when the row scrolls sideways on phones (never scroll the page)
+      // Keep the active chip visible when the row scrolls sideways on phones (never scroll the page)
       if (scroller && scroller.scrollWidth > scroller.clientWidth) {
         const t = tabs[current];
         scroller.scrollTo({ left: t.offsetLeft - (scroller.clientWidth - t.offsetWidth) / 2, behavior: "smooth" });
@@ -312,12 +405,14 @@ const apps = [
 
     root.querySelector('[role="tablist"]')?.addEventListener("keydown", (e) => {
       const k = (e as KeyboardEvent).key;
-      if (k !== "ArrowRight" && k !== "ArrowLeft" && k !== "Home" && k !== "End") return;
+      const next = k === "ArrowRight" || k === "ArrowDown";
+      const prev = k === "ArrowLeft" || k === "ArrowUp";
+      if (!next && !prev && k !== "Home" && k !== "End") return;
       e.preventDefault();
       root.dataset.stopped = "true";
       stopAuto();
-      if (k === "ArrowRight") select(current + 1, true);
-      if (k === "ArrowLeft") select(current - 1, true);
+      if (next) select(current + 1, true);
+      if (prev) select(current - 1, true);
       if (k === "Home") select(0, true);
       if (k === "End") select(tabs.length - 1, true);
     });
