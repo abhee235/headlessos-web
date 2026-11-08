@@ -1,5 +1,8 @@
 ---
 title: LLM Observatory
+head:
+  - tag: title
+    content: "LLM Observatory: tokens, latency and cost | HeadlessOS Docs"
 description: See every model call and action of an AI run in the LLM Observatory, with tokens, latency and estimated cost per run, step and model.
 ---
 

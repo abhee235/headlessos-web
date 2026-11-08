@@ -1,5 +1,8 @@
 ---
 title: File Explorer
+head:
+  - tag: title
+    content: "Linux file manager over SSH and SFTP | HeadlessOS Docs"
 description: Browse, edit, upload, search and delete files on a Linux server with HeadlessOS File Explorer. Works over SFTP, with a code editor and Recycle Bin.
 ---
 

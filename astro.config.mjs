@@ -55,6 +55,12 @@ export default defineConfig({
       },
       customCss: ["./src/styles/starlight.css", "./src/styles/docs.css", "./src/styles/docs-icons.css"],
       head: [
+        // The site's preview image, so a docs link shared in chat or on social media shows a picture
+        { tag: "meta", attrs: { property: "og:image", content: "https://headlessos.com/og-image.png" } },
+        { tag: "meta", attrs: { property: "og:image:width", content: "1200" } },
+        { tag: "meta", attrs: { property: "og:image:height", content: "630" } },
+        { tag: "meta", attrs: { property: "og:image:alt", content: "HeadlessOS, a desktop for your Linux servers" } },
+        { tag: "meta", attrs: { name: "twitter:image", content: "https://headlessos.com/og-image.png" } },
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
         { tag: "link", attrs: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true } },
         {

@@ -1,5 +1,8 @@
 ---
 title: Troubleshooting
+head:
+  - tag: title
+    content: "Troubleshooting SSH and install problems | HeadlessOS Docs"
 description: Fix HeadlessOS problems. Find the log, and solve backend errors, first-launch blocks, failed SSH connections and macOS local network access.
 ---
 

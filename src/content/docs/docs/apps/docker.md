@@ -1,5 +1,8 @@
 ---
 title: Docker
+head:
+  - tag: title
+    content: "Docker GUI for remote servers over SSH | HeadlessOS Docs"
 description: Manage Docker containers and images on a remote server with HeadlessOS. View logs, open a shell and edit files inside a container, all over SSH.
 ---
 

@@ -1,5 +1,8 @@
 ---
 title: UI Agent
+head:
+  - tag: title
+    content: "UI Agent: build server views by asking | HeadlessOS Docs"
 description: Ask the UI Agent for a custom view of your server. It builds the window widget by widget, refines it with follow-ups and asks when a request is unclear.
 ---
 

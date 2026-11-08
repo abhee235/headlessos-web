@@ -1,5 +1,8 @@
 ---
 title: Terminal
+head:
+  - tag: title
+    content: "SSH terminal for your Linux server | HeadlessOS Docs"
 description: Open an SSH shell on your Linux server in HeadlessOS. Run vim, htop and tmux, and change the terminal's font, cursor and scrollback.
 ---
 

@@ -1,5 +1,8 @@
 ---
 title: FAQ
+head:
+  - tag: title
+    content: "HeadlessOS FAQ: common questions answered"
 description: Common questions about HeadlessOS, including cost, changes to your server, sudo, SSH config, 2FA, AI keys, your data and updates.
 ---
 

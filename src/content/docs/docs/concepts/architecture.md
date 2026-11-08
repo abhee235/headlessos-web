@@ -1,5 +1,8 @@
 ---
 title: Architecture
+head:
+  - tag: title
+    content: "Architecture: the app, backend and SSH | HeadlessOS Docs"
 description: How the HeadlessOS app, its local backend and your Linux server fit together, on desktop and from source, and where state is stored.
 ---
 

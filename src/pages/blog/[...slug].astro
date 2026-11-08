@@ -20,11 +20,14 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 });
 
 const url = new URL(`/blog/${post.id}`, Astro.site).href;
+// Search results cut a title after about 60 characters, so a long post title goes without the suffix
+const suffix = " — HeadlessOS Blog";
+const title = post.data.title.length + suffix.length <= 60 ? post.data.title + suffix : post.data.title;
 const published = post.data.pubDate.toISOString();
 const modified = (post.data.updatedDate ?? post.data.pubDate).toISOString();
 ---
 
-<BaseLayout title={`${post.data.title} — HeadlessOS Blog`} description={post.data.description} type="article">
+<BaseLayout title={title} description={post.data.description} type="article">
   <Fragment slot="head">
     <meta property="article:published_time" content={published} />
     <meta property="article:modified_time" content={modified} />

@@ -1,5 +1,8 @@
 ---
 title: AI safety and privacy
+head:
+  - tag: title
+    content: "AI safety and privacy for server agents | HeadlessOS Docs"
 description: How HeadlessOS keeps AI agents safe with typed actions, approvals, an audit log and secret redaction, and exactly what reaches a model provider.
 ---
 

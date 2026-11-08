@@ -1,5 +1,8 @@
 ---
 title: Dashboard
+head:
+  - tag: title
+    content: "Linux server monitoring dashboard | HeadlessOS Docs"
 description: See CPU, memory, disk, network and uptime for a Linux server in the HeadlessOS Dashboard, with live load and traffic graphs read over SSH.
 ---
 

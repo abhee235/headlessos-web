@@ -1,5 +1,8 @@
 ---
 title: Server Admin
+head:
+  - tag: title
+    content: "Linux server admin: firewall, users, nginx | HeadlessOS Docs"
 description: Manage network, firewall, users, SSH, nginx, apt packages, cron jobs, logs and storage on a Linux server from one HeadlessOS app, over SSH.
 ---
 

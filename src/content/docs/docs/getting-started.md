@@ -1,5 +1,8 @@
 ---
 title: Quick Start
+head:
+  - tag: title
+    content: "Quick start: your first server over SSH | HeadlessOS Docs"
 description: Download HeadlessOS, add your first Linux server and sign in over SSH. Covers the desktop app first, then running from source.
 ---
 

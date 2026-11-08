@@ -1,5 +1,8 @@
 ---
 title: Set up AI
+head:
+  - tag: title
+    content: "Set up AI with OpenAI, Claude or Ollama | HeadlessOS Docs"
 description: Turn on AI in HeadlessOS with OpenAI, Claude or a local Ollama model. What each needs, where API keys are stored, and how to choose a provider.
 ---
 

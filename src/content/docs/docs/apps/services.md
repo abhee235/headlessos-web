@@ -1,5 +1,8 @@
 ---
 title: Services
+head:
+  - tag: title
+    content: "Manage systemd services with a GUI | HeadlessOS Docs"
 description: Start, stop, restart, enable and disable systemd services on a Linux server from HeadlessOS, and read each service's status and journal logs.
 ---
 

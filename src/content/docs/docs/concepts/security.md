@@ -1,5 +1,8 @@
 ---
 title: Security model
+head:
+  - tag: title
+    content: "Security model: encryption and SSH keys | HeadlessOS Docs"
 description: What HeadlessOS stores and how it is encrypted, what reaches your server, the local API token, the command policy, and reporting a vulnerability.
 ---
 

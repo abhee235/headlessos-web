@@ -1,5 +1,8 @@
 ---
 title: AI Agent
+head:
+  - tag: title
+    content: "AI agent for Linux server troubleshooting | HeadlessOS Docs"
 description: Ask the AI Agent why a server is slow or a disk is full. It runs checks over SSH and answers with evidence. How to use it and what it can't do.
 ---
 

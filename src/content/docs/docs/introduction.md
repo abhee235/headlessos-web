@@ -1,5 +1,8 @@
 ---
 title: Introduction
+head:
+  - tag: title
+    content: "What is HeadlessOS? A GUI for Linux servers"
 description: HeadlessOS is a free, open-source app that shows your Linux servers as a desktop over SSH, with nothing installed on the server.
 ---
 

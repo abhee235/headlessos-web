@@ -1,5 +1,8 @@
 ---
 title: Task Manager
+head:
+  - tag: title
+    content: "Linux task manager: processes, CPU, memory | HeadlessOS Docs"
 description: Watch processes, CPU, memory, disk and network live on a Linux server in HeadlessOS Task Manager, plus app history, startup apps, users and services.
 ---
 

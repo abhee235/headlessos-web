@@ -1,5 +1,8 @@
 ---
 title: Sessions and Fleet
+head:
+  - tag: title
+    content: "Manage many servers: sessions and Fleet | HeadlessOS Docs"
 description: Run one HeadlessOS session per Linux server. Switch between them, hibernate and wake, use Control Center and Fleet, and export or import a session.
 ---
 

@@ -1,5 +1,8 @@
 ---
 title: Installation
+head:
+  - tag: title
+    content: "Install HeadlessOS on Windows, macOS and Linux"
 description: Install HeadlessOS on Windows, macOS or Linux, get past first-launch warnings, run it from source, and update or uninstall it.
 ---
 

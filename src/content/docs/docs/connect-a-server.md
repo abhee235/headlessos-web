@@ -1,5 +1,8 @@
 ---
 title: Connect a server
+head:
+  - tag: title
+    content: "Connect a Linux server over SSH | HeadlessOS Docs"
 description: Add a Linux server to HeadlessOS with a password, SSH key or SSH agent. See what a server needs, and how to reconnect or remove one.
 ---
 
