@@ -208,9 +208,18 @@ const isCurrent = (href: string) => !href.includes("#") && (path === href || pat
     }
   }
 
-  @media (min-width: 48rem) {
+  /* Logo, links, theme, GitHub and Download need about 900px; below that the links are in the menu */
+  @media (min-width: 60rem) {
     .site-bar-nav {
       display: flex;
+    }
+  }
+
+  /* Logo, theme, Download and the menu need about 392px, plus a desktop scrollbar; below that
+     Download is in the menu */
+  @media (max-width: 25.49rem) {
+    .site-bar-download {
+      display: none;
     }
   }
 </style>

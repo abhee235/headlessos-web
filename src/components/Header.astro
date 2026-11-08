@@ -6,7 +6,7 @@ import { navLinks, githubUrl } from "@/data/nav";
 <header class="site-header sticky top-0 z-50">
   <div class="container-x h-16">
     <SiteBar>
-      <details slot="menu" class="mobile-nav relative md:hidden">
+      <details slot="menu" class="mobile-nav relative">
         <summary class="btn btn-ghost btn-sm !px-2.5" aria-label="Menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16"></path>
@@ -22,6 +22,9 @@ import { navLinks, githubUrl } from "@/data/nav";
           }
           <a href={githubUrl} class="block rounded-lg px-3 py-2.5 text-fg-muted hover:bg-ink/5 hover:text-fg">
             GitHub
+          </a>
+          <a href="/download" class="menu-download block rounded-lg px-3 py-2.5 text-fg-muted hover:bg-ink/5 hover:text-fg">
+            Download
           </a>
         </nav>
       </details>
@@ -39,6 +42,20 @@ import { navLinks, githubUrl } from "@/data/nav";
 
   .mobile-nav summary {
     list-style: none;
+  }
+
+  /* The menu holds what the bar has no room for: the links below 60rem (SiteBar shows them from
+     there), and Download below 25.5rem */
+  @media (min-width: 60rem) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+
+  @media (min-width: 25.5rem) {
+    .menu-download {
+      display: none;
+    }
   }
 
   .mobile-nav summary::-webkit-details-marker {
