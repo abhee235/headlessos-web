@@ -149,7 +149,7 @@ const platforms = [
     }
   }
 
-  type Asset = { name: string; size: number; browser_download_url: string };
+  type Asset = { name: string; browser_download_url: string };
   type Release = { tag_name: string; published_at: string; html_url: string; assets: Asset[] };
 
   const MATCH: Record<string, (n: string) => boolean> = {
@@ -160,8 +160,6 @@ const platforms = [
     "linux-appimage": (n) => /\.appimage$/i.test(n),
     "linux-deb": (n) => /\.deb$/i.test(n),
   };
-
-  const mb = (bytes: number) => `${Math.round(bytes / 1_000_000)} MB`;
 
   fetch("https://api.github.com/repos/abhee235/headlessos/releases/latest", {
     headers: { Accept: "application/vnd.github+json" },
@@ -180,9 +178,8 @@ const platforms = [
           a.dataset.absent = "true";
           return;
         }
+        // The card shows the file type, not its size, which changes with every release
         a.href = asset.browser_download_url;
-        const meta = a.querySelector("[data-asset-meta]");
-        if (meta) meta.textContent = `${meta.textContent} · ${mb(asset.size)}`;
       });
       // A platform with no files in this release points to the source instead
       document.querySelectorAll<HTMLElement>("[data-platform]").forEach((card) => {
