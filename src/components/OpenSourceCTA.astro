@@ -1,13 +1,8 @@
 ---
-// Closing call to action, on the app's Mist wallpaper, with a way in for each platform.
+// Closing call to action, on the app's Mist wallpaper, with the download page's cards for each platform.
 import { Image } from "astro:assets";
 import mist from "@/assets/wallpapers/mist.jpg";
-
-const platforms = [
-  { id: "windows", name: "Windows", detail: "Windows 10 or 11, 64-bit. Installer or portable .exe." },
-  { id: "mac", name: "macOS", detail: "macOS 11 or later, Apple silicon and Intel. A .dmg or .zip." },
-  { id: "linux", name: "Linux", detail: "64-bit. An AppImage, or a .deb for Debian and Ubuntu." },
-];
+import PlatformCards from "@/components/PlatformCards.astro";
 ---
 
 <section class="band scope-light mt-(--section-space) mb-(--section-space)" aria-labelledby="cta-title">
@@ -29,23 +24,11 @@ const platforms = [
     </div>
   </div>
 
-  <ul class="mx-auto mt-[clamp(44px,5vw,72px)] grid max-w-[1120px] grid-cols-1 gap-4 px-[clamp(16px,3vw,24px)] pb-[clamp(16px,3vw,24px)] md:grid-cols-3">
-    {
-      platforms.map((p) => (
-        <li>
-          <a href={`/download#${p.id}`} class="card group flex h-full flex-col gap-2 p-6 transition-transform hover:-translate-y-0.5">
-            <span class="flex items-center justify-between text-[1.15rem] font-semibold">
-              {p.name}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-text" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </span>
-            <span class="text-[0.98rem] leading-relaxed text-fg-muted">{p.detail}</span>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <PlatformCards
+    class="container-x mt-[clamp(44px,5vw,72px)] grid grid-cols-1 gap-4 pb-5 sm:pb-7 lg:grid-cols-3 lg:gap-6"
+    heading="h3"
+    sourceHref="/download#source"
+  />
 </section>
 
 <style>
