@@ -58,6 +58,12 @@
   --radius-2xl: 28px;
 }
 
+/* The one gap between landing-page sections, the wallpaper bands included: 80px on a phone,
+   128px from 1280px wide. Both sit on the 8px grid. */
+:root {
+  --section-space: clamp(80px, 10vw, 128px);
+}
+
 /* Theme channels: --ink is the text colour and --paper the page colour, as "r g b" */
 :root {
   --ink: 16 32 42;
@@ -172,7 +178,7 @@ html[data-theme="dark"] {
 
   /* Landing-page sections: space above only, so the gap between two sections is one step */
   .sect {
-    padding-top: clamp(64px, 7vw, 100px);
+    padding-top: var(--section-space);
   }
 
   /* A section's opening: the title on the left, a short paragraph on the right */
