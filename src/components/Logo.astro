@@ -1,5 +1,8 @@
 ---
 // The HeadlessOS mark + wordmark. Text follows currentColor; "OS" uses the brand cyan.
+// The wordmark is 0.64 of the mark's height (28 of 44), so it reads above 15px nav text where
+// the logo is 28px tall. Its capitals (0.71em in Geist) are centred on the mark: baseline 34.
+// The viewBox ends just after the text.
 interface Props {
   class?: string;
 }
@@ -7,7 +10,7 @@ const { class: className } = Astro.props;
 const id = `lg${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<svg viewBox="0 0 220 48" class={className} role="img" aria-label="HeadlessOS">
+<svg viewBox="0 0 224 48" class={className} role="img" aria-label="HeadlessOS">
   <defs>
     <linearGradient id={`${id}a`} x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#00D4FF"></stop>
@@ -28,7 +31,7 @@ const id = `lg${Math.random().toString(36).slice(2, 8)}`;
     <rect x="27.4" y="17.7" width="2.2" height="12.6" rx="0.8"></rect>
     <rect x="18.6" y="23.0" width="11" height="2.2" rx="0.8"></rect>
   </g>
-  <text x="58" y="32" font-family="Geist, Inter, system-ui, sans-serif" font-size="22" font-weight="650" letter-spacing="-0.4" fill="currentColor">
+  <text x="58" y="34" font-family="Geist, Inter, system-ui, sans-serif" font-size="28" font-weight="650" letter-spacing="-0.5" fill="currentColor">
     Headless<tspan class="logo-os">OS</tspan>
   </text>
 </svg>
