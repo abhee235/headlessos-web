@@ -11,10 +11,15 @@ interface Props {
   type?: "website" | "article";
 }
 
+// What the app is. The home page's description, and the app's description in the structured data on
+// every page, which a page's own description (a blog post's, say) must not replace.
+const appDescription =
+  "A free, open-source desktop GUI for any Linux server, VPS or Raspberry Pi, over SSH: files, Docker, logs and services. Nothing is installed on the server.";
+
 const {
   // Search results show about 60 characters of a title and 155 of a description
   title = "HeadlessOS — a desktop GUI for Linux servers over SSH",
-  description = "A free, open-source desktop GUI for any Linux server, VPS or Raspberry Pi, over SSH: files, Docker, logs and services. Nothing is installed on the server.",
+  description = appDescription,
   image = "/og-image.png",
   noindex = false,
   type = "website",
@@ -89,7 +94,7 @@ const socialImage = new URL(image, Astro.site);
         name: "HeadlessOS",
         applicationCategory: "DeveloperApplication",
         operatingSystem: "Windows, macOS, Linux",
-        description,
+        description: appDescription,
         url: "https://headlessos.com",
         license: "https://opensource.org/licenses/MIT",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
