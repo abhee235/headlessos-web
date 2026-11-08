@@ -262,6 +262,9 @@ starlight-toc a {
   line-height: 1.5;
   color: var(--docs-prose-muted);
   border-inline-start: 2px solid transparent;
+  /* Square, so the current row's mark is a straight line on the rail. Starlight rounds it to 4px,
+     which bends both ends of the line like a bracket. */
+  border-radius: 0;
   transition: color 0.15s ease;
 }
 
