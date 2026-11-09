@@ -27,8 +27,8 @@
   },
   "scripts": {
     "dev": "remotion studio --port 3600",
-    "render": "remotion render Launch out/headlessos-launch.mp4 --codec=h264 --crf=17 --jpeg-quality=95 --x264-preset=slow --pixel-format=yuv420p",
-    "render:readme": "remotion ffmpeg -y -i out/headlessos-launch.mp4 -vf scale=1920:1080:in_range=pc:out_range=tv,format=yuv420p -color_range tv -c:v libx264 -preset slow -crf 27 -movflags +faststart -an out/headlessos-launch-readme.mp4",
+    "render": "remotion render Launch out/headlessos-launch.mp4 --codec=h264 --crf=17 --image-format=png --x264-preset=slow --pixel-format=yuv420p",
+    "render:readme": "remotion ffmpeg -y -i out/headlessos-launch.mp4 -vf scale=1920:1080,format=yuv420p -color_range tv -c:v libx264 -preset slow -crf 27 -movflags +faststart -an out/headlessos-launch-readme.mp4",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
