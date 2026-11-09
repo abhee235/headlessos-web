@@ -14,7 +14,7 @@ Yes. It's free and open source under the MIT licence. The source is on [GitHub](
 
 ### Is it ready for production servers?
 
-Treat it with care. **Settings → About** labels version 0.2.1 Alpha, and the app runs real commands on real servers. Try it on a test server first, and keep your own backups.
+Treat it with care. **Settings → About** labels version 0.3.0 Alpha, and the app runs real commands on real servers. Try it on a test server first, and keep your own backups.
 
 ### Which systems does it run on?
 

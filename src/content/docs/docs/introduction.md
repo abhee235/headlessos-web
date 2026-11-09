@@ -62,7 +62,7 @@ Agents don't write shell commands. They pick typed actions from a fixed list, an
 
 ## Project status
 
-This page covers version 0.2.1, which **Settings → About** labels Alpha. Expect rough edges, try it on a test server first, and [report what you find](https://github.com/abhee235/headlessos/issues).
+This page covers version 0.3.0, which **Settings → About** labels Alpha. Expect rough edges, try it on a test server first, and [report what you find](https://github.com/abhee235/headlessos/issues).
 
 ## Next steps
 
