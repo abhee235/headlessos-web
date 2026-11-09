@@ -16,8 +16,9 @@ const RollingWord: React.FC<{ at: number; hold: number }> = ({ at, hold }) => {
       {ROLL.map((word, i) => {
         const inStart = at + i * hold;
         const outStart = at + (i + 1) * hold;
-        const enter = i === 0 ? 1 : interpolate(frame, [inStart - 10, inStart], [0, 1], { ...clamp, easing: ease.out });
-        const leave = i === ROLL.length - 1 ? 0 : interpolate(frame, [outStart - 10, outStart], [0, 1], { ...clamp, easing: ease.in });
+        // Both words use the same curve over the same frames, so they stay exactly one line apart
+        const enter = i === 0 ? 1 : interpolate(frame, [inStart - 12, inStart], [0, 1], { ...clamp, easing: ease.inOut });
+        const leave = i === ROLL.length - 1 ? 0 : interpolate(frame, [outStart - 12, outStart], [0, 1], { ...clamp, easing: ease.inOut });
         return (
           <div
             key={word}

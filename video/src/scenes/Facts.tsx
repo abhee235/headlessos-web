@@ -18,7 +18,8 @@ const FactsInner = () => {
         {FACTS.map((fact, i) => {
           const start = FIRST + i * EACH;
           const enter = interpolate(frame, [start, start + 12], [0, 1], { ...clamp, easing: ease.out });
-          const leave = i === FACTS.length - 1 ? 0 : interpolate(frame, [start + EACH - 4, start + EACH + 6], [0, 1], { ...clamp, easing: ease.in });
+          // Each fact is all but gone before the next one starts to rise
+          const leave = i === FACTS.length - 1 ? 0 : interpolate(frame, [start + EACH - 7, start + EACH + 2], [0, 1], { ...clamp, easing: ease.in });
           if (enter === 0 || leave === 1) return null;
           return (
             <div
