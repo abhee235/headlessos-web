@@ -84,6 +84,7 @@ headlessOS-Web/
 │   ├── favicon.svg
 │   ├── _headers                  # Cloudflare security headers
 │   └── robots.txt
+├── video/                        # The launch video: its own Remotion (React) project, not part of the site build
 └── .github/workflows/deploy.yml  # CI/CD: build + deploy on push to main
 ```
 
@@ -216,6 +217,7 @@ All marketing components are `.astro` files. Interactivity (the gallery tabs, OS
 | Edit CI/CD | `.github/workflows/deploy.yml` |
 | Change security headers | `public/_headers` |
 | Edit logos | `src/assets/logo-mark.svg`, `logo-wordmark.svg` |
+| Edit or re-render the launch video | `video/` (see `video/README.md`) |
 
 ---
 

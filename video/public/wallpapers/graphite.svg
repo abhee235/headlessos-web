@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="30%" stop-color="#2a2a2a"/>
+      <stop offset="60%" stop-color="#1e1e1e"/>
+      <stop offset="100%" stop-color="#171717"/>
+    </linearGradient>
+    <radialGradient id="light" cx="60%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.035"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Subtle grid pattern -->
+    <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="60" stroke="white" stroke-opacity="0.015" stroke-width="0.5"/>
+      <line x1="0" y1="0" x2="60" y2="0" stroke="white" stroke-opacity="0.015" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#light)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+</svg>
