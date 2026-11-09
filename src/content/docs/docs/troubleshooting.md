@@ -27,7 +27,7 @@ Running from source, there is no log file. The same output goes to the terminal 
 For errors in the window itself, open DevTools. Press Ctrl+Shift+I on Windows, or choose **View → Toggle Developer Tools** on macOS.
 
 :::caution
-Secrets, your computer's name and your home path are masked, and nothing is sent anywhere. The log can still name your servers and file paths, so read it before you paste it into an issue.
+The log records problems, not what you open, and it leaves out commands, server addresses and logins. Secrets, your computer's name and your home path are masked, and nothing is sent anywhere. An unusual error can still name a file or a server, so read the log before you paste it into an issue.
 :::
 
 :::note
@@ -96,7 +96,7 @@ xattr -cr /Applications/HeadlessOS.app
 
 ### Linux: the AppImage won't start
 
-Make it executable with `chmod +x HeadlessOS-0.3.0.AppImage`, then run it. On Debian or Ubuntu, you can install the `.deb` instead.
+Make it executable with `chmod +x HeadlessOS-0.3.2.AppImage`, then run it. On Debian or Ubuntu, you can install the `.deb` instead.
 
 ## A server won't connect
 
@@ -134,14 +134,14 @@ The server refused the username, password or key. Check these:
 
 ### Connection refused
 
-The log says `connect ECONNREFUSED`. The machine answered, but nothing is listening on that port.
+The error says `connect ECONNREFUSED`. The machine answered, but nothing is listening on that port.
 
 - Check the **Port**. To change it, [remove the server and add it again](/docs/connect-a-server#change-or-remove-a-server).
 - On the server, check that SSH is running with `systemctl status ssh`. On some distributions the service is called `sshd`.
 
 ### Connection timed out
 
-The log says `Timed out while waiting for handshake`. Nothing answered within 10 seconds.
+The error says `Timed out while waiting for handshake`. Nothing answered within 10 seconds.
 
 - Check the address. A home server's address can change.
 - Check the firewall on the server, and your cloud provider's firewall or security group. Port 22, or your own SSH port, must be open to your address.
@@ -150,18 +150,18 @@ The log says `Timed out while waiting for handshake`. Nothing answered within 10
 
 ### Host not found
 
-The log says `getaddrinfo ENOTFOUND`. Your computer can't turn that hostname into an address. Check the spelling, or use the IP address instead.
+The error says `getaddrinfo ENOTFOUND`. Your computer can't turn that hostname into an address. Check the spelling, or use the IP address instead.
 
 ### No route to host
 
-The log says `connect EHOSTUNREACH` or `connect ENETUNREACH`. Your computer has no path to that network. Check that you're on the right network or VPN, and that the server's address hasn't changed.
+The error says `connect EHOSTUNREACH` or `connect ENETUNREACH`. Your computer has no path to that network. Check that you're on the right network or VPN, and that the server's address hasn't changed.
 
 ### SSH key problems
 
 | Message | What to do |
 | --- | --- |
-| `Cannot parse privateKey` in the log, with `no passphrase given` | The key has a passphrase. Type it at sign-in |
-| `Cannot parse privateKey` in the log, with `Bad passphrase?` | The passphrase is wrong |
+| `Cannot parse privateKey`, with `no passphrase given` | The key has a passphrase. Type it at sign-in |
+| `Cannot parse privateKey`, with `Bad passphrase?` | The passphrase is wrong |
 | "File does not appear to be a valid SSH private key" | You chose a file that isn't a private key, such as a `.pub` file. A PuTTY `.ppk` file is also refused here |
 | "No SSH keys found in ~/.ssh — try uploading or pasting a key" | Your key isn't named `id_*`, or it's in another folder. Use **Upload File** or **Paste Key** |
 
@@ -171,7 +171,7 @@ If the sign-in screen says "Saved key can't be read", the app has lost its saved
 
 Since macOS 15, an app needs your permission to reach a device on your local network. Tools run from Terminal are exempt, so `ssh` can work while HeadlessOS fails. A public server isn't affected.
 
-The log shows `connect EHOSTUNREACH`. If you click **Reconnect** on the **Server disconnected** panel, the error there adds this hint:
+The error says `connect EHOSTUNREACH`. If you click **Reconnect** on the **Server disconnected** panel, the error there adds this hint:
 
 > macOS may be keeping HeadlessOS off your local network. Allow it in System Settings → Privacy & Security → Local Network, then try again.
 

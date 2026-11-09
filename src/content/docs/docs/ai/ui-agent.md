@@ -53,11 +53,11 @@ The agent only reads while it builds, so a run can't change your server. It can 
 A saved app is a reusable view with a name, an icon and a CLI tool name, plus an optional description and tags. Saved apps are stored in `~/.headlessos/user-apps/`. They appear under **My Apps** in the Start Menu and in the Command Palette. Opening one shows the view as it was saved.
 
 :::caution
-In version 0.3.0, the window that shows a UI Agent view has no **Save as App** button, so you can't save these views yet. To get a view back, click **New** and run it again from **Recent runs**.
+In version 0.3.2, the window that shows a UI Agent view has no **Save as App** button, so you can't save these views yet. To get a view back, click **New** and run it again from **Recent runs**.
 :::
 
 :::note
-The **Sandbox Mode** switch above the input has no effect in version 0.3.0. No container is created, on or off.
+The **Sandbox Mode** switch above the input has no effect in version 0.3.2. No container is created, on or off.
 :::
 
 ## The UI Agent can be wrong

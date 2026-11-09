@@ -10,16 +10,16 @@ HeadlessOS runs on your computer, not on your server. You can install the deskto
 
 ## Download the desktop app
 
-Get the latest version from the [download page](/download). These are the files for version 0.3.0:
+Get the latest version from the [download page](/download). These are the files for version 0.3.2:
 
 | System | File | Notes |
 | --- | --- | --- |
-| Windows | `HeadlessOS.Setup.0.3.0.exe` | Installer |
-| Windows | `HeadlessOS.0.3.0.exe` | Portable, no install needed |
-| macOS | `HeadlessOS-0.3.0-universal.dmg` | Apple silicon and Intel |
-| macOS | `HeadlessOS-0.3.0-universal-mac.zip` | Apple silicon and Intel |
-| Linux | `HeadlessOS-0.3.0.AppImage` | Most distributions |
-| Linux | `headlessos-desktop_0.3.0_amd64.deb` | Debian and Ubuntu |
+| Windows | `HeadlessOS.Setup.0.3.2.exe` | Installer |
+| Windows | `HeadlessOS.0.3.2.exe` | Portable, no install needed |
+| macOS | `HeadlessOS-0.3.2-universal.dmg` | Apple silicon and Intel |
+| macOS | `HeadlessOS-0.3.2-universal-mac.zip` | Apple silicon and Intel |
+| Linux | `HeadlessOS-0.3.2.AppImage` | Most distributions |
+| Linux | `headlessos-desktop_0.3.2_amd64.deb` | Debian and Ubuntu |
 
 You need 64-bit Windows 10 or 11, macOS 11 or later, or a 64-bit Linux desktop.
 
@@ -51,14 +51,14 @@ To reach a device on your local network, the app also needs [local network acces
 Make the AppImage executable and run it:
 
 ```bash
-chmod +x HeadlessOS-0.3.0.AppImage
-./HeadlessOS-0.3.0.AppImage
+chmod +x HeadlessOS-0.3.2.AppImage
+./HeadlessOS-0.3.2.AppImage
 ```
 
 Or install the `.deb` with your package manager:
 
 ```bash
-sudo apt install ./headlessos-desktop_0.3.0_amd64.deb
+sudo apt install ./headlessos-desktop_0.3.2_amd64.deb
 ```
 
 ## Run from source

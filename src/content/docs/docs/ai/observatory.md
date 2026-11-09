@@ -40,7 +40,7 @@ On a small local model, the **Attributes** tab helps explain a cut-off run. In a
 Local Ollama models show $0.00.
 
 :::caution
-Known gaps in version 0.3.0:
+Known gaps in version 0.3.2:
 
 - AI Agent runs on Claude show $0.00, because the price table for those traces lacks the current Claude models. UI Agent runs on Claude are priced.
 - Parsing calls aren't traced, so a model reading command output that no parser could read isn't counted here.
