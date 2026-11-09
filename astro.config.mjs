@@ -30,6 +30,19 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          // Astro names a page's stylesheet after its route, as in index@_@astro.css. Cloudflare answers
+          // a path with "@" in it with a redirect to its %40 form: a round trip before the page can paint.
+          assetFileNames: (asset) => {
+            const name = asset.names?.[0] ?? "asset";
+            if (!name.includes("@")) return "_astro/[name].[hash][extname]";
+            return `_astro/${name.replace(/\.[^.]*$/, "").replaceAll("@", "-")}.[hash][extname]`;
+          },
+        },
+      },
+    },
   },
   integrations: [
     // /icon is a noindex design study; a sitemap must list only pages meant for search
