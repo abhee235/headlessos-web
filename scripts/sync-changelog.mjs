@@ -1,9 +1,14 @@
 // Builds the docs changelog from the app's CHANGELOG.md, so each release is written up once.
-// Runs before every build. If the download fails, the last copy stays and the site still builds.
+// Runs before every build. If a download fails, the last copy stays and the site still builds.
+//
+// The app's CHANGELOG.md gets a version's entry before that version is published (the release waits
+// as a draft until it has been tested), so only versions published on GitHub Releases are kept.
+// The releases API doesn't list drafts to anonymous callers, and drafts are skipped here as well.
 
 import { writeFileSync } from "node:fs";
 
 const SOURCE = "https://raw.githubusercontent.com/abhee235/headlessos/main/CHANGELOG.md";
+const RELEASES = "https://api.github.com/repos/abhee235/headlessos/releases?per_page=100";
 const TARGET = new URL("../src/content/docs/docs/changelog.md", import.meta.url);
 
 const HEADER = `---
@@ -18,25 +23,49 @@ tableOfContents:
 Every HeadlessOS release, newest first. [Download the latest version](/download), or see all the files on [GitHub Releases](https://github.com/abhee235/headlessos/releases).
 `;
 
-/** The release entries, without the file's own title and internal task IDs */
-export function toDocsPage(changelog) {
+/** The version a changelog entry is for: "## 0.3.0 — 2026-11-07" gives "0.3.0" */
+const versionOf = (entry) => entry.match(/^## \[?v?(\d+\.\d+\.\d+)/)?.[1];
+
+/**
+ * The entries of published versions, without the file's own title and internal task IDs.
+ * `published` holds version numbers without the "v", such as "0.3.0".
+ */
+export function toDocsPage(changelog, published) {
   const start = changelog.search(/^## /m);
   if (start < 0) throw new Error("no releases found in CHANGELOG.md");
   const body = changelog
     .slice(start)
     .replace(/\r\n/g, "\n")
+    .split(/^(?=## )/m)
+    .filter((entry) => published.has(versionOf(entry)))
+    .join("")
     // "(EX11)", "(M14.1–M14.2)", "(EX10.8–EX10.10)" point at internal specs
     .replace(/ \((?:M|EX)\d[\w.]*(?:[–,-] ?(?:M|EX)?\d[\w.]*)*\)/g, "")
     .trimEnd();
+  if (!body) throw new Error("no published release in CHANGELOG.md");
   return `${HEADER}\n${body}\n`;
+}
+
+async function get(url, accept) {
+  const response = await fetch(url, { headers: { Accept: accept }, signal: AbortSignal.timeout(10_000) });
+  if (!response.ok) throw new Error(`HTTP ${response.status} from ${new URL(url).host}`);
+  return response;
+}
+
+/** Version numbers of the releases published on GitHub */
+async function publishedVersions() {
+  const releases = await (await get(RELEASES, "application/vnd.github+json")).json();
+  return new Set(releases.filter((r) => !r.draft).map((r) => r.tag_name.replace(/^v/, "")));
 }
 
 async function main() {
   try {
-    const response = await fetch(SOURCE, { signal: AbortSignal.timeout(10_000) });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    writeFileSync(TARGET, toDocsPage(await response.text()));
-    console.log("changelog: updated from the app repo");
+    const [changelog, published] = await Promise.all([
+      get(SOURCE, "text/plain").then((r) => r.text()),
+      publishedVersions(),
+    ]);
+    writeFileSync(TARGET, toDocsPage(changelog, published));
+    console.log(`changelog: updated from the app repo, published releases only`);
   } catch (error) {
     console.warn(`changelog: keeping the last copy (${error.message})`);
   }

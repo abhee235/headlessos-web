@@ -9,29 +9,6 @@ tableOfContents:
 
 Every HeadlessOS release, newest first. [Download the latest version](/download), or see all the files on [GitHub Releases](https://github.com/abhee235/headlessos/releases).
 
-## 0.3.2 — 2026-11-08
-
-0.3.1 wasn't published, so its changes are here too.
-
-### Security
-- **The log records problems, not what you do.** It used to write a line for every request, naming
-  the files, containers and services you opened, and a failed connection wrote the server's address.
-  It now records failures only, with no requests, commands, addresses or logins. Logs from older
-  versions are removed the first time this version starts.
-
-### Changed
-- **The launcher leaves your desktop showing.** It's shorter, and it keeps clear of the top bar. Its
-  apps sit on the same colour tiles as the dock and follow the Dock Icons setting, and the quick
-  actions are smaller tiles with their names. In a short window it shows a scrollbar, and searching
-  no longer changes its height.
-- On a Mac, HeadlessOS uses San Francisco, like the rest of the system. Windows and Linux keep
-  Manrope.
-- About HeadlessOS, Settings → About and the wallpaper show the app's real logo.
-
-### Fixed
-- The About HeadlessOS window cut off its description.
-- `--user-data-dir` moved only part of the app's data, because 0.3.0 pinned the data folder.
-
 ## 0.3.0 — 2026-11-07
 
 ### Security
